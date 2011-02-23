@@ -1,7 +1,7 @@
 4
 10
 Le S.M.I.C. est :
-1
+2
 Le salaire minimum de croissance.
 Le salaire minimum d'insertion communautaire.
 Le salaire minimum interprofessionnel de croissance.
@@ -9,7 +9,7 @@ Le salaire minimum individuel connu.
 Le salaire minimum invisiblement connu.
  
 En économie, l'O.M.C. désigne :
-1
+2
 L'Office Municipal de la Culture.
 L'Organisation Mondiale du Commerce.
 L'Organisme Mondialement Connu.
