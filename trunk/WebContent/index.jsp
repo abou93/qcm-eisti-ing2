@@ -14,9 +14,7 @@ Les champs marqués d'une * sont obligatoires.
 <%
 Personne p = (Personne) request.getAttribute("personne");
 Vector<String> erreurs = (Vector<String>) request.getAttribute("erreur");
-boolean remplir = false;
-if (erreurs != null) {
-	remplir = true;%>
+boolean remplir = false;%>
 	<h2>Vous avez mal saisi les informations</h2>
 	<ul>
 	<%
@@ -27,17 +25,7 @@ if (erreurs != null) {
 		}
 	%>
 	</ul>
-<%}%>
 <table>
-	<tr><td>* Nom : </td><td><input type="text" name="nom" 
-	<%if (remplir) out.println ("value=\"" + p.getNom() + "\""); %>/></td></tr>
-	<tr><td>* Prénom : </td><td><input type="text" name="prenom" 
-	<%if (remplir) out.println ("value=\"" + p.getPrenom() + "\""); %>/></td></tr>
-	<tr><td>* Sexe : </td><td><select name="sexe">
-			<option value=""></option>
-			<option value="Homme">Homme</option>
-			<option value ="Femme">Femme</option>
-		</select></td></tr>
 	<tr><td>Transport : </td><td><select name="transport" size="4" multiple="multiple">
 			<option value="Vélo">Vélo</option>
 			<option value="Voiture">Voiture</option>
