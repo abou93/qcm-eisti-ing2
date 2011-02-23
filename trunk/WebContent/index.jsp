@@ -18,6 +18,7 @@
 		{
 		%>
 			<tr>
+				<p class=cours><%= ((Modele)request.getSession().getAttribute("m")).getLesCours().get(i).getNom() %></p>
 				<table align="center" width="500px">
 			<%
 			for (int j = 0; j < ((Modele)request.getSession().getAttribute("m")).getLesCours().get(i).getLesQCMs().size(); j++)
@@ -35,6 +36,7 @@
 			}
 			%>
 				</table>
+				<br/>
 			</tr>
 		<%
 		}
