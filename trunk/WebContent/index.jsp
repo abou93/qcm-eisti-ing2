@@ -1,60 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="java.util.Vector"
-    import="modele.Personne"%>
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="Modele.*" %>
+<%
+	Modele m = (Modele)request.getSession().getAttribute("m");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>TD3 JEE - MVC</title>
-</head>
-<body>
-<h1>Veuillez remplir le formulaire suivant</h1>
-Les champs marqués d'une * sont obligatoires.
-<form method="post" action="http://localhost:8080/TD3_MVC/MyServlet">
-<%
-Personne p = (Personne) request.getAttribute("personne");
-Vector<String> erreurs = (Vector<String>) request.getAttribute("erreur");
-boolean remplir = false;
-if (erreurs != null) {
-	remplir = true;%>
-	<h2>Vous avez mal saisi les informations</h2>
-	<ul>
-	<%
-		for (String s : erreurs) {
-			%><li>
-			<%= s %></li>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<link href="style.css" rel="stylesheet" type="text/css" />
+		<title>Page d'accueil du module QCM d'entrainnement</title>
+	</head>
+	<body class="body">
+		<%@ page import="Modele.*" %>
+		<h1>Test QCM pour le projet AREL (Client EISTI)</h1>
+		<p>Pour vous entraîner avant le partiel, veuillez choisir un QCM :</p>
+		<form method="get" action="ControleurListeQCMs">
+			<table align="center" width="500px">
 			<%
-		}
-	%>
-	</ul>
-<%}%>
-<table>
-	<tr><td>* Nom : </td><td><input type="text" name="nom" 
-	<%if (remplir) out.println ("value=\"" + p.getNom() + "\""); %>/></td></tr>
-	<tr><td>* Prénom : </td><td><input type="text" name="prenom" 
-	<%if (remplir) out.println ("value=\"" + p.getPrenom() + "\""); %>/></td></tr>
-	<tr><td>* Sexe : </td><td><select name="sexe">
-			<option value=""></option>
-			<option value="Homme">Homme</option>
-			<option value ="Femme">Femme</option>
-		</select></td></tr>
-	<tr><td>Transport : </td><td><select name="transport" size="4" multiple="multiple">
-			<option value="Vélo">Vélo</option>
-			<option value="Voiture">Voiture</option>
-			<option value="A pied">A pied</option>
-			<option value="Avion">Avion</option>
-			<option value="Camion">Camion</option>
-		</select></td></tr>
-	<tr><td>* Code postal : </td><td><input type="text" name="cp" maxlength="5"
-	<%if (remplir) out.println ("value=\"" + p.getCodePostal() + "\""); %>/></td></tr>
-</table>
-	<br/><br/>
-	<input type="submit" name="submit" value="Submit" />
-<%
-request.removeAttribute("personne");
-request.removeAttribute("erreur");
-%>
-</form>
-<!-- <a href="index.jsp">Retour au formulaire</a> -->
-</body>
+				for (int i = 0; i < m.getLesQCMs().size(); i++)
+				{
+			%>
+				<tr>
+					<td>
+						<input class="bouton" type="submit" name="QCM" value= <%=m.getLesQCMs().get(i).getNom()%> />
+					</td>
+					<td class="difficulte">
+						Difficulté :  + <%=m.getLesQCMs().get(i).getLvl()%>
+					</td>
+				</tr>
+			<%
+			}
+			%>
+			</table>
+		</form>
+		<form method="get" action="ControleurListeQCMs">
+			<table>
+				<tr>
+					<td align="center">
+						<input class="bouton" type="submit" name="Rafraichir" value="Rafraichir"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</body>
 </html>
