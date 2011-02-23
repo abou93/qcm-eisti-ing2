@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>Application_L2</display-name>
+  <welcome-file-list>
+    <welcome-file>ControleurListeQCMs</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>ControleurSelectQCM</display-name>
+    <servlet-name>ControleurSelectQCM</servlet-name>
+    <servlet-class>Controleur.ControleurSelectQCM</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControleurSelectQCM</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ControleurListeQCMs</display-name>
+    <servlet-name>ControleurListeQCMs</servlet-name>
+    <servlet-class>Controleur.ControleurListeQCMs</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControleurListeQCMs</servlet-name>
+    <url-pattern>/ControleurListeQCMs</url-pattern>
+  </servlet-mapping>
+</web-app>
