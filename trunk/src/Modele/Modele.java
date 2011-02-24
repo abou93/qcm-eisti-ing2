@@ -27,7 +27,7 @@ public class Modele
                 List<Element> lesNoeudsQCM = lesNoeudsCours.get(i).getChildren("qcm");
                 for(int j=0 ; j<lesNoeudsQCM.size() ; j++)
                 {
-                	this.lesCours.get(i).getLesQCMs().add(new QCM(lesNoeudsQCM.get(j).getChildText("name-qcm"), Integer.parseInt(lesNoeudsQCM.get(j).getChildText("lvl-qcm")), lesNoeudsQCM.get(j).getChildText("url-qcm")));
+                	this.lesCours.get(i).getLesQCMs().add(new QCM(lesNoeudsQCM.get(j).getChildText("name-qcm"), Integer.parseInt(lesNoeudsQCM.get(j).getChildText("lvl-qcm"))));
                 }
             }
 		}
@@ -93,5 +93,10 @@ public class Modele
 			System.out.println(e.toString());
 		}
 		this.QCMCourant = this.get(qcmName).getNom();
+	}
+	
+	public void enregistrer(String urlResultat)
+	{
+		
 	}
 }

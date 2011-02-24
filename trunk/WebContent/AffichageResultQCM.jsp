@@ -46,6 +46,19 @@
 			<%= "Vous avez réalisé ce QCM avec un total de " + nbBonnesReponses + " bonnes réponses sur " + ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getNbQuestions() + "." %>
 		<br/>
 		<br/>
-		<a href="ControleurListeQCMs">Retour au choix des QCM's</a>
+		<form method="get" action="ControleurResultQCM">
+			<table>
+				<tr>
+					<td align="center">
+						<input class="bouton" type="submit" name="ordre" value="Enregistrer"/>
+					</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<input class="bouton" type="submit" name="ordre" value="Retour"/>
+					</td>
+				</tr>
+			</table>
+		</form>
 	</body>
 </html>

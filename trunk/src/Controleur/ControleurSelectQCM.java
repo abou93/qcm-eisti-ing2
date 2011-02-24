@@ -43,14 +43,14 @@ public class ControleurSelectQCM extends HttpServlet {
 			}
 			if(verification(request))
 			{
-				String qcm = request.getParameter("Submit");
+				String qcm = request.getParameter("ordre");
 				qcm = qcm.substring(qcm.length());
 				request.getSession().setAttribute("m", m);
 				request.getRequestDispatcher("AffichageResultQCM.jsp").forward(request, response);
 			}
 			else
 			{
-				String qcm = request.getParameter("Submit");
+				String qcm = request.getParameter("ordre");
 				qcm = qcm.substring(qcm.length());
 				request.getSession().removeAttribute("m");
 				request.getRequestDispatcher("AffichageErreurQCM.jsp").forward(request, response);			

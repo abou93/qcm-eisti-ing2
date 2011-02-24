@@ -1,22 +1,28 @@
 package Controleur;
 
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import Modele.Modele;
 
 /**
- * Servlet implementation class controleurListeQCMs
+ * Servlet implementation class ControleurResultQCM
  */
-public class ControleurListeQCMs extends HttpServlet {
-	private static final long serialVersionUID = 2L;
+public class ControleurResultQCM extends HttpServlet {
+	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ControleurListeQCMs() {
-        // TODO Auto-generated constructor stub
+    public ControleurResultQCM() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -36,27 +42,29 @@ public class ControleurListeQCMs extends HttpServlet {
 			{
 				m = (Modele)request.getSession().getAttribute("m");
 			}
-			String qcm = request.getParameter("QCM");
-			if(qcm == null || qcm.matches(""))
+			String ordre = request.getParameter("ordre");
+			if(ordre.matches("Retour"))
 			{
-				m = new Modele(urlData);
 				request.getSession().setAttribute("m", m);
-				RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
+				RequestDispatcher dispatch = request.getRequestDispatcher("ControleurListeQCMs");
 				dispatch.forward(request, response);
 			}
-			else
+			if(ordre.matches("Enregistrer"))
 			{
 				try{
-					urlData = context.getRealPath("/QCMs/"+qcm+".xml");
-					m.initialiser(qcm, urlData);
+					urlData = context.getRealPath("/QCMs/Resultat.xml");
+					m.enregistrer(urlData);
 					request.getSession().setAttribute("m", m);
-					RequestDispatcher dispatch = request.getRequestDispatcher("AffichageQCM.jsp");
+					RequestDispatcher dispatch = request.getRequestDispatcher("ControleurListeQCMs");
 					dispatch.forward(request, response);
 				}
 				catch(Exception e){
 					System.out.println(e.toString());
+					request.getSession().setAttribute("m", m);
+					RequestDispatcher dispatch = request.getRequestDispatcher("AffichageErreurEnregistrement.jsp");
+					dispatch.forward(request, response);
 				}
-			}
+			}	
 		}
 		catch (Exception e){
 			System.out.println(e.toString());

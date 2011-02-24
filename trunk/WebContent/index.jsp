@@ -47,7 +47,7 @@
 			<table>
 				<tr>
 					<td align="center">
-						<input class="bouton" type="submit" name="Rafraichir" value="Rafraichir"/>
+						<input class="bouton" type="submit" name="ordre" value="Rafraichir"/>
 					</td>
 				</tr>
 			</table>

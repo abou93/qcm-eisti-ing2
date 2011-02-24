@@ -8,7 +8,7 @@
 		<title>Page d'erreur</title>
 	</head>
 	<body>
-		<h1 align="center">Vous n'avez pas répondu à l'ensemble des questions !!!</h1>
+		<h1 align="center">Erreur l'or de l'enregistrement</h1>
 		<br/>
 		<br/>
 		<br/>

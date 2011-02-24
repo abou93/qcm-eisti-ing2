@@ -6,13 +6,11 @@ import java.util.*;
 public class QCM {
 	private String nom;
 	private int difficulte;
-	private String url;
 	private ArrayList<Question> lesQuestions;
 	
-	public QCM (String name, int lvl, String url) {
+	public QCM (String name, int lvl) {
 		this.nom = name;
 		this.difficulte = lvl;
-		this.url = url;
 		this.lesQuestions = new ArrayList<Question> ();
 	}
 	
@@ -47,13 +45,5 @@ public class QCM {
 	
 	public ArrayList<Question> getLesQuestions () {
 		return this.lesQuestions;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
 	}
 }

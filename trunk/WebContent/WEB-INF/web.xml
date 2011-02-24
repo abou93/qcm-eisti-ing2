@@ -24,4 +24,14 @@
     <servlet-name>ControleurListeQCMs</servlet-name>
     <url-pattern>/ControleurListeQCMs</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ControleurResultQCM</display-name>
+    <servlet-name>ControleurResultQCM</servlet-name>
+    <servlet-class>Controleur.ControleurResultQCM</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControleurResultQCM</servlet-name>
+    <url-pattern>/ControleurResultQCM</url-pattern>
+  </servlet-mapping>
 </web-app>

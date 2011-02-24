@@ -26,7 +26,7 @@
 					%>
 				<tr>
 					<td class=choix>
-						<input type="radio" name= "<%= "q" +  i %>" value= "<%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).getExpression() %>" >
+						<input type="checkbox" name= "<%= "q" +  i %>" value= "<%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).getExpression() %>" >
 							<%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).getExpression() %>
 						</input>
 					</td>
@@ -41,7 +41,7 @@
 			%>
 			<tr>
 				<td align="center">
-					<input class="bouton" type="submit" name="Submit" value= "<%= ("Valider ").concat(((Modele)request.getSession().getAttribute("m")).getNomQCMCourant()) %>" />
+					<input class="bouton" type="submit" name="ordre" value= "<%= ("Valider ").concat(((Modele)request.getSession().getAttribute("m")).getNomQCMCourant()) %>" />
 				</td>
 			</tr>
 		</form>
