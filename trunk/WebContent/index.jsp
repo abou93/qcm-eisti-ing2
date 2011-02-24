@@ -2,55 +2,29 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<link href="style.css" rel="stylesheet" type="text/css" />
-		<title>Page d'accueil du module QCM d'entrainnement</title>
-	</head>
-	<body class="body">
-		<%@ page import="Modele.*" %>
-		<h1>Test QCM pour le projet AREL (Client EISTI)</h1>
-		<p>Pour vous entraîner avant le partiel, veuillez choisir un QCM :</p>
-		<form method="get" action="ControleurListeQCMs">
-			<table align="center" width="500px">
-		<%
-		for (int i = 0; i < ((Modele)request.getSession().getAttribute("m")).getLesCours().size(); i++)
-		{
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="style.css" rel="stylesheet" type="text/css" />
+<title>Authentification</title>
+</head>
+<body>
+<h1>Login</h1>
+<p>Veuillez vous connecter pour accéder aux QCMs</p>
+<%
+	String msg = (String) request.getSession().getAttribute("msgErr");
+	if (msg != null) {
 		%>
-			<tr>
-				<p class=cours><%= ((Modele)request.getSession().getAttribute("m")).getLesCours().get(i).getNom() %></p>
-				<table align="center" width="500px">
-			<%
-			for (int j = 0; j < ((Modele)request.getSession().getAttribute("m")).getLesCours().get(i).getLesQCMs().size(); j++)
-			{
-			%>
-					<tr>
-						<td>
-							<input class="bouton" type="submit" name="QCM" value= <%= ((Modele)request.getSession().getAttribute("m")).getLesCours().get(i).getLesQCMs().get(j).getNom() %> />
-						</td>
-						<td class="difficulte">
-							Difficulté :  <%= String.valueOf(((Modele)request.getSession().getAttribute("m")).getLesCours().get(i).getLesQCMs().get(j).getDifficulte()) %>
-						</td>
-					</tr>
-			<%
-			}
-			%>
-				</table>
-				<br/>
-			</tr>
+		<p><%= msg %></p>
 		<%
-		}
-		%>
-			</table>
-		</form>
-		<form method="get" action="ControleurListeQCMs">
-			<table>
-				<tr>
-					<td align="center">
-						<input class="bouton" type="submit" name="ordre" value="Rafraichir"/>
-					</td>
-				</tr>
-			</table>
-		</form>
-	</body>
+	}
+%>
+<br/>
+<form method="post" action="ControleurListeQCMs">
+	<table>
+		<tr><td>Login</td><td><input type="text" name="login" /></td></tr>
+		<tr><td>Password</td><td><input type="password" name="pwd" /></td></tr>
+	</table>
+	<input type="submit" name="Login" value="Login" />
+</form>
+</body>
 </html>
