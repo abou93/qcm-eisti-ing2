@@ -3,9 +3,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
+	<%@ page import="java.io.*" %>
+	<% 	
+		ServletContext context = getServletContext(); 
+		String urlFile = context.getRealPath("style.css");
+		File file = new File(urlFile);
+		InputStream ips=new FileInputStream(file); 
+		InputStreamReader ipsr=new InputStreamReader(ips);
+		BufferedReader br=new BufferedReader(ipsr);
+		String ligne, style="";
+		while ((ligne=br.readLine())!=null){
+			style+=ligne+"\n";
+		}
+		br.close(); 
+	%>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<link href="style.css" rel="stylesheet" type="text/css" />
 		<title>Page d'accueil du module QCM d'entrainnement</title>
+		<style><%=style %></style>
 	</head>
 	<body class="body">
 		<%@ page import="Modele.*" %>

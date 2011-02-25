@@ -2,9 +2,23 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+	<%@ page import="java.io.*" %>
+	<% 	
+		ServletContext context = getServletContext(); 
+		String urlFile = context.getRealPath("style.css");
+		File file = new File(urlFile);
+		InputStream ips=new FileInputStream(file); 
+		InputStreamReader ipsr=new InputStreamReader(ips);
+		BufferedReader br=new BufferedReader(ipsr);
+		String ligne, style="";
+		while ((ligne=br.readLine())!=null){
+			style+=ligne+"\n";
+		}
+		br.close(); 
+	%>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<link href="style.css" rel="stylesheet" type="text/css" />
+		<style><%=style %></style>
 		<title>Page d'erreur</title>
 	</head>
 	<body>
