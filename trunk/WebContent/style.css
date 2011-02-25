@@ -31,8 +31,9 @@ td.choix{
 table{
 	width:100%;
 }
+
 .body{
-	background-image:url('/arel.bmp');
+		background-image:url(arel.png);
 	background-repeat:no-repeat;
 	padding-top:120px;
 	color:#1b1431;
