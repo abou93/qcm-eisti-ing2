@@ -2,12 +2,8 @@ package Controleur;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
 import Modele.Modele;
 
@@ -45,6 +41,7 @@ public class ControleurResultQCM extends HttpServlet {
 			String ordre = request.getParameter("ordre");
 			if(ordre.matches("Retour"))
 			{
+				m = new Modele(urlData);
 				request.getSession().setAttribute("m", m);
 				RequestDispatcher dispatch = request.getRequestDispatcher("ControleurListeQCMs");
 				dispatch.forward(request, response);
@@ -53,7 +50,7 @@ public class ControleurResultQCM extends HttpServlet {
 			{
 				try{
 					urlData = context.getRealPath("/QCMs/Resultat.xml");
-					m.enregistrer(urlData);
+					m.enregistrerResultat(urlData);
 					request.getSession().setAttribute("m", m);
 					RequestDispatcher dispatch = request.getRequestDispatcher("ControleurListeQCMs");
 					dispatch.forward(request, response);

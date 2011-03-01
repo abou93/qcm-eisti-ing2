@@ -1,5 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
+
 h1{
 	color:#391e90;
 	font:"MS Serif", "New York", serif;
@@ -31,9 +32,8 @@ td.choix{
 table{
 	width:100%;
 }
-
 .body{
-		background-image:url(arel.png);
+	background-image:url('/arel.bmp');
 	background-repeat:no-repeat;
 	padding-top:120px;
 	color:#1b1431;

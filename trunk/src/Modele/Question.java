@@ -17,13 +17,14 @@ public class Question {
 		this.reponses.add(rep);
 	}
 	
-	public Reponse getBonneReponse() {
+	public ArrayList<Reponse> getBonnesReponses() {
+		ArrayList<Reponse> BonnesReponses = new ArrayList<Reponse>();
 		for(int i = 0; i < this.reponses.size(); i ++)
 		{
 			if(this.reponses.get(i).isTrue())
-				return this.reponses.get(i);
+				BonnesReponses.add(i, this.reponses.get(i));
 		}
-		return null;
+		return BonnesReponses;
 	}
 	
 	public void setExpression(String expression) {
@@ -37,7 +38,15 @@ public class Question {
 		return this.reponses.get(i);
 	}
 	
-	public int getNbReponse () {
+	public Reponse getBonneReponse(int i) {
+		return this.getBonnesReponses().get(i);
+	}
+	
+	public int getNbReponses () {
 		return this.reponses.size();
+	}
+	
+	public int getNbBonnesReponses() {
+		return this.getBonnesReponses().size();
 	}
 }

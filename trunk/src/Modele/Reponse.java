@@ -6,6 +6,7 @@ public class Reponse
 {
 	private String expression;
 	private boolean valeur;
+	private boolean select;
 	
 	public Reponse(String expression, String valeur)
 	{
@@ -14,6 +15,7 @@ public class Reponse
 			this.valeur = true;
 		else
 			this.valeur = false;
+		this.select = false;
 	}
 	public String getExpression() {
 		return this.expression;
@@ -21,5 +23,10 @@ public class Reponse
 	public boolean isTrue() {
 		return this.valeur;
 	}
-	
+	public void setSelect(boolean v) {
+		this.select = v;
+	}
+	public boolean isSelect() {
+		return this.select;
+	}
 }

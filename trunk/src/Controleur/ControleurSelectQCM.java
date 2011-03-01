@@ -2,8 +2,8 @@ package Controleur;
 
 import Modele.*;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.util.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -30,9 +30,9 @@ public class ControleurSelectQCM extends HttpServlet {
 		// TODO Auto-generated method stub
 		ServletContext context = getServletContext();
 		Modele m;
+		Resultat r;
 		try{
 			String urlData = context.getRealPath("/QCMs/QCMs.xml");
-			//InputStream ips = context.getResourceAsStream("/QCMs/QCMs.xml");
 			if ((Modele)request.getSession().getAttribute("m") == null)
 			{
 				m = new Modele(urlData);
@@ -41,20 +41,39 @@ public class ControleurSelectQCM extends HttpServlet {
 			{
 				m = (Modele)request.getSession().getAttribute("m");
 			}
-			if(verification(request))
+			System.err.println("verif");
+			String qcm = request.getParameter("ordre");
+			r = new Resultat(m.getQCMCourant());
+			for (int i = 0; i < r.getQcmResultat().getNbQuestions(); i++)
 			{
-				String qcm = request.getParameter("ordre");
-				qcm = qcm.substring(qcm.length());
-				request.getSession().setAttribute("m", m);
-				request.getRequestDispatcher("AffichageResultQCM.jsp").forward(request, response);
+				for (int j = 0; j < r.getQcmResultat().getQuestion(i).getNbReponses(); j++)
+				{
+					if (request.getParameter("q" + i + "r" + j) == null)
+					{
+						r.setReponse(i, j, false);
+						System.out.println("q" + i + " r" + j + ": null");
+					}
+					else
+					{
+						System.out.println("q" + i + " r" + j + ": " + request.getParameter("q" + i + "r" + j));
+						if (!(request.getParameter("q" + i + "r" + j).matches("")))
+							r.setReponse(i, j, true);
+					}
+				}
 			}
-			else
+			System.out.println("\n resultat: ");
+			for (int i = 0; i < r.getQcmResultat().getNbQuestions(); i++)
 			{
-				String qcm = request.getParameter("ordre");
-				qcm = qcm.substring(qcm.length());
-				request.getSession().removeAttribute("m");
-				request.getRequestDispatcher("AffichageErreurQCM.jsp").forward(request, response);			
-			}	
+				for (int j = 0; j < r.getQcmResultat().getQuestion(i).getNbReponses(); j++)
+				{
+					System.out.print(r.getQcmResultat().getQuestion(i).getReponse(j).getExpression());
+					System.out.print(r.getQcmResultat().getQuestion(i).getReponse(j).isSelect());
+					System.out.println(r.getQcmResultat().getQuestion(i).getReponse(j).isTrue());
+				}
+			}
+			m.addResultat(r);
+			request.getSession().setAttribute("m", m);
+			request.getRequestDispatcher("AffichageResultQCM.jsp").forward(request, response);
 		}
 		catch (Exception e){
 			System.out.println(e.toString());
@@ -69,11 +88,24 @@ public class ControleurSelectQCM extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	private boolean verification (HttpServletRequest request) {
-		for (int i = 0; i < ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getNbQuestions(); i++) {
-			if (request.getParameter("q" + i)==null) return false;
+	/*private boolean verification (Modele m, HttpServletRequest request) {
+		boolean correct = false;
+		for (int i = 0; i < m.getQCMCourant().getNbQuestions(); i++)
+		{
+			for (int j = 0; j < m.getQCMCourant().getQuestion(i).getNbReponses(); j++)
+			{
+				if (request.getParameter("q" + i + "r" + j) != null)
+				{
+					if (!(request.getParameter("q" + i + "r" + j).matches("")))
+						correct = true;
+				}
+			}
+			if (correct == false)
+			{				
+				return false;
+			}
 		}
-		return true;
-	}
+		return correct;
+	}*/
 
 }

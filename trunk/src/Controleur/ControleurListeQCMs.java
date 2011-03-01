@@ -1,18 +1,9 @@
 package Controleur;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import Modele.Modele;
-import Modele.UtilisateurManager;
-import Modele.Utilisateur;
-import Modele.Sessions;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import Modele.*;
 
 /**
  * Servlet implementation class controleurListeQCMs
@@ -56,7 +47,7 @@ public class ControleurListeQCMs extends HttpServlet {
 			String qcm = request.getParameter("QCM");
 			if(qcm == null || qcm.matches(""))
 			{
-				m = new Modele(urlData);
+				//m = new Modele(urlData);
 				request.getSession().setAttribute("m", m);
 				RequestDispatcher dispatch = request.getRequestDispatcher("accueil.jsp");
 				dispatch.forward(request, response);

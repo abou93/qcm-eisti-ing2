@@ -2,10 +2,13 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+	<%
+	ServletContext context = getServletContext();
+	%>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Page d'accueil du module QCM d'entrainnement</title>
 		<style type="text/css">	<%@ include file="style.css" %>	</style>
+		<title>Page d'accueil du module QCM d'entrainnement</title>
 	</head>
 	<body class="body">
 		<%@ page import="Modele.*" %>
@@ -18,7 +21,7 @@
 		{
 		%>
 			<tr>
-				<p class=cours><%= ((Modele)request.getSession().getAttribute("m")).getLesCours().get(i).getNom() %></p>
+				<p class="cours"><%= ((Modele)request.getSession().getAttribute("m")).getLesCours().get(i).getNom() %></p>
 				<table align="center" width="500px">
 			<%
 			for (int j = 0; j < ((Modele)request.getSession().getAttribute("m")).getLesCours().get(i).getLesQCMs().size(); j++)
@@ -48,15 +51,6 @@
 				<tr>
 					<td align="center">
 						<input class="bouton" type="submit" name="ordre" value="Rafraichir"/>
-					</td>
-				</tr>
-			</table>
-		</form>
-		<form method="post" action="ControleurListeQCMs">
-			<table>
-				<tr>
-					<td align="center">
-						<input class="bouton" type="submit" name="logout" value="Logout"/>
 					</td>
 				</tr>
 			</table>

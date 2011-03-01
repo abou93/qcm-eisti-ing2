@@ -39,11 +39,19 @@ public class QCM {
 		this.nom = n;
 	}
 	
+	public void clear(){
+		lesQuestions.clear();
+	}
+	
 	public Question getQuestion (int i) {
 		return this.lesQuestions.get(i);
 	}
 	
 	public ArrayList<Question> getLesQuestions () {
 		return this.lesQuestions;
+	}
+	
+	public void setLesQuestions(ArrayList <Question> questions) {
+		this.lesQuestions = questions;
 	}
 }

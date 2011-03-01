@@ -10,10 +10,12 @@ public class Modele
 {
 	private String QCMCourant;
 	private ArrayList<Cours> lesCours;
+	private ArrayList<Resultat> lesResultats;
 	
 	public Modele(String urlData) {
-		this.QCMCourant = null;
-        this.lesCours = new ArrayList<Cours> ();
+		//this.QCMCourant = null;
+        this.lesCours = new ArrayList<Cours>();
+        this.lesResultats = new ArrayList<Resultat>();
         
     	Document doc;
     	SAXBuilder sxb = new SAXBuilder();
@@ -50,24 +52,30 @@ public class Modele
 	public QCM get(String name) {
 		for(int i = 0; i < this.lesCours.size(); i++)
 		{
-			for(int j = 0; j < this.getLesCours().get(i).getLesQCMs().size(); j++)
+			for(int j = 0; j < this.lesCours.get(i).getLesQCMs().size(); j++)
 			{
-				if(this.getLesCours().get(i).getLesQCMs().get(j).getNom().matches(name))
+				if(this.lesCours.get(i).getLesQCMs().get(j).getNom().matches(name))
 					return this.getLesCours().get(i).getLesQCMs().get(j);
 			}
 		}
 		return null;
 	}
-	public QCM getQCMCourant() {
-		for(int i = 0; i < this.lesCours.size(); i++)
+	
+	public Resultat getResultat(String name) {
+		for(int i = 0; i < this.lesResultats.size(); i++)
 		{
-			for(int j = 0; j < this.getLesCours().get(i).getLesQCMs().size(); j++)
-			{
-				if(this.getLesCours().get(i).getLesQCMs().get(j).getNom().matches(this.QCMCourant))
-					return this.getLesCours().get(i).getLesQCMs().get(j);
-			}
+			if(this.lesResultats.get(i).getQcmResultat().getNom().matches(name))
+				return this.lesResultats.get(i);
 		}
 		return null;
+	}
+	
+	
+	public QCM getQCMCourant() {
+		if(this.get(this.getNomQCMCourant()) == null)
+			return null;
+		else
+			return this.get(this.getNomQCMCourant());
 	}
 	
 	public void initialiser (String qcmName, String urlData)
@@ -78,6 +86,8 @@ public class Modele
             doc = sxb.build(new File(urlData));
             Element noeudQCM = doc.getRootElement();
             List<Element> lesNoeudsQuestion = noeudQCM.getChildren("question");
+            
+            this.get(qcmName).clear();
             for(int i=0 ; i<lesNoeudsQuestion.size() ; i++)
             {
             	this.get(qcmName).addQuestion(new Question(lesNoeudsQuestion.get(i).getChildText("expression")));
@@ -87,7 +97,6 @@ public class Modele
                 	this.get(qcmName).getQuestion(i).addReponse(new Reponse(lesNoeudsReponse.get(j).getText(), lesNoeudsReponse.get(j).getAttributeValue("value")));
                 }
             }
-            
 		}
 		catch (Exception e){
 			System.out.println(e.toString());
@@ -95,8 +104,32 @@ public class Modele
 		this.QCMCourant = this.get(qcmName).getNom();
 	}
 	
-	public void enregistrer(String urlResultat)
+	public void addResultat (Resultat r)
 	{
+		this.lesResultats.add(r);
+	}
+	
+	public void enregistrerResultat(String urlData)
+	{
+    	Document doc;
+    	SAXBuilder sxb = new SAXBuilder();
+		try{
+            doc = sxb.build(new File(urlData));
+            Element noeudRacine = doc.getRootElement();
+            List<Element> lesNoeudsCours = noeudRacine.getChildren("cours");
+            for(int i=0 ; i<lesNoeudsCours.size() ; i++)
+            {
+            	this.lesCours.add(new Cours(lesNoeudsCours.get(i).getAttributeValue("name")));
+                List<Element> lesNoeudsQCM = lesNoeudsCours.get(i).getChildren("qcm");
+                for(int j=0 ; j<lesNoeudsQCM.size() ; j++)
+                {
+                	this.lesCours.get(i).getLesQCMs().add(new QCM(lesNoeudsQCM.get(j).getChildText("name-qcm"), Integer.parseInt(lesNoeudsQCM.get(j).getChildText("lvl-qcm"))));
+                }
+            }
+		}
+		catch (Exception e){
+			System.out.println(e.toString());
+		}
 		
 	}
 }
