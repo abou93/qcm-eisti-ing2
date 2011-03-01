@@ -7,10 +7,6 @@
 	%>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<<<<<<< .mine
-=======
-		<style type="text/css">	<%@ include file="style.css" %>	</style>
->>>>>>> .r30
 		<title>Page d'accueil du module QCM d'entrainnement</title>
 		<style type="text/css">	<%@ include file="style.css" %>	</style>
 	</head>
@@ -55,6 +51,15 @@
 				<tr>
 					<td align="center">
 						<input class="bouton" type="submit" name="ordre" value="Rafraichir"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<form method="post" action="ControleurListeQCMs">
+			<table>
+				<tr>
+					<td align="center">
+						<input class="bouton" type="submit" name="logout" value="Logout"/>
 					</td>
 				</tr>
 			</table>
