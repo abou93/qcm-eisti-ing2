@@ -20,10 +20,10 @@ public class ControleurListeQCMs extends HttpServlet {
         super();
         if (!init) {
 			init = true;
-			UtilisateurManager.addUser(new Utilisateur("rachou", "123"));
-			UtilisateurManager.addUser(new Utilisateur("stitch", "456"));
-			UtilisateurManager.addUser(new Utilisateur("michou", "789"));
-			UtilisateurManager.addUser(new Utilisateur("fransou", "000"));
+			UtilisateurManager.addUser(new Utilisateur("rachou", "123", true));
+			UtilisateurManager.addUser(new Utilisateur("stitch", "456", true));
+			UtilisateurManager.addUser(new Utilisateur("michou", "789", false));
+			UtilisateurManager.addUser(new Utilisateur("fransou", "000", false));
 		}
     }
 
