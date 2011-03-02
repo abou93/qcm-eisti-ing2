@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<style type="text/css">	<%@ include file="style.css" %>	</style>
+		<link href="style.css" type="text/css" rel="stylesheet" />
 		<title>QCM Arel de <%= ((Modele)request.getSession().getAttribute("m")).getNomQCMCourant() %></title>
 		
 		<!-- Script pour le compte à rebours -->
@@ -48,7 +48,6 @@
 			window.onload = Init;
 		</script>
 
-		</script>
 	</head>
 	
 	<body>

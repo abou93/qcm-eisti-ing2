@@ -62,17 +62,19 @@
 			</table>
 		</form>
 		
-		
-		<% if((Boolean) request.getSession().getAttribute("estProf")){%>
-			<form method="get" action="ControleurResultats">
-				<table>
-				<tr>
-				<td align="center">
+		<form method="get" action="ControleurResultats">
+			<table>
+			<tr>
+			<td align="center">
+				<% if((Boolean) request.getSession().getAttribute("estProf")){%>
 					<input class="bouton" type="submit" name="VoirResultats" value="Voir les Résultats enregistrés"/>
-				</td>
-				</tr>
-				</table>
-			</form>
-		<%	}%>
+				<%	}
+				else {%>
+					<input class="bouton" type="submit" name="VoirResultats" value="Voir les Résultats enregistrés"/>
+				<%	}%>
+			</td>
+			</tr>
+			</table>
+		</form>
 	</body>
 </html>

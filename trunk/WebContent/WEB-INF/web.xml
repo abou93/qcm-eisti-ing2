@@ -34,6 +34,16 @@
     <servlet-name>ControleurResultQCM</servlet-name>
     <url-pattern>/ControleurResultQCM</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ControleurResultats</display-name>
+    <servlet-name>ControleurResultats</servlet-name>
+    <servlet-class>Controleur.ControleurResultats</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControleurResultats</servlet-name>
+    <url-pattern>/ControleurResultats</url-pattern>
+  </servlet-mapping>
   <filter>
     <display-name>AuthentificationFilter</display-name>
     <filter-name>AuthentificationFilter</filter-name>
