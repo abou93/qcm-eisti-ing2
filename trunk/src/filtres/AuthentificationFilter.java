@@ -37,10 +37,13 @@ public class AuthentificationFilter implements Filter {
 		String session = httpReq.getRequestedSessionId();
 		// Si la sessions n'est pas enregistrée, retour au formulaire de connexion
 		if (!Sessions.estConnecte(session)) {
+			System.out.println("pas connecté");
 			httpReq.getSession().setAttribute("msgErr", "Vous n'êtes pas connecté");
 			RequestDispatcher dispatch = httpReq.getRequestDispatcher("index.jsp");
 			dispatch.forward(httpReq, response);
 		}
+		else
+			System.out.println("connecté");
 		
 		// pass the request along the filter chain
 		chain.doFilter(request, response);

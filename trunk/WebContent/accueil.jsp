@@ -15,12 +15,10 @@
 		<h1>Test QCM pour le projet AREL (Client EISTI)</h1>
 		<p>Pour vous entraîner avant le partiel, veuillez choisir un QCM :</p>
 		<form method="get" action="ControleurListeQCMs">
-			<table align="center" width="500px">
 		<%
 		for (int i = 0; i < ((Modele)request.getSession().getAttribute("m")).getLesCours().size(); i++)
 		{
 		%>
-			<tr>
 				<p class="cours"><%= ((Modele)request.getSession().getAttribute("m")).getLesCours().get(i).getNom() %></p>
 				<table align="center" width="500px">
 			<%
@@ -40,11 +38,9 @@
 			%>
 				</table>
 				<br/>
-			</tr>
 		<%
 		}
 		%>
-			</table>
 		</form>
 		<form method="get" action="ControleurListeQCMs">
 			<table>

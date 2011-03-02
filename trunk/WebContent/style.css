@@ -32,6 +32,19 @@ table{
 	width:100%;
 }
 
+.minuterie {
+
+font-size: 16pt;
+color: #000000;
+background-color: #FFFFFF;
+border-style: solid;
+border-top-width: 1px;
+border-left-width: 1px;
+border-bottom-width: 1px;
+border-right-width:1px;
+border-color: #FFFFFF;
+}
+
 .body{
 		background-image:url(arel.png);
 	background-repeat:no-repeat;

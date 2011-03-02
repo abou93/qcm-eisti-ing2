@@ -20,10 +20,10 @@ public class ControleurListeQCMs extends HttpServlet {
         super();
         if (!init) {
 			init = true;
-			UtilisateurManager.addUser(new Utilisateur("rachou", "123", true));
-			UtilisateurManager.addUser(new Utilisateur("stitch", "456", true));
-			UtilisateurManager.addUser(new Utilisateur("michou", "789", false));
-			UtilisateurManager.addUser(new Utilisateur("fransou", "000", false));
+			new Utilisateur("rachou", "123", true);
+			new Utilisateur("stitch", "456", true);
+			new Utilisateur("michou", "789", false);
+			new Utilisateur("fransou", "000", false);
 		}
     }
 
@@ -97,9 +97,9 @@ public class ControleurListeQCMs extends HttpServlet {
 			}
 			// Si tout va bien...
 			else {
-				Sessions.connecter(request.getRequestedSessionId());
+				if (!Sessions.estConnecte(request.getRequestedSessionId()))
+					Sessions.connecter(request.getRequestedSessionId());
 				request.getSession().setAttribute("user", request.getParameter("login"));
-				request.getSession().setAttribute("msgErr", "Login inconnu");
 				doGet(request, response);
 			}
 		}

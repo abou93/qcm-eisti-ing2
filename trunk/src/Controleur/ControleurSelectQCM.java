@@ -1,12 +1,15 @@
 package Controleur;
 
-import Modele.*;
+import java.io.IOException;
 
-import java.io.*;
-import java.util.*;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import Modele.Modele;
+import Modele.Resultat;
 
 
 /**
@@ -28,56 +31,61 @@ public class ControleurSelectQCM extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ServletContext context = getServletContext();
-		Modele m;
-		Resultat r;
-		try{
-			String urlData = context.getRealPath("/QCMs/QCMs.xml");
-			if ((Modele)request.getSession().getAttribute("m") == null)
-			{
-				m = new Modele(urlData);
-			}
-			else
-			{
-				m = (Modele)request.getSession().getAttribute("m");
-			}
-			System.err.println("verif");
-			String qcm = request.getParameter("ordre");
-			r = new Resultat(m.getQCMCourant());
-			for (int i = 0; i < r.getQcmResultat().getNbQuestions(); i++)
-			{
-				for (int j = 0; j < r.getQcmResultat().getQuestion(i).getNbReponses(); j++)
-				{
-					if (request.getParameter("q" + i + "r" + j) == null)
+		String tps = request.getParameter("temps");
+		if (tps != null) {
+			if (!tps.equals("ecoule")) {
+				ServletContext context = getServletContext();
+				Modele m;
+				Resultat r;
+				try{
+					String urlData = context.getRealPath("/QCMs/QCMs.xml");
+					if ((Modele)request.getSession().getAttribute("m") == null)
 					{
-						r.setReponse(i, j, false);
-						System.out.println("q" + i + " r" + j + ": null");
+						m = new Modele(urlData);
 					}
 					else
 					{
-						System.out.println("q" + i + " r" + j + ": " + request.getParameter("q" + i + "r" + j));
-						if (!(request.getParameter("q" + i + "r" + j).matches("")))
-							r.setReponse(i, j, true);
+						m = (Modele)request.getSession().getAttribute("m");
 					}
+					System.err.println("verif");
+					String qcm = request.getParameter("ordre");
+					r = new Resultat(m.getQCMCourant());
+					for (int i = 0; i < r.getQcmResultat().getNbQuestions(); i++)
+					{
+						for (int j = 0; j < r.getQcmResultat().getQuestion(i).getNbReponses(); j++)
+						{
+							if (request.getParameter("q" + i + "r" + j) == null)
+							{
+								r.setReponse(i, j, false);
+								System.out.println("q" + i + " r" + j + ": null");
+							}
+							else
+							{
+								System.out.println("q" + i + " r" + j + ": " + request.getParameter("q" + i + "r" + j));
+								if (!(request.getParameter("q" + i + "r" + j).matches("")))
+									r.setReponse(i, j, true);
+							}
+						}
+					}
+					System.out.println("\n resultat: ");
+					for (int i = 0; i < r.getQcmResultat().getNbQuestions(); i++)
+					{
+						for (int j = 0; j < r.getQcmResultat().getQuestion(i).getNbReponses(); j++)
+						{
+							System.out.print(r.getQcmResultat().getQuestion(i).getReponse(j).getExpression());
+							System.out.print(r.getQcmResultat().getQuestion(i).getReponse(j).isSelect());
+							System.out.println(r.getQcmResultat().getQuestion(i).getReponse(j).isTrue());
+						}
+					}
+					m.addResultat(r);
+					request.getSession().setAttribute("m", m);
+					request.getRequestDispatcher("AffichageResultQCM.jsp").forward(request, response);
+				}
+				catch (Exception e){
+					System.out.println(e.toString());
 				}
 			}
-			System.out.println("\n resultat: ");
-			for (int i = 0; i < r.getQcmResultat().getNbQuestions(); i++)
-			{
-				for (int j = 0; j < r.getQcmResultat().getQuestion(i).getNbReponses(); j++)
-				{
-					System.out.print(r.getQcmResultat().getQuestion(i).getReponse(j).getExpression());
-					System.out.print(r.getQcmResultat().getQuestion(i).getReponse(j).isSelect());
-					System.out.println(r.getQcmResultat().getQuestion(i).getReponse(j).isTrue());
-				}
-			}
-			m.addResultat(r);
-			request.getSession().setAttribute("m", m);
-			request.getRequestDispatcher("AffichageResultQCM.jsp").forward(request, response);
 		}
-		catch (Exception e){
-			System.out.println(e.toString());
-		}		
 	}
 
 	/**
