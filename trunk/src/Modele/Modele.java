@@ -139,7 +139,7 @@ public class Modele
 				noeudRacine.addContent(noeudQuestion);
 			}
 			System.out.println(urlData);
-			sortie.output(doc, new FileOutputStream(urlData + "Resultat_" + this.getQCMCourant().getNom() + ".xml"));
+			sortie.output(doc, new FileOutputStream(urlData + File.separator + "Resultat_" + this.getQCMCourant().getNom() + ".xml"));
 		}
 		catch (Exception e){
 			System.out.println(e.toString());

@@ -48,47 +48,7 @@
 			window.onload = Init;
 		</script>
 
-		
-		<!-- Script pour le compte à rebours -->
-		<script type="text/javascript">
-			var valeur_origine = 10;
-			
-			
-			var valeur = valeur_origine;
-			var x;
-			function Init()	{
-				window.document.getElementById('compteur').value=valeur;
-				x = window.setInterval('Decompte()', 1000);
-			}
-			
-			function Decompte()	{
-				//((valeur > 0)&&( ! window.document.getElementById('MaCheck').checked)) ? (window.document.getElementById('compteur').value = --valeur) : (window.clearInterval(x));
-				if (valeur > 0) {
-					window.document.getElementById('compteur').value = --valeur;
-				}
-				else if (valeur == 0) {
-					//window.location.href = "http://www.nouveaulien.com";
-					//window.open('plop','_blank','toolbar=0, location=0, directories=0, status=0, scrollbars=0, resizable=0, copyhistory=0, menuBar=0, width=50, height=50');
-					window.clearInterval(x);
-					//request.getSession().setAttribute("temps", -1);
-					alert ('Temps écoulé !!');
-					window.location.href = "ControleurListeQCMs?temps=ecoule";
-				}
-			}
-			
-			function Relance(elem)	{
-				if( ! elem.checked )		x= window.setInterval('Decompte()', 1000);
-			}
-			
-			function ResetCompteur()	{
-				valeur = valeur_origine;
-				window.document.getElementById('MaCheck').checked = false;
-				window.clearInterval(x);
-				Init();
-			}
-			window.onload = Init;
 		</script>
-
 	</head>
 	
 	<body>
