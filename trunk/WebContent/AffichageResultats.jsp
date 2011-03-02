@@ -25,8 +25,8 @@ if (request.getParameter("fini") == null) {%>
 				<option value="<%=((ArrayList<String>) request.getSession().getAttribute("liste")).get(i) %>"><%=((ArrayList<String>) request.getSession().getAttribute("liste")).get(i) %></option>
 				<%} %>
 			</select>
-			<%if (request.getSession().getAttribute("fin") != null) {%>
-				<input type="text" name="fini" value="fini"/>
+			<%if (request.getSession().getAttribute("choixUser") != null) {%>
+				<input type="text" name="fini" value="<%=request.getSession().getAttribute("choixUser") %>"/>
 			<%} %>
 			<br/><br/>
 			<input class="bouton" type="submit" name="valider" value="Valider"/>

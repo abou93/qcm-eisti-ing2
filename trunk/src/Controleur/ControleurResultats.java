@@ -76,7 +76,7 @@ public class ControleurResultats extends HttpServlet {
 						if (s[i].endsWith(".xml")==false) continue; // ce n'est pas un fichier xml (svn ou autre)
 						liste.add(s[i].substring(0,s[i].length()-4));
 					}
-					request.getSession().setAttribute("fin", true);
+					request.getSession().setAttribute("choixUser", user);
 				}
 				request.getSession().setAttribute("liste", liste);
 				
@@ -85,7 +85,7 @@ public class ControleurResultats extends HttpServlet {
 			}
 			// on a fini les choix, on affiche les resultats
 			else {
-				String nomFichierXML = (String) request.getSession().getAttribute("choix");
+				String nomFichierXML = (String) request.getParameter("choix");
 				System.out.println("TODO @ STITCH");
 				System.out.println("fichier à afficher : " + nomFichierXML);
 				RequestDispatcher dispatch = request.getRequestDispatcher("AffichageResultats.jsp");
@@ -118,14 +118,14 @@ public class ControleurResultats extends HttpServlet {
 				if (s[i].endsWith(".xml")==false) continue; // ce n'est pas un fichier xml (svn ou autre)
 				liste.add(s[i].substring(0,s[i].length()-4));
 			}
-			request.getSession().setAttribute("fin", true);
+			request.getSession().setAttribute("choixUser", user);
 			request.getSession().setAttribute("liste", liste);
 			RequestDispatcher dispatch = request.getRequestDispatcher("AffichageResultats.jsp");
 			dispatch.forward(request, response);
 		}
 		// on a choisi le résultat
 		else {
-			String nomFichierXML = (String) request.getSession().getAttribute("choix");
+			String nomFichierXML = (String) request.getParameter("choix");
 			System.out.println("TODO @ STITCH");
 			System.out.println("fichier à afficher : " + nomFichierXML);
 			RequestDispatcher dispatch = request.getRequestDispatcher("AffichageResultats.jsp");
