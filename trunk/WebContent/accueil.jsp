@@ -52,16 +52,13 @@
 				</tr>
 			</table>
 		</form>
-		<form method="get" action="ControleurResultats">
+		<form <% if((Boolean) request.getSession().getAttribute("estProf")){%>method="get"
+		<%}else {%> method="post" <%}%> action="ControleurResultats">
 			<table>
 				<tr>
 					<td align="center">
-						<% if((Boolean) request.getSession().getAttribute("estProf")){%>
-							<input class="bouton" type="submit" name="VoirResultats" value="Voir les Résultats enregistrés"/>
-						<%	}
-						else {%>
-							<input class="bouton" type="submit" name="VoirResultats" value="Voir les Résultats enregistrés"/>
-						<%	}%>
+						<input class="bouton" type="submit" name="VoirResultats" value="Voir les Résultats enregistrés"/>
+
 					</td>
 				</tr>
 			</table>

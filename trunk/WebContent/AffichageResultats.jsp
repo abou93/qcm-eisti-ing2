@@ -8,24 +8,34 @@
 <style type="text/css">	<%@ include file="style.css" %>	</style>
 </head>
 <body>
-<h1>Choisissez les résultats que vous voulez afficher</h1>
 <%
-if (((ArrayList<String>) request.getSession().getAttribute("liste")).size() == 0) {
-	%>Aucun QCM n'a été réalisé jusqu'à présent.<%;}
+// On affiche les choix, ils ne sont pas finis
+if (request.getSession().getAttribute("fini") == null) {%>
+	<h1>Choisissez les résultats que vous voulez afficher</h1>
+	<%
+	if (((ArrayList<String>) request.getSession().getAttribute("liste")).size() == 0) {
+		%>Aucun QCM n'a été réalisé jusqu'à présent.<%;}
+	else {%>
+		<form <%if ((Boolean)request.getSession().getAttribute("estProf")) { %>method="get"
+		<%} else { %> method="post" <%} %> action="ControleurResultats">
+			<select name="choix">
+				<%
+				for (int i = 0; i < ((ArrayList<String>) request.getSession().getAttribute("liste")).size(); i++) {
+				%>
+				<option value="<%=((ArrayList<String>) request.getSession().getAttribute("liste")).get(i) %>"><%=((ArrayList<String>) request.getSession().getAttribute("liste")).get(i) %></option>
+				<%} %>
+			</select>
+			<br/><br/>
+			<input class="bouton" type="submit" name="valider" value="Valider"/>
+		</form>
+	<%}
+}
+// On affiche le résultat
 else {%>
-	<form method="post" action="ControleurResultats">
-		<select name="choix">
-			<%
-			for (int i = 0; i < ((ArrayList<String>) request.getSession().getAttribute("liste")).size(); i++) {
-			%>
-			<option value="<%=((ArrayList<String>) request.getSession().getAttribute("liste")).get(i) %>"><%=((ArrayList<String>) request.getSession().getAttribute("liste")).get(i) %></option>
-			<%} %>
-		</select>
-		<br/><br/>
-		<input class="bouton" type="submit" name="valider" value="Valider"/>
-	</form>
-<%}
-%>
+	TODO @ STITCH
+<%} %>
+
+
 <br/><br/>
 <a href="accueil.jsp">Accueil</a>
 </body>
