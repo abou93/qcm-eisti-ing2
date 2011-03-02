@@ -56,7 +56,7 @@ public class ControleurListeQCMs extends HttpServlet {
 			{
 				try{
 					urlData = context.getRealPath("/Data/QCMs/"+qcm+".xml");
-					m.initialiser(qcm, urlData);
+					m.chargerQCM(qcm, urlData);
 					request.getSession().setAttribute("m", m);
 					RequestDispatcher dispatch = request.getRequestDispatcher("AffichageQCM.jsp");
 					dispatch.forward(request, response);

@@ -18,6 +18,7 @@ public class Modele
 {
 	private String QCMCourant;
 	private ArrayList<Cours> lesCours;
+	private QCM resultatCourant;
 	
 	public Modele(String urlData) {
         this.lesCours = new ArrayList<Cours>();
@@ -77,7 +78,7 @@ public class Modele
 		this.getQCMCourant().getQuestion(indexQ).getReponse(indexR).setSelect(v);
 	}
 	
-	public void initialiser (String qcmName, String urlData)
+	public void chargerQCM (String qcmName, String urlData)
 	{
         this.get(qcmName).clear();
     	Document doc;
@@ -145,6 +146,35 @@ public class Modele
 					this.getQCMCourant().getNom() + ".xml"); 
 			FileOutputStream fos = new FileOutputStream(f); 
 			sortie.output(doc, fos);
+		}
+		catch (Exception e){
+			System.out.println(e.toString());
+		}
+	}
+	
+	public void chargerResultat (String resultatName, String urlData)
+	{
+        this.resultatCourant.clear();
+        this.resultatCourant.setNom(this.getNomQCMCourant());
+    	Document doc;
+        SAXBuilder sxb = new SAXBuilder();
+		try{
+            doc = sxb.build(new File(urlData));
+            Element noeudQCMResultat = doc.getRootElement();
+            Element noeudDifficulte = noeudQCMResultat.getChild("difficulte");
+            this.resultatCourant.setDifficulte(Integer.parseInt(noeudDifficulte.getText()));
+            Element noeudScore = noeudQCMResultat.getChild("score");
+            this.resultatCourant.setScore(Integer.parseInt(noeudScore.getText()));
+            List<Element> lesNoeudsQuestion = noeudQCMResultat.getChildren("question");
+            for(int i=0 ; i<lesNoeudsQuestion.size() ; i++)
+            {
+            	this.resultatCourant.addQuestion(new Question(lesNoeudsQuestion.get(i).getChildText("expression")));
+                List<Element> lesNoeudsReponse = lesNoeudsQuestion.get(i).getChildren("reponse");
+                for(int j = 0; j < lesNoeudsReponse.size(); j++)
+                {
+                	this.resultatCourant.getQuestion(i).addReponse(new Reponse(lesNoeudsReponse.get(j).getText(), lesNoeudsReponse.get(j).getAttributeValue("value")));
+                }
+            }
 		}
 		catch (Exception e){
 			System.out.println(e.toString());
