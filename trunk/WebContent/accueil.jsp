@@ -58,7 +58,6 @@
 				<tr>
 					<td align="center">
 						<input class="bouton" type="submit" name="VoirResultats" value="Voir les Résultats enregistrés"/>
-
 					</td>
 				</tr>
 			</table>

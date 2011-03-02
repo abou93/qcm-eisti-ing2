@@ -32,7 +32,7 @@ public class ControleurResultats extends HttpServlet {
      */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-<<<<<<< .mine
+		// on n'a pas fini les choix d'utilisateur et de résultat
 		ServletContext context = getServletContext();
 		Modele m;
 		try{
@@ -40,9 +40,7 @@ public class ControleurResultats extends HttpServlet {
 			if ((Modele)request.getSession().getAttribute("m") == null)
 			{
 				m = new Modele(urlData);
-=======
-		// on n'a pas fini les choix d'utilisateur et de résultat
-		if (request.getSession().getAttribute("fini")==null) {
+		if (request.getParameter("fini")==null) {
 			ArrayList<String> liste = new ArrayList<String>();
 			/* Si on n'a pas choisi l'utilisateur dont on affiche les résultats */
 			if (request.getParameter("choix")==null) {
@@ -58,60 +56,8 @@ public class ControleurResultats extends HttpServlet {
 					if (UtilisateurManager.getUser(s[i]) == null) continue;
 					liste.add(s[i]);
 				}
->>>>>>> .r44
+
 			}
-<<<<<<< .mine
-			else
-			{
-				m = (Modele)request.getSession().getAttribute("m");
-			}
-			/* Si l'utilisateur est un prof on affiche les utilisateurs ... */
-			if ((Boolean)request.getSession().getAttribute("estProf")) {
-				String [] s = new File(getServletContext().getRealPath(File.separator + "Data" + 
-						File.separator + "Resultats")).list();
-				ArrayList<String> liste = new ArrayList<String>();
-				
-				/* Pour chaque dossier trouvé, on vérifie si son nom est bien
-				 * celui d'un utilisateur de la liste. Si c'est le cas on
-				 * l'ajoute à la liste que l'on enverra à la vue.
-				 */
-				for (int i = 0; i < s.length; i++) {
-					if (UtilisateurManager.getUser(s[i]) == null) continue;
-					liste.add(s[i]);
-				}
-				request.getSession().setAttribute("liste", liste);
-			}
-			/* Si l'utilisateur est un étudiant on affiche ses résultats */
-			else {
-				String urlUser = context.getRealPath(File.separator + "Data" +
-						File.separator + "Resultats");
-				urlUser += File.separator + (String)request.getSession().getAttribute("user");
-				/* TODO urlUser contient l'adresse du dossier de reponses de 
-				 * l'utilisateur. Il faut parser le fichier Resultats.xml pour
-				 * pouvoir le mettre dans un objet, et envoyer cet objet à la
-				 * vue pour affichage et sélection du résultat.
-				 */
-				/*
-				 * Pour les tests avant la mise en place du parsage, on utilise
-				 * une liste contenant le nom des fichiers xml contenus dans le
-				 * dossier.
-				 */
-				String [] s = new File(getServletContext().getRealPath(File.separator + "Data" + 
-						File.separator + "Resultats" + File.separator + 
-						request.getSession().getAttribute("user"))).list();
-				ArrayList<String> liste = new ArrayList<String>();
-				
-				for (int i = 0; i < s.length; i++) {
-					if (s[i].endsWith(".xml")==false) continue;
-					liste.add(s[i]);
-				}
-				request.getSession().setAttribute("liste", liste);
-				/* Fin du code utilisé pour le test */
-			}
-			
-			RequestDispatcher dispatch = request.getRequestDispatcher("AffichageResultats.jsp");
-			dispatch.forward(request, response);
-=======
 			/* Si on a déjà choisi l'utilisateur et qu'on veut le choix du résultat */
 			else {
 				String user = request.getParameter("choix");
@@ -123,8 +69,9 @@ public class ControleurResultats extends HttpServlet {
 				for (int i = 0; i < s.length; i++) {
 					if (s[i].equals("Resultats.xml")) continue; // c'est la banque de résultats
 					if (s[i].endsWith(".xml")==false) continue; // ce n'est pas un fichier xml (svn ou autre)
-					liste.add(s[i].substring(9,s[i].length()-4));
+					liste.add(s[i].substring(0,s[i].length()-4));
 				}
+				request.getSession().setAttribute("fin", true);
 			}
 			request.getSession().setAttribute("liste", liste);
 			
@@ -138,18 +85,8 @@ public class ControleurResultats extends HttpServlet {
 			System.out.println("fichier à afficher : " + nomFichierXML);
 			RequestDispatcher dispatch = request.getRequestDispatcher("AffichageResultats.jsp");
 			dispatch.forward(request, response);
-
-			request.getSession().setAttribute("liste", liste);
-			/* Fin du code utilisé pour le test */
->>>>>>> .r44
 		}
-<<<<<<< .mine
-		catch (Exception e){
-			System.out.println(e.toString());
-		}
-=======
 
->>>>>>> .r44
 	}
 
 	/**
@@ -160,7 +97,7 @@ public class ControleurResultats extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// on n'a pas choisi le résultat
-		if (request.getSession().getAttribute("fini")== null) {
+		if (request.getParameter("fini")== null) {
 			ArrayList<String> liste = new ArrayList<String>();
 			String user = (String)request.getSession().getAttribute("user");
 			String [] s = new File(getServletContext().getRealPath(File.separator + "Data" + 
@@ -170,8 +107,9 @@ public class ControleurResultats extends HttpServlet {
 			for (int i = 0; i < s.length; i++) {
 				if (s[i].equals("Resultats.xml")) continue; // c'est la banque de résultats
 				if (s[i].endsWith(".xml")==false) continue; // ce n'est pas un fichier xml (svn ou autre)
-				liste.add(s[i].substring(9,s[i].length()-4));
+				liste.add(s[i].substring(0,s[i].length()-4));
 			}
+			request.getSession().setAttribute("fin", true);
 			request.getSession().setAttribute("liste", liste);
 			RequestDispatcher dispatch = request.getRequestDispatcher("AffichageResultats.jsp");
 			dispatch.forward(request, response);

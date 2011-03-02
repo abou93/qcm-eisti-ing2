@@ -10,7 +10,7 @@
 <body>
 <%
 // On affiche les choix, ils ne sont pas finis
-if (request.getSession().getAttribute("fini") == null) {%>
+if (request.getParameter("fini") == null) {%>
 	<h1>Choisissez les résultats que vous voulez afficher</h1>
 	<%
 	if (((ArrayList<String>) request.getSession().getAttribute("liste")).size() == 0) {
@@ -25,6 +25,9 @@ if (request.getSession().getAttribute("fini") == null) {%>
 				<option value="<%=((ArrayList<String>) request.getSession().getAttribute("liste")).get(i) %>"><%=((ArrayList<String>) request.getSession().getAttribute("liste")).get(i) %></option>
 				<%} %>
 			</select>
+			<%if (request.getSession().getAttribute("fin") != null) {%>
+				<input type="text" name="fini" value="fini"/>
+			<%} %>
 			<br/><br/>
 			<input class="bouton" type="submit" name="valider" value="Valider"/>
 		</form>
@@ -32,10 +35,9 @@ if (request.getSession().getAttribute("fini") == null) {%>
 }
 // On affiche le résultat
 else {%>
+<%=request.getSession().getAttribute("fini") %>
 	TODO @ STITCH
 <%} %>
-
-
 <br/><br/>
 <a href="accueil.jsp">Accueil</a>
 </body>
