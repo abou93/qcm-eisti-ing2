@@ -63,7 +63,7 @@
 			
 			function Decompte()	{
 				//((valeur > 0)&&( ! window.document.getElementById('MaCheck').checked)) ? (window.document.getElementById('compteur').value = --valeur) : (window.clearInterval(x));
-				if ((valeur > 0)&&(!window.document.getElementById('MaCheck').checked)) {
+				if (valeur > 0) {
 					window.document.getElementById('compteur').value = --valeur;
 				}
 				else if (valeur == 0) {
@@ -92,34 +92,15 @@
 	</head>
 	
 	<body>
-	
-		<table>
-		<tr><td>Temps restant : </td>
-		<td><input type="text" name="compteur" id="compteur" size="2" readonly="readonly"></td></tr>
-		<!-- <tr><td>Pause : </td><td>
-		<input type="checkbox" name="MaCheck" id="MaCheck" value="Pause" onclick="Relance(this);">
-		</td><td>
-		<input type="button" value="Recommencer" onclick="ResetCompteur(); return false;">
-		</td></tr> -->
-		</table>
-		
-	
-		<table>
-		<tr><td>Temps restant : </td>
-		<td><input type="text" name="compteur" id="compteur" size="2" readonly="readonly"></td></tr>
-		<tr><td>Pause : </td><td>
-		<input type="checkbox" name="MaCheck" id="MaCheck" value="Pause" onclick="Relance(this);">
-		</td><td>
-		<input type="button" value="Recommencer" onclick="ResetCompteur(); return false;">
-		</td></tr>
-		</table>
-		
-		
 		<h1 align="center">Répondez aux questions !!! =)</h1>
 		<br/>
-		<br/>
-		<br/>
 		<form method="post" action="ControleurSelectQCM">
+			<table>
+				<tr><td>Temps restant : </td>
+				<td><input type="text" name="temps" id="compteur" size="2" readonly="readonly"></td></tr>
+			</table>
+		<br/>
+		<br/>
 		<%
 			for (int i = 0; i < ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getNbQuestions(); i++)
 			{

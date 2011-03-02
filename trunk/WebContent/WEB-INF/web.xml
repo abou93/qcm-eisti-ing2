@@ -37,7 +37,7 @@
   <filter>
     <display-name>AuthentificationFilter</display-name>
     <filter-name>AuthentificationFilter</filter-name>
-    <filter-class>filtres.AuthentificationFilter</filter-class>
+    <filter-class>Filtres.AuthentificationFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>AuthentificationFilter</filter-name>

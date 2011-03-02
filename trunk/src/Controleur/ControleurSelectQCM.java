@@ -29,6 +29,7 @@ public class ControleurSelectQCM extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String tps = request.getParameter("temps");
+		System.out.println(tps);
 		if (tps != null) {
 			if (!tps.equals("ecoule")) {
 					ServletContext context = getServletContext();
