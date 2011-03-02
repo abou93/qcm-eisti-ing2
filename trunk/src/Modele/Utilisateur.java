@@ -1,5 +1,7 @@
 package Modele;
 
+import java.io.File;
+
 public class Utilisateur {
 	private String login;
 	private String password;
@@ -9,7 +11,7 @@ public class Utilisateur {
 		this.login = log;
 		this.password = pwd;
 		this.professeur = prof;
-		UtilisateurManager.addUser(this);
+		UtilisateurManager.addUser(this); 
 	}
 	
 	public boolean estProf () {

@@ -1,5 +1,6 @@
 package Controleur;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.*;
@@ -49,7 +50,9 @@ public class ControleurResultQCM extends HttpServlet {
 			if(ordre.matches("Enregistrer"))
 			{
 				try{
-					urlData = context.getRealPath("/Data/Resultats/");
+					urlData = context.getRealPath(File.separator+"Data"+File.separator+"Resultats"+File.separator);
+					System.out.println(request.getSession().getAttribute("user"));
+					urlData += File.separator + request.getSession().getAttribute("user") + File.separator;
 					m.enregistrerResultat(urlData);
 					request.getSession().setAttribute("m", m);
 					RequestDispatcher dispatch = request.getRequestDispatcher("ControleurListeQCMs");

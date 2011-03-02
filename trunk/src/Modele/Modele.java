@@ -20,7 +20,6 @@ public class Modele
 	private ArrayList<Cours> lesCours;
 	
 	public Modele(String urlData) {
-		//this.QCMCourant = null;
         this.lesCours = new ArrayList<Cours>();
         
     	Document doc;
@@ -138,8 +137,14 @@ public class Modele
 				}
 				noeudRacine.addContent(noeudQuestion);
 			}
-			System.out.println(urlData);
-			sortie.output(doc, new FileOutputStream(urlData + File.separator + "Resultat_" + this.getQCMCourant().getNom() + ".xml"));
+			File dir = new File(urlData); 
+			System.out.println(dir.getAbsolutePath());
+			System.out.println("Mkdir = "+dir.mkdir());
+			File f = new File(dir.getAbsolutePath()+
+					File.separator + "Resultat_" + 
+					this.getQCMCourant().getNom() + ".xml"); 
+			FileOutputStream fos = new FileOutputStream(f); 
+			sortie.output(doc, fos);
 		}
 		catch (Exception e){
 			System.out.println(e.toString());
