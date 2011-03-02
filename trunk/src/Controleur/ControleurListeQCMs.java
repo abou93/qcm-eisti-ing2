@@ -20,9 +20,9 @@ public class ControleurListeQCMs extends HttpServlet {
         super();
         if (!init) {
 			init = true;
-			new Utilisateur("rachou", "123", true);
+			new Utilisateur("rachou", "123", false);
 			new Utilisateur("stitch", "456", true);
-			new Utilisateur("michou", "789", false);
+			new Utilisateur("michou", "789", true);
 			new Utilisateur("fransou", "000", false);
 		}
     }
@@ -99,6 +99,7 @@ public class ControleurListeQCMs extends HttpServlet {
 			else {
 				if (!Sessions.estConnecte(request.getRequestedSessionId()))
 					Sessions.connecter(request.getRequestedSessionId());
+				request.getSession().setAttribute("estProf", UtilisateurManager.estProf(request.getParameter("login")));
 				request.getSession().setAttribute("user", request.getParameter("login"));
 				doGet(request, response);
 			}

@@ -61,5 +61,18 @@
 				</tr>
 			</table>
 		</form>
+		
+		
+		<% if((Boolean) request.getSession().getAttribute("estProf")){%>
+			<form method="get" action="ControleurResultats">
+				<table>
+				<tr>
+				<td align="center">
+					<input class="bouton" type="submit" name="VoirResultats" value="Voir les Résultats enregistrés"/>
+				</td>
+				</tr>
+				</table>
+			</form>
+		<%	}%>
 	</body>
 </html>
