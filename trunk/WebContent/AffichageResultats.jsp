@@ -11,10 +11,10 @@
 <h1>Choisissez les résultats que vous voulez afficher</h1>
 <%
 if (((ArrayList<String>) request.getSession().getAttribute("liste")).size() == 0) {
-	%>Pas d'utilisateurs<%;}
+	%>Aucun QCM n'a été réalisé jusqu'à présent.<%;}
 else {%>
 	<form method="post" action="ControleurResultats">
-		<select name="sexe">
+		<select name="choix">
 			<%
 			for (int i = 0; i < ((ArrayList<String>) request.getSession().getAttribute("liste")).size(); i++) {
 			%>
@@ -22,7 +22,7 @@ else {%>
 			<%} %>
 		</select>
 		<br/><br/>
-		<input class="bouton" type="submit" name="choix" value="Valider"/>
+		<input class="bouton" type="submit" name="valider" value="Valider"/>
 	</form>
 <%}
 %>

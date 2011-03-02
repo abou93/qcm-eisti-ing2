@@ -29,29 +29,51 @@ public class ControleurResultats extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		System.out.println("coucou !!");
-		String [] s;
-		ArrayList<String> liste = new ArrayList<String> ();
+		/* Si l'utilisateur est un prof on affiche les utilisateurs ... */
 		if ((Boolean)request.getSession().getAttribute("estProf")) {
-			System.out.println("c'est un prof, on affiche la liste des utilisateurs");
-			s = new File(getServletContext().getRealPath(File.separator + "Data" + 
+			String [] s = new File(getServletContext().getRealPath(File.separator + "Data" + 
 					File.separator + "Resultats")).list();
+			ArrayList<String> liste = new ArrayList<String>();
+			
+			/* Pour chaque dossier trouvé, on vérifie si son nom est bien
+			 * celui d'un utilisateur de la liste. Si c'est le cas on
+			 * l'ajoute à la liste que l'on enverra à la vue.
+			 */
 			for (int i = 0; i < s.length; i++) {
 				if (UtilisateurManager.getUser(s[i]) == null) continue;
 				liste.add(s[i]);
-				//System.out.println(s[i]);
 			}
+			request.getSession().setAttribute("liste", liste);
 		}
+		/* Si l'utilisateur est un étudiant on affiche ses résultats */
 		else {
-			System.out.println("c'est un étudiant, on affiche la liste des QCM");
-			s = new File(getServletContext().getRealPath(File.separator + "Data" + 
+			ServletContext context = getServletContext();
+			String urlUser = context.getRealPath(File.separator + "Data" +
+					File.separator + "Resultats");
+			urlUser += File.separator + (String)request.getSession().getAttribute("user");
+			/* TODO urlUser contient l'adresse du dossier de reponses de 
+			 * l'utilisateur. Il faut parser le fichier Resultats.xml pour
+			 * pouvoir le mettre dans un objet, et envoyer cet objet à la
+			 * vue pour affichage et sélection du résultat.
+			 */
+			/*
+			 * Pour les tests avant la mise en place du parsage, on utilise
+			 * une liste contenant le nom des fichiers xml contenus dans le
+			 * dossier.
+			 */
+			String [] s = new File(getServletContext().getRealPath(File.separator + "Data" + 
 					File.separator + "Resultats" + File.separator + 
 					request.getSession().getAttribute("user"))).list();
+			ArrayList<String> liste = new ArrayList<String>();
+			
 			for (int i = 0; i < s.length; i++) {
+				if (s[i].endsWith(".xml")==false) continue;
 				liste.add(s[i]);
 			}
+			request.getSession().setAttribute("liste", liste);
+			/* Fin du code utilisé pour le test */
 		}
-		request.getSession().setAttribute("liste", liste);
+		
 		RequestDispatcher dispatch = request.getRequestDispatcher("AffichageResultats.jsp");
 		dispatch.forward(request, response);
 	}
@@ -60,8 +82,18 @@ public class ControleurResultats extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("coucou");
+		/* Si c'est un prof et que "prof", on vient d'afficher les étudiants, il faut
+		 * afficher les résultats pour que le prof choisisse */
+		if (((Boolean)request.getSession().getAttribute("estProf")) && (request.getSession().getAttribute("etuTrouve") == null)) {
+			// 
+		}
+		/* Sinon, on doit afficher le résultat sélectionné */
+		else {
+			
+		}
+		
+		String urlFicUser = (String)request.getSession().getAttribute("choix");
+		System.out.println(urlFicUser);
 	}
 
 }

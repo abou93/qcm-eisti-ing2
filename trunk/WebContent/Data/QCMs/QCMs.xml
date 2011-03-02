@@ -4,12 +4,10 @@
 		<qcm>
 			<name-qcm>DROIT1</name-qcm>
 			<lvl-qcm>1</lvl-qcm>
-			<url-qcm>/QCMs/DROIT1.xml</url-qcm>
 		</qcm>
 		<qcm>
 			<name-qcm>DROIT4</name-qcm>
 			<lvl-qcm>4</lvl-qcm>
-			<url-qcm>/QCMs/DROIT4.xml</url-qcm>
 		</qcm>
 	</cours>
 	<cours name="html">

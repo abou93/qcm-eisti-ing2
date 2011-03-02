@@ -52,6 +52,20 @@
 				</tr>
 			</table>
 		</form>
+		<form method="get" action="ControleurResultats">
+			<table>
+				<tr>
+					<td align="center">
+						<% if((Boolean) request.getSession().getAttribute("estProf")){%>
+							<input class="bouton" type="submit" name="VoirResultats" value="Voir les Résultats enregistrés"/>
+						<%	}
+						else {%>
+							<input class="bouton" type="submit" name="VoirResultats" value="Voir les Résultats enregistrés"/>
+						<%	}%>
+					</td>
+				</tr>
+			</table>
+		</form>
 		<form method="post" action="ControleurListeQCMs">
 			<table>
 				<tr>
@@ -59,21 +73,6 @@
 						<input class="bouton" type="submit" name="logout" value="Logout"/>
 					</td>
 				</tr>
-			</table>
-		</form>
-		
-		<form method="get" action="ControleurResultats">
-			<table>
-			<tr>
-			<td align="center">
-				<% if((Boolean) request.getSession().getAttribute("estProf")){%>
-					<input class="bouton" type="submit" name="VoirResultats" value="Voir les Résultats enregistrés"/>
-				<%	}
-				else {%>
-					<input class="bouton" type="submit" name="VoirResultats" value="Voir les Résultats enregistrés"/>
-				<%	}%>
-			</td>
-			</tr>
 			</table>
 		</form>
 	</body>
