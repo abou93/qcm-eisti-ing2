@@ -17,16 +17,6 @@ public class Question {
 		this.reponses.add(rep);
 	}
 	
-	public ArrayList<Reponse> getBonnesReponses() {
-		ArrayList<Reponse> BonnesReponses = new ArrayList<Reponse>();
-		for(int i = 0; i < this.reponses.size(); i ++)
-		{
-			if(this.reponses.get(i).isTrue())
-				BonnesReponses.add(i, this.reponses.get(i));
-		}
-		return BonnesReponses;
-	}
-	
 	public void setExpression(String expression) {
 		this.expression = expression;
 	}
@@ -38,15 +28,29 @@ public class Question {
 		return this.reponses.get(i);
 	}
 	
-	public Reponse getBonneReponse(int i) {
-		return this.getBonnesReponses().get(i);
+	public ArrayList<Reponse> getLesReponses() {
+		return this.reponses;
 	}
 	
 	public int getNbReponses () {
 		return this.reponses.size();
 	}
 	
-	public int getNbBonnesReponses() {
-		return this.getBonnesReponses().size();
+	public boolean aRepondu() {
+		for (int i = 0; i < this.reponses.size(); i++)
+		{
+			if (this.reponses.get(i).isSelect() == true)
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean evaluerReponses() {
+		boolean correct = true;
+		for (int i = 0; i < this.reponses.size(); i++)
+		{
+			correct = correct && this.reponses.get(i).evaluate();
+		}
+		return correct;
 	}
 }

@@ -29,4 +29,10 @@ public class Reponse
 	public boolean isSelect() {
 		return this.select;
 	}
+	public boolean evaluate() {
+		if(this.select == this.valeur)
+			return true;
+		else
+			return false;
+	}
 }

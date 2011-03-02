@@ -35,7 +35,7 @@ public class ControleurListeQCMs extends HttpServlet {
 		ServletContext context = getServletContext();
 		Modele m;
 		try{
-			String urlData = context.getRealPath("/QCMs/QCMs.xml");
+			String urlData = context.getRealPath("/Data/QCMs/QCMs.xml");
 			if ((Modele)request.getSession().getAttribute("m") == null)
 			{
 				m = new Modele(urlData);
@@ -47,7 +47,7 @@ public class ControleurListeQCMs extends HttpServlet {
 			String qcm = request.getParameter("QCM");
 			if(qcm == null || qcm.matches(""))
 			{
-				//m = new Modele(urlData);
+				m = new Modele(urlData);
 				request.getSession().setAttribute("m", m);
 				RequestDispatcher dispatch = request.getRequestDispatcher("accueil.jsp");
 				dispatch.forward(request, response);
@@ -55,7 +55,7 @@ public class ControleurListeQCMs extends HttpServlet {
 			else
 			{
 				try{
-					urlData = context.getRealPath("/QCMs/"+qcm+".xml");
+					urlData = context.getRealPath("/Data/QCMs/"+qcm+".xml");
 					m.initialiser(qcm, urlData);
 					request.getSession().setAttribute("m", m);
 					RequestDispatcher dispatch = request.getRequestDispatcher("AffichageQCM.jsp");

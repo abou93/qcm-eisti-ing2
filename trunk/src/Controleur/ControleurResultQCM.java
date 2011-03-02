@@ -29,7 +29,7 @@ public class ControleurResultQCM extends HttpServlet {
 		ServletContext context = getServletContext();
 		Modele m;
 		try{
-			String urlData = context.getRealPath("/QCMs/QCMs.xml");
+			String urlData = context.getRealPath("/Data/QCMs/QCMs.xml");
 			if ((Modele)request.getSession().getAttribute("m") == null)
 			{
 				m = new Modele(urlData);
@@ -49,7 +49,7 @@ public class ControleurResultQCM extends HttpServlet {
 			if(ordre.matches("Enregistrer"))
 			{
 				try{
-					urlData = context.getRealPath("/QCMs/Resultat.xml");
+					urlData = context.getRealPath("/Data/Resultats/");
 					m.enregistrerResultat(urlData);
 					request.getSession().setAttribute("m", m);
 					RequestDispatcher dispatch = request.getRequestDispatcher("ControleurListeQCMs");

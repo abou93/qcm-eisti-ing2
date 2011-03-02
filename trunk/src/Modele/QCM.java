@@ -6,6 +6,7 @@ import java.util.*;
 public class QCM {
 	private String nom;
 	private int difficulte;
+	private int score;
 	private ArrayList<Question> lesQuestions;
 	
 	public QCM (String name, int lvl) {
@@ -38,6 +39,14 @@ public class QCM {
 	public void setNom (String n) {
 		this.nom = n;
 	}
+
+	public int getScore() {
+		return this.score;
+	}
+	
+	public void setScore(int score) {
+		this.score = score;
+	}
 	
 	public void clear(){
 		lesQuestions.clear();
@@ -53,5 +62,13 @@ public class QCM {
 	
 	public void setLesQuestions(ArrayList <Question> questions) {
 		this.lesQuestions = questions;
+	}
+	
+	public void evaluerScore() {
+		for (int i = 0; i < this.lesQuestions.size(); i++)
+		{
+			if (this.lesQuestions.get(i).evaluerReponses())
+				this.score++;
+		}
 	}
 }

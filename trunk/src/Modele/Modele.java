@@ -3,19 +3,25 @@ package Modele;
 import java.io.*;
 import java.util.*;
 
+import javax.xml.parsers.*;
+
 import org.jdom.*;
 import org.jdom.input.*;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
+import org.xml.sax.*;
+
+
+
 
 public class Modele
 {
 	private String QCMCourant;
 	private ArrayList<Cours> lesCours;
-	private ArrayList<Resultat> lesResultats;
 	
 	public Modele(String urlData) {
 		//this.QCMCourant = null;
         this.lesCours = new ArrayList<Cours>();
-        this.lesResultats = new ArrayList<Resultat>();
         
     	Document doc;
     	SAXBuilder sxb = new SAXBuilder();
@@ -61,33 +67,26 @@ public class Modele
 		return null;
 	}
 	
-	public Resultat getResultat(String name) {
-		for(int i = 0; i < this.lesResultats.size(); i++)
-		{
-			if(this.lesResultats.get(i).getQcmResultat().getNom().matches(name))
-				return this.lesResultats.get(i);
-		}
-		return null;
-	}
-	
-	
 	public QCM getQCMCourant() {
-		if(this.get(this.getNomQCMCourant()) == null)
+		if(this.get(this.QCMCourant) == null)
 			return null;
 		else
 			return this.get(this.getNomQCMCourant());
 	}
+
+	public void setReponse(int indexQ, int indexR, boolean v) {
+		this.getQCMCourant().getQuestion(indexQ).getReponse(indexR).setSelect(v);
+	}
 	
 	public void initialiser (String qcmName, String urlData)
-	{        
+	{
+        this.get(qcmName).clear();
     	Document doc;
         SAXBuilder sxb = new SAXBuilder();
 		try{
             doc = sxb.build(new File(urlData));
             Element noeudQCM = doc.getRootElement();
             List<Element> lesNoeudsQuestion = noeudQCM.getChildren("question");
-            
-            this.get(qcmName).clear();
             for(int i=0 ; i<lesNoeudsQuestion.size() ; i++)
             {
             	this.get(qcmName).addQuestion(new Question(lesNoeudsQuestion.get(i).getChildText("expression")));
@@ -104,32 +103,46 @@ public class Modele
 		this.QCMCourant = this.get(qcmName).getNom();
 	}
 	
-	public void addResultat (Resultat r)
-	{
-		this.lesResultats.add(r);
+	public void evaluerScoreQCM() {
+		this.getQCMCourant().evaluerScore();
 	}
 	
-	public void enregistrerResultat(String urlData)
+	public void enregistrerResultat(String urlData) throws ParserConfigurationException, SAXException, IOException
 	{
-    	Document doc;
-    	SAXBuilder sxb = new SAXBuilder();
+		Document doc;
+		XMLOutputter sortie;
 		try{
-            doc = sxb.build(new File(urlData));
-            Element noeudRacine = doc.getRootElement();
-            List<Element> lesNoeudsCours = noeudRacine.getChildren("cours");
-            for(int i=0 ; i<lesNoeudsCours.size() ; i++)
-            {
-            	this.lesCours.add(new Cours(lesNoeudsCours.get(i).getAttributeValue("name")));
-                List<Element> lesNoeudsQCM = lesNoeudsCours.get(i).getChildren("qcm");
-                for(int j=0 ; j<lesNoeudsQCM.size() ; j++)
-                {
-                	this.lesCours.get(i).getLesQCMs().add(new QCM(lesNoeudsQCM.get(j).getChildText("name-qcm"), Integer.parseInt(lesNoeudsQCM.get(j).getChildText("lvl-qcm"))));
-                }
-            }
+			sortie = new XMLOutputter(Format.getPrettyFormat());
+			Element noeudRacine = new Element("qcm-resultat");
+			doc = new Document(noeudRacine);
+			Element noeudScore = new Element("score");
+			noeudScore.setText(String.valueOf(this.getQCMCourant().getScore()));
+			noeudRacine.addContent(noeudScore);
+			for (int i = 0; i < this.getQCMCourant().getLesQuestions().size(); i++)
+			{
+				Element noeudQuestion = new Element("question");
+				for (int j = 0; j < this.getQCMCourant().getQuestion(i).getLesReponses().size(); j++)
+				{
+					Element noeudExpression = new Element("expression");
+					Element noeudReponse = new Element("reponse");
+					Attribute attributReponse;
+					if(this.getQCMCourant().getQuestion(i).getLesReponses().get(j).isSelect())
+					{
+						noeudExpression.setText(this.getQCMCourant().getQuestion(i).getExpression());
+						noeudQuestion.addContent(noeudExpression);
+						attributReponse = new Attribute("value", String.valueOf(this.getQCMCourant().getQuestion(i).getReponse(j).isTrue()));
+						noeudReponse.setAttribute(attributReponse);
+						noeudReponse.setText(this.getQCMCourant().getQuestion(i).getReponse(j).getExpression());
+						noeudQuestion.addContent(noeudReponse);
+					}
+				}
+				noeudRacine.addContent(noeudQuestion);
+			}
+			System.out.println(urlData);
+			sortie.output(doc, new FileOutputStream(urlData + "Resultat_" + this.getQCMCourant().getNom() + ".xml"));
 		}
 		catch (Exception e){
 			System.out.println(e.toString());
 		}
-		
 	}
 }

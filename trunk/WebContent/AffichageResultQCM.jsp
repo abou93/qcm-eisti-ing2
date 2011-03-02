@@ -14,86 +14,73 @@
 		<br/>
 		<br/>
 		<%
-			String reponse;
-			int nbBonnesReponses = 0;
-			boolean aRepondu = false;
-			boolean correct = true;
 			for (int i = 0; i < ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getNbQuestions(); i++)
 			{
-				aRepondu = false;
-				correct = true;
 			%>
 		<table>
 			<p class="question"> <%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getExpression() %> </p>
 			<%
-				for(int j = 0; j < ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getNbBonnesReponses(); j++)
+				for(int j = 0; j < ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getNbReponses(); j++)
 				{
-					if(((Modele)request.getSession().getAttribute("m")).getResultat(((Modele)request.getSession().getAttribute("m")).getNomQCMCourant()).getQcmResultat().getQuestion(i).getReponse(j).isSelect() == true
-					&& ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).isTrue() == true)
-						aRepondu = true;
-					if(((Modele)request.getSession().getAttribute("m")).getResultat(((Modele)request.getSession().getAttribute("m")).getNomQCMCourant()).getQcmResultat().getQuestion(i).getReponse(j).isSelect() == false
-					&& ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).isTrue() == true)
-						correct = false;
-					if(((Modele)request.getSession().getAttribute("m")).getResultat(((Modele)request.getSession().getAttribute("m")).getNomQCMCourant()).getQcmResultat().getQuestion(i).getReponse(j).isSelect() == true
-					&& ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).isTrue() == false)
+					if(((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).isSelect())
 					{
-						correct = false;
-						aRepondu = true;
-					}
-					System.out.print(((Modele)request.getSession().getAttribute("m")).getResultat(((Modele)request.getSession().getAttribute("m")).getNomQCMCourant()).getQcmResultat().getQuestion(i).getReponse(j).getExpression());
-					System.out.println(((Modele)request.getSession().getAttribute("m")).getResultat(((Modele)request.getSession().getAttribute("m")).getNomQCMCourant()).getQcmResultat().getQuestion(i).getReponse(j).isTrue());
-				}
-				System.out.println("correct: " + String.valueOf(correct));
-				System.out.println("a repondu: " + String.valueOf(aRepondu)); 
-				for(int j = 0; j < ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getNbBonnesReponses(); j++)
-				{
-					if(correct == true && aRepondu == true)
-					{
-						if(((Modele)request.getSession().getAttribute("m")).getResultat(((Modele)request.getSession().getAttribute("m")).getNomQCMCourant()).getQcmResultat().getQuestion(i).getReponse(j).isTrue() == true)
-						{
-						%>
-			<p class="vrai">
-						<%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getBonneReponse(j).getExpression() %>
-			</p>
-						<%
-						}
-					}
-					if(correct == false)
-					{
-						if(((Modele)request.getSession().getAttribute("m")).getResultat(((Modele)request.getSession().getAttribute("m")).getNomQCMCourant()).getQcmResultat().getQuestion(i).getReponse(j).isTrue() == true)
-						{
-						%>
-			<p class="faux"><%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getBonneReponse(j).getExpression() %>
-			</p>
-						<%
-						}
-					}
-				}
-				if(correct == true && aRepondu == true)
-				{	
-					nbBonnesReponses++;
 					%>
-			Bravo, vous avez bien répondu !!<br/>
-				<%
+			<p class="reponse">
+				<%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).getExpression() %>
+				<br/>
+			</p>	
+					<%		
+					}
 				}
-				if(correct == false && aRepondu == true)
+					%>
+			<br/>
+			<br/>
+					<%	
+				for(int j = 0; j < ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getNbReponses(); j++)
+				{
+					if(((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).isTrue())
+					{
+					%>
+			<p class="correction">
+				<%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).getExpression() %>
+				<br/>
+			</p>
+					<%
+					}
+				}
+				if(((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).evaluerReponses() && ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).aRepondu())
 				{
 				%>
-			Vous vous êtes trompé, retournez réviser... <br/>
+			<p class="vrai">
+				Bravo, vous avez bien répondu !!<br/>
+				<br/>
+			</p>
 				<%
 				}
-				if(correct == true && aRepondu == false)
+				if (!(((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).aRepondu()))
 				{
 				%>
-			Vous n'avez pas répondu à cette question... <br/>
+			<p class="faux">
+				Vous n'avez pas répondu à cette question... <br/>
+				<br/>
+			</p>
+				<%
+				}
+				else if (!(((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).evaluerReponses()))
+				{
+				%>
+			<p class="faux">
+				Vous vous êtes trompé, retournez réviser... <br/>
+				<br/>
+			</p>
 				<%
 				}
 			}
-				%>
+			%>
 		</table>
 		<br/>
 		<br/>
-			<%= "Vous avez réalisé ce QCM avec un total de " + nbBonnesReponses + " bonnes réponses sur " + ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getNbQuestions() + "." %>
+			<%= "Vous avez réalisé ce QCM avec un total de " + ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getScore() + " bonnes réponses sur " + ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getNbQuestions() + "." %>
 		<br/>
 		<br/>
 		<form method="get" action="ControleurResultQCM">
