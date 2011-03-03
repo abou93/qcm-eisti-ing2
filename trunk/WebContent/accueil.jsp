@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="Modele.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<%
@@ -11,8 +11,12 @@
 		<style type="text/css">	<%@ include file="style.css" %>	</style>
 	</head>
 	<body class="body">
-		<%@ page import="Modele.*" %>
 		<h1>Test QCM pour le projet AREL (Client EISTI)</h1>
+		<%
+		if (request.getSession().getAttribute("msgErr") != null) {
+			%><p class="faux"><%= request.getSession().getAttribute("msgErr")%></p><%
+		}
+		%>
 		<p>Pour vous entraîner avant le partiel, veuillez choisir un QCM</p>
 		<p>Attention ! Tous les QCMs se font en temps limité, le compte à rebours est lancé dés que vous selectionnez un QCM !</p>
 		<form method="get" action="ControleurListeQCMs">

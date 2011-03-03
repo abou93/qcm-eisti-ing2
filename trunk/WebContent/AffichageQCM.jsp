@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="Modele.*"%>
+    pageEncoding="ISO-8859-1" import="Modele.*" import="java.io.*" 
+    import="java.util.Date"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -9,7 +10,7 @@
 		
 		<!-- Script pour le compte à rebours -->
 		<script type="text/javascript">
-			var valeur_origine = 10;
+			var valeur_origine = 300;
 			
 			
 			var valeur = valeur_origine;
@@ -56,7 +57,7 @@
 		<form method="post" action="ControleurSelectQCM">
 			<table>
 				<tr><td>Temps restant : </td>
-				<td><input type="text" name="temps" id="compteur" size="2" readonly="readonly"></td></tr>
+				<td><input type="text" name="temps" id="compteur" size="2" ><!-- readonly="readonly"--></td></tr>
 			</table>
 		<br/>
 		<br/>
@@ -65,32 +66,21 @@
 			{
 			%>
 				<p class="question"> <%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getExpression() %> </p>
+				<table>
 				<%
 					for (int j = 0; j < ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getNbReponses(); j++)
-					{
-					%>
-			<table>
-				<tr>
-					<td class="choix">
-						<input type="checkbox" name= "<%= "q" +  i + "r" + j%>" value= "<%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).getExpression() %>" >
-						<%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).getExpression() %>
-					</td>
-				</tr>
-					<%
-					}
-					%>
-			</table>
-			<br/>
-			<%
-			}
-			%>
-			<table>
-				<tr>
-					<td align="center">
-						<input class="bouton" type="submit" name="ordre" value= "<%= ("Valider ").concat(((Modele)request.getSession().getAttribute("m")).getNomQCMCourant()) %>" />
-					</td>
-				</tr>
-			</table>
+					{%>
+					<tr>
+						<td class="choix">
+							<input type="checkbox" name= "<%= "q" +  i + "r" + j%>" value= "<%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).getExpression() %>" >
+							<%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).getExpression() %>
+						</td>
+					</tr>
+					<%}%>
+				</table>
+				<br/>
+			<%}%>
+			<input class="bouton" type="submit" name="ordre" value= "<%= ("Valider ").concat(((Modele)request.getSession().getAttribute("m")).getNomQCMCourant()) %>" />
 		</form>
 	</body>
 </html>

@@ -28,43 +28,76 @@ public class ControleurSelectQCM extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		// On récupère le temps écoulé dans une chaine de caractère
 		String tps = request.getParameter("temps");
-		System.out.println(tps);
+		// On vide éventuellement le(s) précédent(s) message(s) d'erreur
+		request.getSession().removeAttribute("msgErr");
+		long diff = -1;
 		if (tps != null) {
+			// s'il a été initialisé, on récupère le fichier temporaire dans lequel
+			// on a stocké la date (en milisecondes) de début du QCM
+			File tmp = (File)request.getSession().getAttribute("tmp");
+			if (tmp != null) {
+				try {
+					FileReader fin =new FileReader(tmp);
+					BufferedReader br = new BufferedReader(fin);
+					diff = (new Date()).getTime() - Long.parseLong(br.readLine());
+					diff = diff / 1000;
+					
+					br.close();
+					tmp.delete();
+				}
+				catch (Exception e) {
+					System.err.println("ERREUR !!! relancer l'application");
+					tmp.delete();
+				}
+				System.out.println("vous avez mis " + (300 - Integer.parseInt(tps)) + " secondes.");
+				System.out.println("l'ordinateur dit que vous avez mis " + 
+						String.valueOf(diff) + " secondes.");
+			}
 			if (!tps.equals("ecoule")) {
+				int temps = 300 - Integer.parseInt(tps);
+				if (temps == diff) {
 					ServletContext context = getServletContext();
 					Modele m;
-				try{
-					String urlData = context.getRealPath("/Data/QCMs/QCMs.xml");
-					if ((Modele)request.getSession().getAttribute("m") == null)
-					{
-						m = new Modele(urlData);
-					}
-					else
-					{
-						m = (Modele)request.getSession().getAttribute("m");
-					}
-					for (int i = 0; i < m.getQCMCourant().getNbQuestions(); i++)
-					{
-						for (int j = 0; j < m.getQCMCourant().getQuestion(i).getNbReponses(); j++)
+					try{
+						String urlData = context.getRealPath("/Data/QCMs/QCMs.xml");
+						if ((Modele)request.getSession().getAttribute("m") == null)
 						{
-							if (request.getParameter("q" + i + "r" + j) == null)
+							m = new Modele(urlData);
+						}
+						else
+						{
+							m = (Modele)request.getSession().getAttribute("m");
+						}
+						for (int i = 0; i < m.getQCMCourant().getNbQuestions(); i++)
+						{
+							for (int j = 0; j < m.getQCMCourant().getQuestion(i).getNbReponses(); j++)
 							{
-								m.setReponse(i, j, false);
-							}
-							else
-							{
-								if (!(request.getParameter("q" + i + "r" + j).matches("")))
-									m.setReponse(i, j, true);
+								if (request.getParameter("q" + i + "r" + j) == null)
+								{
+									m.setReponse(i, j, false);
+								}
+								else
+								{
+									if (!(request.getParameter("q" + i + "r" + j).matches("")))
+										m.setReponse(i, j, true);
+								}
 							}
 						}
+						m.evaluerScoreQCM();
+						request.getSession().setAttribute("m", m);
+						request.getRequestDispatcher("AffichageResultQCM.jsp").forward(request, response);
 					}
-					m.evaluerScoreQCM();
-					request.getSession().setAttribute("m", m);
-					request.getRequestDispatcher("AffichageResultQCM.jsp").forward(request, response);
+					catch (Exception e){
+						System.out.println(e.toString());
+					}
 				}
-				catch (Exception e){
-					System.out.println(e.toString());
+				else {
+					// L'utilisateur a triché !!!
+					request.getSession().setAttribute("msgErr", "Vous avez lamentablement " +
+							"essayé de tricher au précédent QCM. C'est minable.");
+					request.getRequestDispatcher("accueil.jsp").forward(request, response);
 				}
 			}
 		}

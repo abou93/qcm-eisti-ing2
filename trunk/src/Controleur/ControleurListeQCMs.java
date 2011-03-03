@@ -1,9 +1,22 @@
 package Controleur;
 
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import Modele.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import Modele.Modele;
+import Modele.Sessions;
+import Modele.Utilisateur;
+import Modele.UtilisateurManager;
 
 /**
  * Servlet implementation class controleurListeQCMs
@@ -34,6 +47,14 @@ public class ControleurListeQCMs extends HttpServlet {
 		// TODO Auto-generated method stub
 		ServletContext context = getServletContext();
 		Modele m;
+		/* On supprimer le fichier temporaire (si il a déjà été créé ici, c'est que
+		 * le temps a été entièrement écoulé)
+		 */
+		File tmp = (File)request.getSession().getAttribute("tmp");
+		if (tmp != null) {
+			tmp.delete();
+			request.getSession().removeAttribute("tmp");
+		}
 		try{
 			String urlData = context.getRealPath("/Data/QCMs/QCMs.xml");
 			if ((Modele)request.getSession().getAttribute("m") == null)
@@ -58,6 +79,16 @@ public class ControleurListeQCMs extends HttpServlet {
 					urlData = context.getRealPath("/Data/QCMs/"+qcm+".xml");
 					m.chargerQCM(qcm, urlData);
 					request.getSession().setAttribute("m", m);
+					// Création d'un fichier temporaire contenant l'heure d'affichage de la page
+					tmp = File.createTempFile("nom",".txt");
+					//tmp.deleteOnExit();
+					System.out.println("fichier tmp créé : " + tmp.getName());
+					FileWriter fout =new FileWriter(tmp);
+					Date date = new Date();
+					fout.write(String.valueOf(date.getTime()));
+					System.out.println(String.valueOf(date.getTime()) + " écrit dans le fichier");
+					fout.close();
+					request.getSession().setAttribute("tmp", tmp);
 					RequestDispatcher dispatch = request.getRequestDispatcher("AffichageQCM.jsp");
 					dispatch.forward(request, response);
 				}
@@ -99,6 +130,7 @@ public class ControleurListeQCMs extends HttpServlet {
 			else {
 				if (!Sessions.estConnecte(request.getRequestedSessionId()))
 					Sessions.connecter(request.getRequestedSessionId());
+				request.getSession().removeAttribute("msgErr");
 				request.getSession().setAttribute("estProf", UtilisateurManager.estProf(request.getParameter("login")));
 				request.getSession().setAttribute("user", request.getParameter("login"));
 				doGet(request, response);
@@ -118,6 +150,8 @@ public class ControleurListeQCMs extends HttpServlet {
 				request.getSession().removeAttribute("msgErr");
 				request.getSession().removeAttribute("liste");
 				request.getSession().removeAttribute("user");
+				// régénérer l'id de session
+				request.getSession().invalidate();
 			}
 			RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
 			dispatch.forward(request, response);
