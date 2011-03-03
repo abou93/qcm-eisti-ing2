@@ -22,7 +22,7 @@ public class Modele
 	
 	public Modele(String urlData) {
         this.lesCours = new ArrayList<Cours>();
-        
+        this.resultatCourant = new QCM("Resultat Vide", 0);
     	Document doc;
     	SAXBuilder sxb = new SAXBuilder();
 		try{
@@ -155,7 +155,7 @@ public class Modele
 	public void chargerResultat (String resultatName, String urlData)
 	{
         this.resultatCourant.clear();
-        this.resultatCourant.setNom(this.getNomQCMCourant());
+        this.resultatCourant.setNom(resultatName);
     	Document doc;
         SAXBuilder sxb = new SAXBuilder();
 		try{
@@ -180,4 +180,8 @@ public class Modele
 			System.out.println(e.toString());
 		}
 	}
+	public QCM getResultatCourant() {
+		return resultatCourant;
+	}
+	
 }

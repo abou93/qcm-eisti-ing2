@@ -86,8 +86,11 @@ public class ControleurResultats extends HttpServlet {
 			// on a fini les choix, on affiche les resultats
 			else {
 				String nomFichierXML = (String) request.getParameter("choix");
-				System.out.println("TODO @ STITCH");
-				System.out.println("fichier à afficher : " + nomFichierXML);
+				String nameUser = (String) request.getSession().getAttribute("choixUser");
+				String urlResult = context.getRealPath("/Data/Resultats/"+nameUser+"/"+nomFichierXML+".xml");
+				
+				m.chargerResultat(nomFichierXML, urlResult);
+				request.getSession().setAttribute("m", m);
 				RequestDispatcher dispatch = request.getRequestDispatcher("AffichageResultats.jsp");
 				dispatch.forward(request, response);
 			}
@@ -105,6 +108,17 @@ public class ControleurResultats extends HttpServlet {
 	 * doPost communique avec un utilisateur simple
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ServletContext context = getServletContext();
+		Modele m;
+		String urlData = context.getRealPath("/Data/QCMs/QCMs.xml");
+		if ((Modele)request.getSession().getAttribute("m") == null)
+		{
+			m = new Modele(urlData);
+		}
+		else
+		{
+			m = (Modele)request.getSession().getAttribute("m");
+		}
 		// on n'a pas choisi le résultat
 		if (request.getParameter("fini")== null) {
 			ArrayList<String> liste = new ArrayList<String>();
@@ -126,8 +140,10 @@ public class ControleurResultats extends HttpServlet {
 		// on a choisi le résultat
 		else {
 			String nomFichierXML = (String) request.getParameter("choix");
-			System.out.println("TODO @ STITCH");
-			System.out.println("fichier à afficher : " + nomFichierXML);
+			String nameUser = (String) request.getSession().getAttribute("choixUser");
+			String urlResult = context.getRealPath("/Data/Resultats/"+nameUser+"/"+nomFichierXML+".xml");
+			m.chargerResultat(nomFichierXML, urlResult);
+			request.getSession().setAttribute("m", m);
 			RequestDispatcher dispatch = request.getRequestDispatcher("AffichageResultats.jsp");
 			dispatch.forward(request, response);
 		}
