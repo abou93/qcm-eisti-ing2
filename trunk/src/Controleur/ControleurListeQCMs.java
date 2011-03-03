@@ -109,6 +109,14 @@ public class ControleurListeQCMs extends HttpServlet {
 			// Si la session est enregistrée on la supprime
 			if (Sessions.estConnecte(request.getRequestedSessionId())) {
 				Sessions.deconnecter(request.getRequestedSessionId());
+				// supprimer tous les attributs créés pendant une execution
+				request.getSession().removeAttribute("choixUser");
+				request.getSession().removeAttribute("fini");
+				request.getSession().removeAttribute("fin");
+				request.getSession().removeAttribute("m");
+				request.getSession().removeAttribute("estProf");
+				request.getSession().removeAttribute("msgErr");
+				request.getSession().removeAttribute("liste");
 				request.getSession().removeAttribute("user");
 			}
 			RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
