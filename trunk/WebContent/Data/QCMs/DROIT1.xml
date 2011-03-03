@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?> 
-<qcm>
+<qcm temps="240">
 	<question>
 		<expression>Le S.M.I.C. est :</expression>
 		<reponse value="false">Le salaire minimum de croissance.</reponse>

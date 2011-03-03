@@ -7,11 +7,10 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link href="style.css" type="text/css" rel="stylesheet" />
 		<title>QCM Arel de <%= ((Modele)request.getSession().getAttribute("m")).getNomQCMCourant() %></title>
-		
+
 		<!-- Script pour le compte à rebours -->
 		<script type="text/javascript">
-			var valeur_origine = 300;
-			
+			var valeur_origine = <%=((Modele)request.getSession().getAttribute("m")).getQCMCourant().getTemps() %>;
 			
 			var valeur = valeur_origine;
 			var x;
@@ -61,6 +60,7 @@
 			</table>
 		<br/>
 		<br/>
+		debug temps : 
 		<%
 			for (int i = 0; i < ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getNbQuestions(); i++)
 			{

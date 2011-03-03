@@ -51,13 +51,16 @@ public class ControleurSelectQCM extends HttpServlet {
 					System.err.println("ERREUR !!! relancer l'application");
 					tmp.delete();
 				}
-				System.out.println("vous avez mis " + (300 - Integer.parseInt(tps)) + " secondes.");
+				System.out.println("vous avez mis " + ((Integer)request.getSession().getAttribute("temps") - Integer.parseInt(tps)) + " secondes.");
 				System.out.println("l'ordinateur dit que vous avez mis " + 
 						String.valueOf(diff) + " secondes.");
 			}
 			if (!tps.equals("ecoule")) {
-				int temps = 300 - Integer.parseInt(tps);
-				if (temps == diff) {
+				int temps = (Integer)request.getSession().getAttribute("temps") - Integer.parseInt(tps);
+				request.getSession().removeAttribute("temps");
+				request.getSession().removeAttribute("tmp");
+				// on accepte un écart d'une seconde entre le temps annoncé et le temps réel
+				if (Math.abs(temps-diff) <= 1) {
 					ServletContext context = getServletContext();
 					Modele m;
 					try{

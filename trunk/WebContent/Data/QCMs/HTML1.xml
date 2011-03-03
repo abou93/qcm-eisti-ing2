@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<qcm>
+<qcm temps="120">
 	<question>
 		<expression>Quelle est la fonction permettant de creer un tableau ?</expression>
 		<reponse value="false">Un crayon et une regle</reponse>

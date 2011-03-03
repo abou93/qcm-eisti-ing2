@@ -7,6 +7,7 @@ public class QCM {
 	private String nom;
 	private int difficulte;
 	private int score;
+	private int temps;
 	private ArrayList<Question> lesQuestions;
 	
 	public QCM (String name, int lvl) {
@@ -70,5 +71,13 @@ public class QCM {
 			if (this.lesQuestions.get(i).evaluerReponses())
 				this.score++;
 		}
+	}
+	
+	public void setTemps (int tps) {
+		this.temps = tps;
+	}
+	
+	public int getTemps () {
+		return this.temps;
 	}
 }

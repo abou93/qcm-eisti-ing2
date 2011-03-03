@@ -87,6 +87,7 @@ public class Modele
             doc = sxb.build(new File(urlData));
             Element noeudQCM = doc.getRootElement();
             List<Element> lesNoeudsQuestion = noeudQCM.getChildren("question");
+            this.get(qcmName).setTemps(Integer.parseInt(noeudQCM.getAttributeValue("temps")));
             for(int i=0 ; i<lesNoeudsQuestion.size() ; i++)
             {
             	this.get(qcmName).addQuestion(new Question(lesNoeudsQuestion.get(i).getChildText("expression")));

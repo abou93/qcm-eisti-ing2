@@ -79,6 +79,7 @@ public class ControleurListeQCMs extends HttpServlet {
 					urlData = context.getRealPath("/Data/QCMs/"+qcm+".xml");
 					m.chargerQCM(qcm, urlData);
 					request.getSession().setAttribute("m", m);
+					request.getSession().setAttribute("temps", m.getQCMCourant().getTemps());
 					// Création d'un fichier temporaire contenant l'heure d'affichage de la page
 					tmp = File.createTempFile("nom",".txt");
 					//tmp.deleteOnExit();
@@ -149,6 +150,8 @@ public class ControleurListeQCMs extends HttpServlet {
 				request.getSession().removeAttribute("estProf");
 				request.getSession().removeAttribute("msgErr");
 				request.getSession().removeAttribute("liste");
+				request.getSession().removeAttribute("temps");
+				request.getSession().removeAttribute("tps");
 				request.getSession().removeAttribute("user");
 				// régénérer l'id de session
 				request.getSession().invalidate();
