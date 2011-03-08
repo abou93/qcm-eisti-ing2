@@ -87,6 +87,7 @@ public class ControleurResultats extends HttpServlet {
 			else {
 				String nomFichierXML = (String) request.getParameter("choix");
 				String nameUser = (String) request.getSession().getAttribute("choixUser");
+				request.getSession().removeAttribute("choixUser");
 				String urlResult = context.getRealPath("/Data/Resultats/"+nameUser+"/"+nomFichierXML+".xml");
 				
 				m.chargerResultat(nomFichierXML, urlResult);
