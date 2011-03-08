@@ -10,82 +10,52 @@
 <body>
 
 <%@ page import="Modele.*" %>
-<%
-// On affiche les choix, ils ne sont pas finis
-if (request.getParameter("fini") == null) {%>
-	<h1>Choisissez les résultats que vous voulez afficher</h1>
-	<%
-	if (((ArrayList<String>) request.getSession().getAttribute("liste")).size() == 0) {
-		%>Aucun QCM n'a été réalisé jusqu'à présent.<%;}
-	else {%>
-		<form <%if ((Boolean)request.getSession().getAttribute("estProf")) { %>method="get"
-		<%} else { %> method="post" <%} %> action="ControleurResultats">
-			<select name="choix">
-				<%
-				for (int i = 0; i < ((ArrayList<String>) request.getSession().getAttribute("liste")).size(); i++) {
-				%>
-				<option value="<%=((ArrayList<String>) request.getSession().getAttribute("liste")).get(i) %>"><%=((ArrayList<String>) request.getSession().getAttribute("liste")).get(i) %></option>
-				<%} %>
-			</select>
-			<%if (request.getSession().getAttribute("choixUser") != null) {%>
-				<input type="text" name="fini" value="<%=request.getSession().getAttribute("choixUser") %>"/>
+<h1>Choisissez les résultats que vous voulez afficher</h1>
+	
+<form <%if ((Boolean)request.getSession().getAttribute("estProf")) 
+		{ %>method="get"<%} 
+		else { %>method="post"<%} %> 
+action="ControleurResultats">
+	<h2> Liste des utilisateurs : </h2>
+	<%for (int i = 0; i < ((ArrayList<String>) request.getSession().getAttribute("listeUsers")).size(); i++) 
+	{ %>
+		<p class="more-user">
+			<button type="submit" name="choixUser" value="<%=((ArrayList<String>) request.getSession().getAttribute("listeUsers")).get(i) %>">+</button>
+			<%=((ArrayList<String>) request.getSession().getAttribute("listeUsers")).get(i) %>
+		</p>
+		
+		<%if ( request.getSession().getAttribute("choixUser")!=null && ((String)request.getSession().getAttribute("choixUser")).matches(((ArrayList<String>) request.getSession().getAttribute("listeUsers")).get(i)))
+		{%>
+			<%if( ((ArrayList<String>) request.getSession().getAttribute("liste")).size() == 0)
+			{%>
+				Aucun QCM.
 			<%} %>
-			<br/><br/>
-			<input class="bouton" type="submit" name="valider" value="Valider"/>
-		</form>
-	<%}
-}
-// On affiche le résultat
-else {%>
-	<h4>Réusltat de 
-	<%=request.getSession().getAttribute("choixUser") %> 
-	au QCM : 
-	<%=((Modele)request.getSession().getAttribute("m")).getResultatCourant().getNom() %>
-	</h4>
-	Score = 
-	<%=((Modele)request.getSession().getAttribute("m")).getResultatCourant().getScore() %> 
-<%-- <%@ page import="Modele.*" %> --%>
-<!-- 		<h1 align="center">Réponse aux questions !!! =)</h1> -->
-<!-- 		<br/> -->
-<!-- 		<br/> -->
-<!-- 		<br/> -->
-<%-- 		<% --%>
-<!-- 			for (int i = 0; i < ((Modele)request.getSession().getAttribute("m")).getResultatCourant().getNbQuestions(); i++) -->
-<!-- 			{ -->
-<!-- 			%> -->
-<!-- 		<table> -->
-<%-- 			<p class="question"> Q <%=i%><%= ((Modele)request.getSession().getAttribute("m")).getResultatCourant().getQuestion(i).getExpression() %> </p> --%>
-<%-- 			<% --%>
-<!-- 				for(int j = 0; j < ((Modele)request.getSession().getAttribute("m")).getResultatCourant().getQuestion(i).getNbReponses(); j++) -->
-<!-- 				{ -->
-<!-- 					%> -->
-<!-- 				<p class="reponse"> -->
-<!-- 					Réponse donnée :  -->
-<%-- 					<%= ((Modele)request.getSession().getAttribute("m")).getResultatCourant().getQuestion(i).getReponse(j).getExpression() %> --%>
-<%-- 					<%if(((Modele)request.getSession().getAttribute("m")).getResultatCourant().getQuestion(i).getReponse(j).isTrue()) --%>
-<!-- 						{%> -->
-<!-- 						<p class="vrai"> -->
-<!-- 							Bonne Réponse -->
-<!-- 						</p> -->
-<%-- 						<%} --%>
-<!-- 					else {%> -->
-<!-- 					<p class="correction"> -->
-<!-- 						Réponse Fausse -->
-<!-- 					</p> -->
-<%-- 					<%} %> --%>
-<!-- 				</p>	 -->
-<%-- 			<% } %> --%>
-<!-- 			<br/> -->
-<!-- 		</table> -->
-<%-- 		<% } %> --%>
-<!-- 		<br/> -->
-<!-- 		<br/> -->
-<%-- 		<%=request.getSession().getAttribute("choixUser") + " a réalisé(e) ce QCM avec un total de " + ((Modele)request.getSession().getAttribute("m")).getResultatCourant().getScore() + " bonnes réponses sur " + ((Modele)request.getSession().getAttribute("m")).getResultatCourant().getNbQuestions() + "." %> --%>
-<!-- 		<br/> -->
-<!-- 		<br/> -->
-
-
+			<%for(int j=0; j<((ArrayList<String>) request.getSession().getAttribute("liste")).size(); j++)
+			{%>
+				<p class="more-qcm">
+					<button type="submit" name="choix" value="<%=((ArrayList<String>) request.getSession().getAttribute("liste")).get(j) %>">+</button>
+					<%=((ArrayList<String>) request.getSession().getAttribute("liste")).get(j) %>
+				</p>
+				<% if ( request.getSession().getAttribute("choix")!=null && ((String)request.getSession().getAttribute("choix")).matches(((ArrayList<String>) request.getSession().getAttribute("liste")).get(j)) )
+				{%>
+					<p class="more-result">
+						<b>Score =	<%=((Modele)request.getSession().getAttribute("m")).getResultatCourant().getScore() %></b>
+						<br/>
+						<%for(int k=0 ; k<((Modele)request.getSession().getAttribute("m")).getResultatCourant().getNbQuestions() ; k++) 
+						{ %>			
+								Question n°<%=k+1%> - 
+								<%=((Modele)request.getSession().getAttribute("m")).getResultatCourant().getQuestion(k).getExpression() %>
+								<br/>
+								<%=((Modele)request.getSession().getAttribute("m")).getResultatCourant().getQuestion(k).getReponse(0).getExpression() %>
+								<br/>
+						<%} %>
+					</p>
+				<%} %>
+			<%} %>
+		<%} %>
 	<%} %>
+</form>
+
 <br/><br/>
 <a href="accueil.jsp">Accueil</a>
 </body>

@@ -162,8 +162,8 @@ public class Modele
 		try{
             doc = sxb.build(new File(urlData));
             Element noeudQCMResultat = doc.getRootElement();
-            Element noeudDifficulte = noeudQCMResultat.getChild("difficulte");
-            this.resultatCourant.setDifficulte(Integer.parseInt(noeudDifficulte.getText()));
+            //Element noeudDifficulte = noeudQCMResultat.getChild("difficulte");
+            //this.resultatCourant.setDifficulte(Integer.parseInt(noeudDifficulte.getText()));
             Element noeudScore = noeudQCMResultat.getChild("score");
             this.resultatCourant.setScore(Integer.parseInt(noeudScore.getText()));
             List<Element> lesNoeudsQuestion = noeudQCMResultat.getChildren("question");
@@ -178,6 +178,7 @@ public class Modele
             }
 		}
 		catch (Exception e){
+			System.out.println("Erreur lors du chargeùent du Resultat");
 			System.out.println(e.toString());
 		}
 	}

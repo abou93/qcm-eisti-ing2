@@ -11,6 +11,8 @@ public class Reponse
 	public Reponse(String expression, String valeur)
 	{
 		this.expression = expression;
+		this.expression=this.expression.replaceAll(">", "&gt;");
+		this.expression=this.expression.replaceAll("<", "&lt;");
 		if(valeur.matches("true"))
 			this.valeur = true;
 		else

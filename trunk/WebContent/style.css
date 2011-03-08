@@ -70,3 +70,15 @@ p.vrai{
 p.faux{
 	color:red;
 }
+
+p.more-user{
+	padding-left:50px;
+}
+p.more-qcm{
+	padding-left:70px;
+}
+p.more-result{
+	padding-left:100px;
+}
+
+}

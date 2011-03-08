@@ -45,56 +45,69 @@ public class ControleurResultats extends HttpServlet {
 			{
 				m = (Modele)request.getSession().getAttribute("m");
 			}
-			if (request.getParameter("fini")==null)
-			{
+				
+			/* Si on n'a pas choisi l'utilisateur dont on veut afficher les résultats */
+			if (request.getParameter("choixUser")==null) {
 				ArrayList<String> liste = new ArrayList<String>();
-				/* Si on n'a pas choisi l'utilisateur dont on affiche les résultats */
-				if (request.getParameter("choix")==null) {
-					/* Permet de lister le contenu du dossier */
-					String [] s = new File(getServletContext().getRealPath(File.separator + "Data" + 
-							File.separator + "Resultats")).list();
-					
-					/* Pour chaque dossier trouvé, on vérifie si son nom est bien
-					 * celui d'un utilisateur de la liste. Si c'est le cas on
-					 * l'ajoute à la liste que l'on enverra à la vue.
-					 */
-					for (int i = 0; i < s.length; i++) {
-						if (UtilisateurManager.getUser(s[i]) == null) continue;
-						liste.add(s[i]);
-					}
-				}
-				/* Si on a déjà choisi l'utilisateur et qu'on veut le choix du résultat */
-				else {
-					String user = request.getParameter("choix");
-					String [] s = new File(getServletContext().getRealPath(File.separator + "Data" + 
-							File.separator + "Resultats" + File.separator + user)).list();
-					
-					/* On transforme le tableau en liste
-					 */
-					for (int i = 0; i < s.length; i++) {
-						if (s[i].equals("Resultats.xml")) continue; // c'est la banque de résultats
-						if (s[i].endsWith(".xml")==false) continue; // ce n'est pas un fichier xml (svn ou autre)
-						liste.add(s[i].substring(0,s[i].length()-4));
-					}
-					request.getSession().setAttribute("choixUser", user);
-				}
-				request.getSession().setAttribute("liste", liste);
+				/* Permet de lister le contenu du dossier */
+				String [] s = new File(getServletContext().getRealPath(File.separator + "Data" + 
+						File.separator + "Resultats")).list();
 				
-				RequestDispatcher dispatch = request.getRequestDispatcher("AffichageResultats.jsp");
-				dispatch.forward(request, response);
+				/* Pour chaque dossier trouvé, on vérifie si son nom est bien
+				 * celui d'un utilisateur de la liste. Si c'est le cas on
+				 * l'ajoute à la liste que l'on enverra à la vue.
+				 */
+				for (int i = 0; i < s.length; i++) {
+					if (UtilisateurManager.getUser(s[i]) == null) continue;
+					liste.add(s[i]);
+				}
+				request.getSession().setAttribute("listeUsers", liste);
 			}
-			// on a fini les choix, on affiche les resultats
+			/* Si on a déjà choisi l'utilisateur et qu'on veut le choix du résultat */
 			else {
-				String nomFichierXML = (String) request.getParameter("choix");
-				String nameUser = (String) request.getSession().getAttribute("choixUser");
-				request.getSession().removeAttribute("choixUser");
-				String urlResult = context.getRealPath("/Data/Resultats/"+nameUser+"/"+nomFichierXML+".xml");
+				ArrayList<String> liste = new ArrayList<String>();
+				String user = request.getParameter("choixUser");
+				String [] s = new File(getServletContext().getRealPath(File.separator + "Data" + 
+						File.separator + "Resultats" + File.separator + user)).list();
 				
-				m.chargerResultat(nomFichierXML, urlResult);
-				request.getSession().setAttribute("m", m);
-				RequestDispatcher dispatch = request.getRequestDispatcher("AffichageResultats.jsp");
-				dispatch.forward(request, response);
+				/* On transforme le tableau en liste
+				 */
+				for (int i = 0; i < s.length; i++) {
+					if (s[i].equals("Resultats.xml")) continue; // c'est la banque de résultats
+					if (s[i].endsWith(".xml")==false) continue; // ce n'est pas un fichier xml (svn ou autre)
+					liste.add(s[i].substring(0,s[i].length()-4));
+				}
+				request.getSession().setAttribute("choixUser", user);
+				request.getSession().setAttribute("liste", liste);
+				request.getSession().setAttribute("choix", null);
 			}
+			
+			if(request.getParameter("choix") != null)
+			{
+				/* On veut décocher le choix*/
+				if((request.getSession().getAttribute("choix")!=null)
+					&&
+					((String)request.getParameter("choix")).matches((String) request.getSession().getAttribute("choix")))
+				{
+					request.getSession().setAttribute("choix", null);
+				}
+				/* On veut afficher le choix*/
+				else
+				{
+					String nomFichierXML = (String) request.getParameter("choix");
+					String nameUser = (String) request.getSession().getAttribute("choixUser");
+					String urlResult = context.getRealPath("/Data/Resultats/"+nameUser+"/"+nomFichierXML+".xml");
+					m.chargerResultat(nomFichierXML, urlResult);
+					
+					request.getSession().setAttribute("choixUser", nameUser);
+					request.getSession().setAttribute("choix", nomFichierXML);
+					request.getSession().setAttribute("m", m);
+				}
+			}
+			
+			
+			RequestDispatcher dispatch = request.getRequestDispatcher("AffichageResultats.jsp");
+			dispatch.forward(request, response);
 		}
 		catch (Exception e){
 			System.out.println(e.toString());
@@ -121,9 +134,11 @@ public class ControleurResultats extends HttpServlet {
 			m = (Modele)request.getSession().getAttribute("m");
 		}
 		// on n'a pas choisi le résultat
-		if (request.getParameter("fini")== null) {
+		if (request.getParameter("choix")== null) {
+			ArrayList<String> listeUsers = new ArrayList<String>();
 			ArrayList<String> liste = new ArrayList<String>();
 			String user = (String)request.getSession().getAttribute("user");
+			listeUsers.add(user);
 			String [] s = new File(getServletContext().getRealPath(File.separator + "Data" + 
 					File.separator + "Resultats" + File.separator + user)).list();
 			
@@ -134,17 +149,31 @@ public class ControleurResultats extends HttpServlet {
 				liste.add(s[i].substring(0,s[i].length()-4));
 			}
 			request.getSession().setAttribute("choixUser", user);
+			request.getSession().setAttribute("choix", null);
 			request.getSession().setAttribute("liste", liste);
+			request.getSession().setAttribute("listeUsers", listeUsers);
 			RequestDispatcher dispatch = request.getRequestDispatcher("AffichageResultats.jsp");
 			dispatch.forward(request, response);
 		}
 		// on a choisi le résultat
 		else {
-			String nomFichierXML = (String) request.getParameter("choix");
-			String nameUser = (String) request.getSession().getAttribute("choixUser");
-			String urlResult = context.getRealPath("/Data/Resultats/"+nameUser+"/"+nomFichierXML+".xml");
-			m.chargerResultat(nomFichierXML, urlResult);
-			request.getSession().setAttribute("m", m);
+			if((request.getSession().getAttribute("choix")!=null)
+					&&
+					((String)request.getParameter("choix")).matches((String) request.getSession().getAttribute("choix")))
+			{
+				request.getSession().setAttribute("choix", null);
+			}
+			else
+			{
+				String nomFichierXML = (String) request.getParameter("choix");
+				String nameUser = (String) request.getSession().getAttribute("choixUser");
+				String urlResult = context.getRealPath("/Data/Resultats/"+nameUser+"/"+nomFichierXML+".xml");
+				m.chargerResultat(nomFichierXML, urlResult);
+				
+				request.getSession().setAttribute("choixUser", nameUser);
+				request.getSession().setAttribute("choix", nomFichierXML);
+				request.getSession().setAttribute("m", m);
+			}
 			RequestDispatcher dispatch = request.getRequestDispatcher("AffichageResultats.jsp");
 			dispatch.forward(request, response);
 		}

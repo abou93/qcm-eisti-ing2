@@ -10,6 +10,8 @@ public class Question {
 	
 	public Question (String expression) {
 		this.expression = expression;
+		this.expression=this.expression.replaceAll(">", "&gt;");
+		this.expression=this.expression.replaceAll("<", "&lt;");
 		this.reponses = new ArrayList<Reponse> ();
 	}
 	
