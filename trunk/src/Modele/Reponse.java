@@ -1,6 +1,5 @@
 package Modele;
 
-import org.jdom.Element;
 
 public class Reponse 
 {

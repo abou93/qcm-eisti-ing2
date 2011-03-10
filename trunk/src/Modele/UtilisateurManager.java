@@ -1,5 +1,6 @@
 package Modele;
 
+import java.util.List;
 import java.util.Vector;
 
 public abstract class UtilisateurManager {
@@ -20,7 +21,7 @@ public abstract class UtilisateurManager {
 	 */
 	public static Utilisateur getUser (String login) {
 		for (Utilisateur u : lesUtilisateurs) {
-			if (!(u.getLogin().equals(login))) continue;
+			if (!(u.getUserLogin().equals(login))) continue;
 			return u;
 		}
 		return null;
@@ -34,9 +35,16 @@ public abstract class UtilisateurManager {
 	 */
 	public static boolean estProf (String login) {
 		for (Utilisateur u : lesUtilisateurs) {
-			if (!(u.getLogin().equals(login))) continue;
+			if (!(u.getUserLogin().equals(login))) continue;
 			return u.estProf();
 		}
 		return false;
+	}
+
+	public static void creerListe(List<Utilisateur> result) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < result.size(); i++) {
+			lesUtilisateurs.add((Utilisateur)result.get(i));
+		}
 	}
 }

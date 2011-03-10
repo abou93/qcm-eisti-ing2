@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 10 mars 2011 17:57:40 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="Modele.Utilisateur" table="UTILISATEUR" schema="SYSTEM">
+        <id name="userId" type="big_decimal">
+            <column name="USER_ID" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="userLogin" type="string">
+            <column name="USER_LOGIN" length="50" />
+        </property>
+        <property name="userPassword" type="string">
+            <column name="USER_PASSWORD" length="50" />
+        </property>
+        <property name="userEstProf" type="big_decimal">
+            <column name="USER_EST_PROF" precision="22" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>
