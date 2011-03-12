@@ -142,11 +142,14 @@ public class ControleurResultats extends HttpServlet {
 			String [] s = new File(getServletContext().getRealPath(File.separator + "Data" + 
 					File.separator + "Resultats" + File.separator + user)).list();
 			
-			/* On transforme le tableau en liste */
-			for (int i = 0; i < s.length; i++) {
-				if (s[i].equals("Resultats.xml")) continue; // c'est la banque de résultats
-				if (s[i].endsWith(".xml")==false) continue; // ce n'est pas un fichier xml (svn ou autre)
-				liste.add(s[i].substring(0,s[i].length()-4));
+			if(s != null)
+			{
+				/* On transforme le tableau en liste */
+				for (int i = 0; i < s.length; i++) {
+					if (s[i].equals("Resultats.xml")) continue; // c'est la banque de résultats
+					if (s[i].endsWith(".xml")==false) continue; // ce n'est pas un fichier xml (svn ou autre)
+					liste.add(s[i].substring(0,s[i].length()-4));
+				}
 			}
 			request.getSession().setAttribute("choixUser", user);
 			request.getSession().setAttribute("choix", null);

@@ -10,7 +10,7 @@
 	<body class="body">
 		<h1>Test QCM pour le projet AREL (Client EISTI)</h1>
 		<%
-		if (request.getSession().getAttribute("msgErr") != null) {
+		if(request.getSession().getAttribute("msgErr") != null) {
 			%><p class="faux"><%= request.getSession().getAttribute("msgErr")%></p><%
 		}
 		%>

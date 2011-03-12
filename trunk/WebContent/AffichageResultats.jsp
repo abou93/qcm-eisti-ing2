@@ -28,7 +28,9 @@ action="ControleurResultats">
 		{%>
 			<%if( ((ArrayList<String>) request.getSession().getAttribute("liste")).size() == 0)
 			{%>
-				Aucun QCM.
+				<p class="more-qcm">
+					Aucun QCM.
+				</p>
 			<%} %>
 			<%for(int j=0; j<((ArrayList<String>) request.getSession().getAttribute("liste")).size(); j++)
 			{%>
