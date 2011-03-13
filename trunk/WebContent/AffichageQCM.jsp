@@ -14,9 +14,12 @@
 			
 			var valeur = valeur_origine;
 			var x;
+			
 			function Init()	{
 				window.document.getElementById('compteur').value=valeur;
 				x = window.setInterval('Decompte()', 1000);
+				window.document.getElementById('min').innerHTML = valeur/60;
+				window.document.getElementById('s').innerHTML = valeur%60;
 			}
 			
 			function Decompte()	{
@@ -24,6 +27,8 @@
 				//if ((valeur > 0)&&(!window.document.getElementById('MaCheck').checked)) {
 				if (valeur > 0) {
 					window.document.getElementById('compteur').value = --valeur;
+					window.document.getElementById('min').innerHTML = Math.floor(valeur/60);
+					window.document.getElementById('s').innerHTML = valeur%60;
 				}
 				else if (valeur == 0) {
 					//window.location.href = "http://www.nouveaulien.com";
@@ -54,13 +59,15 @@
 		<h1 align="center">Répondez aux questions !!! =)</h1>
 		<br/>
 		<form method="post" action="ControleurSelectQCM">
-			<table>
-				<tr><td>Temps restant : </td>
-				<td><input type="text" name="temps" id="compteur" size="2" ><!-- readonly="readonly"--></td></tr>
-			</table>
+			<fieldset>
+		      	<legend>Temps restant</legend>
+				<table>
+					<tr><td><span id="min" ></span>:<span id="s"></span></td>
+					<td><input type="HIDDEN" name="temps" id="compteur" size="2"  readonly="readonly"/></td></tr>
+				</table>
+			</fieldset>
 		<br/>
 		<br/>
-		debug temps : 
 		<%
 			for (int i = 0; i < ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getNbQuestions(); i++)
 			{
