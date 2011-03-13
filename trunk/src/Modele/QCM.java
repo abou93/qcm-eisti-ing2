@@ -1,6 +1,16 @@
 package Modele;
 
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.DOMBuilder;
+import org.jdom.input.SAXBuilder;
+import org.jdom.output.DOMOutputter;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 
 
 public class QCM {
@@ -9,6 +19,10 @@ public class QCM {
 	private int score;
 	private int temps;
 	private ArrayList<Question> lesQuestions;
+	private org.w3c.dom.Document xml;
+	private int id; /*Hibernate*/
+	
+	public QCM (){} /*Hibernate*/
 	
 	public QCM (String name, int lvl) {
 		this.nom = name;
@@ -79,5 +93,57 @@ public class QCM {
 	
 	public int getTemps () {
 		return this.temps;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public org.w3c.dom.Document getXml() {
+		return xml;
+	}
+
+	public void setXml(org.w3c.dom.Document xml) {
+		this.xml = xml;
+	}
+	
+	public String getXmlText()
+	{
+		DOMBuilder builder = new DOMBuilder();
+		org.jdom.Document documentJDOM = builder.build(xml);
+		XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+	    return sortie.outputString(documentJDOM);	
+	}
+	
+	public void readXML() {
+		DOMBuilder builder = new DOMBuilder();
+		org.jdom.Document doc = builder.build(this.xml);
+		
+		SAXBuilder sxb = new SAXBuilder();
+		try{
+            Element noeudQCM = doc.getRootElement();
+            List<Element> lesNoeudsQuestion = noeudQCM.getChildren("question");
+            this.setTemps(Integer.parseInt(noeudQCM.getAttributeValue("temps")));
+            for(int i=0 ; i<lesNoeudsQuestion.size() ; i++)
+            {
+            	this.addQuestion(new Question(lesNoeudsQuestion.get(i).getChildText("expression")));
+                List<Element> lesNoeudsReponse = lesNoeudsQuestion.get(i).getChildren("reponse");
+                for(int j = 0; j < lesNoeudsReponse.size(); j++)
+                {
+                	this.getQuestion(i).addReponse(new Reponse(lesNoeudsReponse.get(j).getText(), lesNoeudsReponse.get(j).getAttributeValue("value")));
+                }
+            }
+            
+            DOMOutputter domOutputter = new DOMOutputter();
+            this.xml = domOutputter.output(doc);
+		}
+		catch (Exception e){
+			System.out.println(e.toString());
+			System.out.println("Probleme lors de la lecture du xml du QCM");
+		}
 	}
 }

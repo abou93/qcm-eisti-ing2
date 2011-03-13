@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.classic.Session;
 
+import DAO.HibernateUtil;
 import Modele.Modele;
 import Modele.Sessions;
 import Modele.UtilisateurManager;
-import Util.HibernateUtil;
 
 /**
  * Servlet implementation class controleurListeQCMs
