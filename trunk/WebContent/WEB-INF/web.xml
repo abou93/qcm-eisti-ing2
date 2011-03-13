@@ -10,6 +10,10 @@
     <servlet-name>ControleurSelectQCM</servlet-name>
     <servlet-class>Controleur.ControleurSelectQCM</servlet-class>
   </servlet>
+  <servlet-mapping>
+    <servlet-name>ControleurSelectQCM</servlet-name>
+    <url-pattern>/ControleurSelectQCM</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>ControleurListeQCMs</display-name>
