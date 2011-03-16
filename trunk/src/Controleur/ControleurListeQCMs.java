@@ -79,7 +79,6 @@ public class ControleurListeQCMs extends HttpServlet {
 					int id = Integer.parseInt(request.getParameter("QCM"));
 					QCM q = DAOBase.getQCM(id);
 					q.readXML();
-					System.out.println("Nb questions = "+q.getNbQuestions());
 					request.setAttribute("QCM", q);
 					
 					request.getSession().setAttribute("temps", q.getTemps());
