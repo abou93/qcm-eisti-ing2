@@ -1,4 +1,7 @@
 DROP TABLE Utilisateur CASCADE CONSTRAINT;
+DROP TABLE Cours CASCADE CONSTRAINT;
+DROP TABLE Qcm CASCADE CONSTRAINT;
+
 
 CREATE TABLE Utilisateur (
 	user_id NUMBER CONSTRAINT pk_utilisateur PRIMARY KEY,
@@ -6,22 +9,12 @@ CREATE TABLE Utilisateur (
 	user_password VARCHAR2(50),
 	user_est_prof NUMBER);
 	
-INSERT INTO Utilisateur VALUES (1, 'rachou', '123', 0);
-INSERT INTO Utilisateur VALUES (2, 'stitch', '456', 1);
-INSERT INTO Utilisateur VALUES (3, 'michou', '789', 1);
-INSERT INTO Utilisateur VALUES (4, 'fransou', '000', 0);
-
-
-
-/*-------------------------------------------------*/
-
-DROP TABLE Cours CASCADE CONSTRAINT;
-DROP TABLE Qcm CASCADE CONSTRAINT;
 
 CREATE TABLE Qcm (
 	id NUMBER(4) CONSTRAINT pk_qcm PRIMARY KEY,
 	xml XMLTYPE,
-  id_cours NUMBER(4)
+	id_cours NUMBER(4),
+	id_user NUMBER
 	);
 	
 CREATE TABLE Cours (
@@ -29,10 +22,16 @@ CREATE TABLE Cours (
 	nom VARCHAR2(50)
 	);	
 	
-ALTER TABLE Qcm ADD CONSTRAINT fk_qcm_cours FOREIGN KEY (id_cours) REFERENCES Cours (id);  
+ALTER TABLE Qcm ADD CONSTRAINT fk_qcm_cours FOREIGN KEY (id_cours) REFERENCES Cours (id); 
+ALTER TABLE Qcm ADD CONSTRAINT fk_qcm_user FOREIGN KEY (id_user) REFERENCES Utilisateur (user_id);  
 
 
 /** Insertion **/
+INSERT INTO Utilisateur VALUES (0, 'cours', null, null);
+INSERT INTO Utilisateur VALUES (1, 'rachou', '123', 0);
+INSERT INTO Utilisateur VALUES (2, 'stitch', '456', 1);
+INSERT INTO Utilisateur VALUES (3, 'michou', '789', 1);
+INSERT INTO Utilisateur VALUES (4, 'fransou', '000', 0);
 INSERT INTO Cours (ID, NOM) VALUES ('1', 'Droit');
 INSERT INTO Cours (ID, NOM) VALUES ('2', 'HTML');
 
@@ -62,7 +61,7 @@ Insert into QCM values (1, XMLType(
 		<reponse value="true">Le Tribunal de Commerce.</reponse>
 		<reponse value="false">Le Conseil des Prud''hommes.</reponse>
 	</question>
-</qcm>'),1);
+</qcm>'),1,0);
 Insert into QCM values (2,XMLType(
 '<qcm temps="180" lvl="4" date="01/02/2011">
 	<question>
@@ -89,7 +88,7 @@ Insert into QCM values (2,XMLType(
 		<reponse value="false">Le remplacement des salaries grevistes.</reponse>
 		<reponse value="false">Des jours de conge supplementaires.</reponse>
 	</question>
-</qcm>'),1);
+</qcm>'),1,0);
 
 Insert into QCM values (3, XMLType(
 '<qcm temps="120" lvl="2" date="01/04/2011">
@@ -114,7 +113,7 @@ Insert into QCM values (3, XMLType(
 		<reponse value="false">Avec la balise <CAPTION> </CAPTION></reponse>
 		<reponse value="false">Avec la balise <TH> </TH></reponse>
 	</question>
-</qcm>'),2);
+</qcm>'),2,0);
 
 
 commit;

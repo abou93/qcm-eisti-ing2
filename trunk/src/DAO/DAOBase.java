@@ -11,8 +11,6 @@ import Modele.QCM;
 
 public class DAOBase 
 {	
-
-	@SuppressWarnings("unchecked")
 	public static List<Cours> getListCours()
 	{
 		Session session= HibernateUtil.getSessionFactory().openSession();
@@ -22,7 +20,6 @@ public class DAOBase
 		return result;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static List<QCM> getListQCM()
 	{
 		Session session= HibernateUtil.getSessionFactory().openSession();
@@ -32,7 +29,6 @@ public class DAOBase
 		return result;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static List<QCM> getMesQCMs(Cours c)
 	{
 		Session session= HibernateUtil.getSessionFactory().openSession();
@@ -49,5 +45,14 @@ public class DAOBase
 		QCM result = (QCM) session.createQuery("from QCM where id = "+id).uniqueResult();	
 		session.close();
 		return result;
+	}
+	
+	public static void saveResultat(QCM q, int id_user)
+	{
+		Session session= HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		session.save(q);
+		session.createQuery("update QCM set id_user = "+id_user+" where id = "+q.getId());
+		session.close();
 	}
 }

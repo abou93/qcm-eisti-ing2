@@ -28,7 +28,6 @@ import Modele.UtilisateurManager;
  */
 public class ControleurListeQCMs extends HttpServlet {
 	private static final long serialVersionUID = 2L;
-	private static boolean init = false; // pour savoir si on a créé les users de test
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -36,6 +35,16 @@ public class ControleurListeQCMs extends HttpServlet {
     public ControleurListeQCMs() {
         // TODO Auto-generated constructor stub
         super();
+    }
+    
+    static {
+    	Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		List result = session.createQuery("from Utilisateur").list(); // requête HQL
+		session.getTransaction().commit();
+		HibernateUtil.getSessionFactory().close();
+		
+		UtilisateurManager.creerListe (result);
     }
 
 	/**
@@ -110,36 +119,6 @@ public class ControleurListeQCMs extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-        if (!init) {
-        	/* Initialisation des utilisateurs à l'arrache, sans passer par oracle
-			init = true;
-			new Utilisateur("rachou", "123", 0);
-			new Utilisateur("stitch", "456", 1);
-			new Utilisateur("michou", "789", 1);
-			new Utilisateur("fransou", "000", 0);
-			*/
-        	//try {
-        		init = true;
-        		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        		session.beginTransaction();
-        		List result = session.createQuery("from Utilisateur").list(); // requête HQL
-        		session.getTransaction().commit();
-        		HibernateUtil.getSessionFactory().close();
-        		
-        		UtilisateurManager.creerListe (result);
-        		
-        		for (int i = 0; i < result.size(); i++) {
-        			System.out.println(result.get(i));
-        			//UtilisateurManager.addUser((Utilisateur)result.get(i));
-        		}
-        	/*}
-        	catch (Exception e) {
-        		System.err.println("Erreur hibernate : " + e);
-        	}*/
-        }
-		
 		// On peut accéder ici en ayant cliqué sur "login" ou "logout", le 1er
 		// test permet de savoir d'où l'on vient.
 		
