@@ -1,13 +1,9 @@
 package Controleur;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.classic.Session;
 
+import DAO.DAOBase;
 import DAO.HibernateUtil;
-import Modele.Modele;
+import Modele.Cours;
+import Modele.QCM;
 import Modele.Sessions;
 import Modele.UtilisateurManager;
 
@@ -40,62 +38,79 @@ public class ControleurListeQCMs extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ServletContext context = getServletContext();
-		Modele m;
-		/* On supprimer le fichier temporaire (si il a déjà été créé ici, c'est que
-		 * le temps a été entièrement écoulé)
-		 */
-		File tmp = (File)request.getSession().getAttribute("tmp");
-		if (tmp != null) {
-			tmp.delete();
-			request.getSession().removeAttribute("tmp");
+//		ServletContext context = getServletContext();
+//		Modele m;
+//		/* On supprimer le fichier temporaire (si il a déjà été créé ici, c'est que
+//		 * le temps a été entièrement écoulé)
+//		 */
+//		File tmp = (File)request.getSession().getAttribute("tmp");
+//		if (tmp != null) {
+//			tmp.delete();
+//			request.getSession().removeAttribute("tmp");
+//		}
+//		try{
+//			String urlData = context.getRealPath("/Data/QCMs/QCMs.xml");
+//			if ((Modele)request.getSession().getAttribute("m") == null)
+//			{
+//				m = new Modele(urlData);
+//			}
+//			else
+//			{
+//				m = (Modele)request.getSession().getAttribute("m");
+//			}
+//			String qcm = request.getParameter("QCM");
+//			if(qcm == null || qcm.matches(""))
+//			{
+//				m = new Modele(urlData);
+//				request.getSession().setAttribute("m", m);
+//				RequestDispatcher dispatch = request.getRequestDispatcher("accueil.jsp");
+//				dispatch.forward(request, response);
+//			}
+//			else
+//			{
+//				try{
+//					urlData = context.getRealPath("/Data/QCMs/"+qcm+".xml");
+//					m.chargerQCM(qcm, urlData);
+//					request.getSession().setAttribute("m", m);
+//					request.getSession().setAttribute("temps", m.getQCMCourant().getTemps());
+//					// Création d'un fichier temporaire contenant l'heure d'affichage de la page
+//					tmp = File.createTempFile("nom",".txt");
+//					//tmp.deleteOnExit();
+//					System.out.println("fichier tmp créé : " + tmp.getName());
+//					FileWriter fout =new FileWriter(tmp);
+//					Date date = new Date();
+//					fout.write(String.valueOf(date.getTime()));
+//					System.out.println(String.valueOf(date.getTime()) + " écrit dans le fichier");
+//					fout.close();
+//					request.getSession().setAttribute("tmp", tmp);
+//					RequestDispatcher dispatch = request.getRequestDispatcher("AffichageQCM.jsp");
+//					dispatch.forward(request, response);
+//				}
+//				catch(Exception e){
+//					System.out.println(e.toString());
+//				}
+//			}
+//		}
+//		catch (Exception e){
+//			System.out.println(e.toString());
+//		}
+		
+		
+		List<Cours> lc = DAOBase.getListCours();
+		for (int i=0; i<lc.size() ; i++)
+		{
+			java.util.List<QCM> lqcm = DAOBase.getMesQCMs(lc.get(i));
+			for(int j=0; j<lqcm.size() ; j++)
+			{
+				lqcm.get(j).readXML();
+				lc.get(i).addQCM(lqcm.get(j));
+				System.out.println("	QCM "+(j+1)+"/"+lqcm.size()+" : "+lqcm.get(j).getTemps());
+			}
 		}
-		try{
-			String urlData = context.getRealPath("/Data/QCMs/QCMs.xml");
-			if ((Modele)request.getSession().getAttribute("m") == null)
-			{
-				m = new Modele(urlData);
-			}
-			else
-			{
-				m = (Modele)request.getSession().getAttribute("m");
-			}
-			String qcm = request.getParameter("QCM");
-			if(qcm == null || qcm.matches(""))
-			{
-				m = new Modele(urlData);
-				request.getSession().setAttribute("m", m);
-				RequestDispatcher dispatch = request.getRequestDispatcher("accueil.jsp");
-				dispatch.forward(request, response);
-			}
-			else
-			{
-				try{
-					urlData = context.getRealPath("/Data/QCMs/"+qcm+".xml");
-					m.chargerQCM(qcm, urlData);
-					request.getSession().setAttribute("m", m);
-					request.getSession().setAttribute("temps", m.getQCMCourant().getTemps());
-					// Création d'un fichier temporaire contenant l'heure d'affichage de la page
-					tmp = File.createTempFile("nom",".txt");
-					//tmp.deleteOnExit();
-					System.out.println("fichier tmp créé : " + tmp.getName());
-					FileWriter fout =new FileWriter(tmp);
-					Date date = new Date();
-					fout.write(String.valueOf(date.getTime()));
-					System.out.println(String.valueOf(date.getTime()) + " écrit dans le fichier");
-					fout.close();
-					request.getSession().setAttribute("tmp", tmp);
-					RequestDispatcher dispatch = request.getRequestDispatcher("AffichageQCM.jsp");
-					dispatch.forward(request, response);
-				}
-				catch(Exception e){
-					System.out.println(e.toString());
-				}
-			}
-		}
-		catch (Exception e){
-			System.out.println(e.toString());
-		}
+		
+		request.getSession().setAttribute("ListCours", lc);
+		RequestDispatcher dispatch = request.getRequestDispatcher("accueil.jsp");
+		dispatch.forward(request, response);
 	}
 
 	/**

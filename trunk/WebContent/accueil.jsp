@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="Modele.*"%>
+    pageEncoding="ISO-8859-1" import="Modele.*, java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -16,30 +16,25 @@
 		%>
 		<p>Pour vous entraîner avant le partiel, veuillez choisir un QCM</p>
 		<p>Attention ! Tous les QCMs se font en temps limité, le compte à rebours est lancé dés que vous selectionnez un QCM !</p>
-		<form method="get" action="ControleurListeQCMs">
+		
+		<form method="get" action="ControleurAffichageQCM">
+		<% List<Cours> lc = (List<Cours>)request.getSession().getAttribute("ListCours"); %>
 		<%
-		for (int i = 0; i < ((Modele)request.getSession().getAttribute("m")).getLesCours().size(); i++)
+		for (int i = 0; i < lc.size(); i++)
 		{
 		%>
-				<p class="cours"><%= ((Modele)request.getSession().getAttribute("m")).getLesCours().get(i).getNom() %></p>
-				<table align="center" width="500px">
+			<p class="cours"><%= lc.get(i).getNom() %></p>
 			<%
-			for (int j = 0; j < ((Modele)request.getSession().getAttribute("m")).getLesCours().get(i).getLesQCMs().size(); j++)
+			for (int j = 0; j < lc.get(i).getLesQCMs().size(); j++)
 			{
 			%>
-					<tr>
-						<td>
-							<input class="bouton" type="submit" name="QCM" value= <%= ((Modele)request.getSession().getAttribute("m")).getLesCours().get(i).getLesQCMs().get(j).getNom() %> />
-						</td>
-						<td class="difficulte">
-							Difficulté :  <%= String.valueOf(((Modele)request.getSession().getAttribute("m")).getLesCours().get(i).getLesQCMs().get(j).getDifficulte()) %>
-						</td>
-					</tr>
+				<button type="submit" name="QCM" value="<%=lc.get(i).getLesQCMs().get(j).getId()%>">
+					Difficulté :  <%= String.valueOf(lc.get(i).getLesQCMs().get(j).getDifficulte()) %>
+				</button>
 			<%
 			}
 			%>
-				</table>
-				<br/>
+			<br/>
 		<%
 		}
 		%>

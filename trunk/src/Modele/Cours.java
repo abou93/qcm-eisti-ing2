@@ -6,9 +6,11 @@ import java.util.List;
 public class Cours {
 	private int id; /*Hibernate*/
 	private String nom;
-	private List<QCM> lesQCMs;
+	private ArrayList<QCM> lesQCMs;
 
-	public Cours(){} /*Hibernate*/
+	public Cours(){
+		this.lesQCMs = new ArrayList<QCM>();
+	} /*Hibernate*/
 	
 	public Cours(String name) {
 		this.nom = name;
@@ -27,8 +29,16 @@ public class Cours {
 		return lesQCMs;
 	}
 
+	public void addQCM(QCM q) {
+		this.lesQCMs.add(q);
+	}
+	
+	public void initQCM(){
+		this.lesQCMs = new ArrayList<QCM>();
+	}
+	
 	public void setLesQCMs(List<QCM> lesQCMs) {
-		this.lesQCMs = lesQCMs;
+		this.lesQCMs = (ArrayList) lesQCMs;
 	}
 
 	public int getId() {

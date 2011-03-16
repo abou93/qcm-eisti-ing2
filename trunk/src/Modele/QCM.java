@@ -1,11 +1,10 @@
 package Modele;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.input.DOMBuilder;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.DOMOutputter;
@@ -18,14 +17,17 @@ public class QCM {
 	private int difficulte;
 	private int score;
 	private int temps;
+//	private Date date;
 	private ArrayList<Question> lesQuestions;
 	private org.w3c.dom.Document xml;
 	private int id; /*Hibernate*/
 	
-	public QCM (){} /*Hibernate*/
+	public QCM (){
+		this.lesQuestions = new ArrayList<Question> ();
+	} /*Hibernate*/
 	
-	public QCM (String name, int lvl) {
-		this.nom = name;
+	public QCM (String nom, int lvl) {
+		this.nom = nom;
 		this.difficulte = lvl;
 		this.lesQuestions = new ArrayList<Question> ();
 	}
@@ -126,8 +128,11 @@ public class QCM {
 		SAXBuilder sxb = new SAXBuilder();
 		try{
             Element noeudQCM = doc.getRootElement();
+            this.difficulte = Integer.parseInt(noeudQCM.getAttributeValue("lvl"));
+            this.temps = Integer.parseInt(noeudQCM.getAttributeValue("temps"));
+//            this.lesQuestions = new ArrayList<Question>();
+            
             List<Element> lesNoeudsQuestion = noeudQCM.getChildren("question");
-            this.setTemps(Integer.parseInt(noeudQCM.getAttributeValue("temps")));
             for(int i=0 ; i<lesNoeudsQuestion.size() ; i++)
             {
             	this.addQuestion(new Question(lesNoeudsQuestion.get(i).getChildText("expression")));
