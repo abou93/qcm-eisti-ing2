@@ -178,7 +178,7 @@ public class Modele
             }
 		}
 		catch (Exception e){
-			System.out.println("Erreur lors du chargeùent du Resultat");
+			System.out.println("Erreur lors du chargement du Resultat");
 			System.out.println(e.toString());
 		}
 	}

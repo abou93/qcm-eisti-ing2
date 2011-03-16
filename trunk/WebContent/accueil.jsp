@@ -63,6 +63,25 @@
 				</tr>
 			</table>
 		</form>
+		<% if((Boolean) request.getSession().getAttribute("estProf"))
+		{%>
+		<form method="post" enctype="multipart/form-data" action="ControleurUploadQCM">
+			<table>
+				<tr>
+					<td align="center">
+						<label for="mon_fichier">Fichier (format .xml | max. 10 Mo) :</label><br />
+     					<input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+     					<input type="file" name="mon_fichier" id="mon_fichier" /><br />
+     					<label for="titre">Titre du fichier (max. 50 caractères) :</label><br />
+     					<input type="text" name="titre" value="Titre du fichier" id="titre" /><br />
+     					<input type="submit" name="submit" value="Upload" />
+					</td>
+				</tr>
+			</table>
+		</form>
+		<%
+		}
+		%>
 		<form method="post" action="ControleurListeQCMs">
 			<table>
 				<tr>

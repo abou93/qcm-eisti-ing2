@@ -8,7 +8,7 @@
 		<title>Page d'erreur</title>
 	</head>
 	<body>
-		<h1 align="center">Erreur lors de l'enregistrement</h1>
+		<h1 align="center">Erreur lors de l'upload</h1>
 		<br/>
 		<br/>
 		<br/>
