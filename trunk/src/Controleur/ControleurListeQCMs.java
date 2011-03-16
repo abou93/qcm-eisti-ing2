@@ -54,23 +54,21 @@ public class ControleurListeQCMs extends HttpServlet {
 			request.getSession().removeAttribute("tmp");
 		}
 		try{
-			List<Cours> lc = DAOBase.getListCours();
-			for (int i=0; i<lc.size() ; i++)
-			{
-				java.util.List<QCM> lqcm = DAOBase.getMesQCMs(lc.get(i));
-				for(int j=0; j<lqcm.size() ; j++)
-				{
-					lqcm.get(j).readXML();
-					lc.get(i).addQCM(lqcm.get(j));
-					System.out.println("	QCM "+(j+1)+"/"+lqcm.size()+" : "+lqcm.get(j).getTemps());
-				}
-			}
-			
-			request.getSession().setAttribute("ListCours", lc);
 			
 			String qcm = request.getParameter("QCM");
 			if(qcm == null || qcm.matches(""))
 			{
+				List<Cours> lc = DAOBase.getListCours();
+				for (int i=0; i<lc.size() ; i++)
+				{
+					java.util.List<QCM> lqcm = DAOBase.getMesQCMs(lc.get(i));
+					for(int j=0; j<lqcm.size() ; j++)
+					{
+						lqcm.get(j).readXML();
+						lc.get(i).addQCM(lqcm.get(j));
+						System.out.println("	QCM "+(j+1)+"/"+lqcm.size()+" : "+lqcm.get(j).getTemps());
+					}
+				}			
 				request.getSession().setAttribute("ListCours", lc);
 				RequestDispatcher dispatch = request.getRequestDispatcher("accueil.jsp");
 				dispatch.forward(request, response);
@@ -78,8 +76,10 @@ public class ControleurListeQCMs extends HttpServlet {
 			else
 			{
 				try{
-					int id = Integer.parseInt((String)request.getAttribute("QCM"));
+					int id = Integer.parseInt(request.getParameter("QCM"));
 					QCM q = DAOBase.getQCM(id);
+					q.readXML();
+					System.out.println("Nb questions = "+q.getNbQuestions());
 					request.setAttribute("QCM", q);
 					
 					request.getSession().setAttribute("temps", q.getTemps());

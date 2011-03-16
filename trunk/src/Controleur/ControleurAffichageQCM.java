@@ -28,7 +28,7 @@ public class ControleurAffichageQCM extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		System.out.println("Yoo!!!");
-		int id = Integer.parseInt((String)request.getAttribute("QCM"));
+		int id = Integer.parseInt((String)request.getParameter("QCM"));
 		QCM q = DAOBase.getQCM(id);
 		request.setAttribute("QCM", q);
 		RequestDispatcher dispatch = request.getRequestDispatcher("AffichageQCM.jsp");

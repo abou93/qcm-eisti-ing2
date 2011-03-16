@@ -17,7 +17,7 @@
 		<p>Pour vous entraîner avant le partiel, veuillez choisir un QCM</p>
 		<p>Attention ! Tous les QCMs se font en temps limité, le compte à rebours est lancé dés que vous selectionnez un QCM !</p>
 		
-		<form method="get" action="ControleurAffichageQCM">
+		<form method="get" action="ControleurListeQCMs">
 		<% List<Cours> lc = (List<Cours>)request.getSession().getAttribute("ListCours"); %>
 		<%
 		for (int i = 0; i < lc.size(); i++)
