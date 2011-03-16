@@ -101,6 +101,7 @@ public class ControleurListeQCMs extends HttpServlet {
 					System.out.println(String.valueOf(date.getTime()) + " écrit dans le fichier");
 					fout.close();
 					request.getSession().setAttribute("tmp", tmp);
+					request.getSession().setAttribute("id_qcm", id);
 					RequestDispatcher dispatch = request.getRequestDispatcher("AffichageQCM.jsp");
 					dispatch.forward(request, response);
 				}

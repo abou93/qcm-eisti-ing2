@@ -6,7 +6,10 @@ import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import DAO.DAOBase;
 import Modele.Modele;
+import Modele.QCM;
+import Modele.UtilisateurManager;
 
 /**
  * Servlet implementation class ControleurResultQCM
@@ -30,37 +33,25 @@ public class ControleurResultQCM extends HttpServlet {
 		ServletContext context = getServletContext();
 		Modele m;
 		try{
-			String urlData = context.getRealPath("/Data/QCMs/QCMs.xml");
-			if ((Modele)request.getSession().getAttribute("m") == null)
-			{
-				m = new Modele(urlData);
-			}
-			else
-			{
-				m = (Modele)request.getSession().getAttribute("m");
-			}
 			String ordre = request.getParameter("ordre");
 			if(ordre.matches("Retour"))
 			{
-				m = new Modele(urlData);
-				request.getSession().setAttribute("m", m);
+				request.getSession().removeAttribute("QCM");
 				RequestDispatcher dispatch = request.getRequestDispatcher("ControleurListeQCMs");
 				dispatch.forward(request, response);
 			}
 			if(ordre.matches("Enregistrer"))
 			{
 				try{
-					urlData = context.getRealPath(File.separator+"Data"+File.separator+"Resultats"+File.separator);
-					System.out.println(request.getSession().getAttribute("user"));
-					urlData += File.separator + request.getSession().getAttribute("user") + File.separator;
-					m.enregistrerResultat(urlData);
-					request.getSession().setAttribute("m", m);
+					QCM q = (QCM) request.getSession().getAttribute("QCM");
+					q.setXML();
+					System.out.println(q.getXmlText());
+					DAOBase.saveResultat(q, UtilisateurManager.getId((String) request.getSession().getAttribute("user")));
 					RequestDispatcher dispatch = request.getRequestDispatcher("ControleurListeQCMs");
 					dispatch.forward(request, response);
 				}
 				catch(Exception e){
 					System.out.println(e.toString());
-					request.getSession().setAttribute("m", m);
 					RequestDispatcher dispatch = request.getRequestDispatcher("AffichageErreurEnregistrement.jsp");
 					dispatch.forward(request, response);
 				}

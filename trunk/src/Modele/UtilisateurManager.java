@@ -1,5 +1,6 @@
 package Modele;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Vector;
 
@@ -47,4 +48,12 @@ public abstract class UtilisateurManager {
 			lesUtilisateurs.add((Utilisateur)result.get(i));
 		}
 	}
+	
+	public static int getId (String login) {
+        for (Utilisateur u : lesUtilisateurs) {
+                if (u.getUserLogin().equals(login)) continue;
+                return u.getUserId().intValue();
+        }
+        return -1;
+}
 }

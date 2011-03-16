@@ -1,10 +1,14 @@
 package Modele;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import org.apache.tomcat.jni.File;
+import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.jdom.input.DOMBuilder;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.DOMOutputter;
@@ -150,5 +154,49 @@ public class QCM {
 			System.out.println(e.toString());
 			System.out.println("Probleme lors de la lecture du xml du QCM");
 		}
+	}
+	public void setXML()
+	{
+	        Element racine = new Element("qcm");
+	        racine.setAttribute("temps", String.valueOf(this.getTemps()));
+	        racine.setAttribute("lvl", String.valueOf(this.getDifficulte()));
+	        racine.setAttribute("score", String.valueOf(this.getScore()));
+	        
+	        int i,j;
+	        for (i=0; i<lesQuestions.size(); i++)
+	        {
+	        	ArrayList<Element> questions = new ArrayList<Element>();
+	            Element NoeudQuestion = new Element("question");
+	            
+	            Element NoeudExpression = new Element("expression");
+	            NoeudExpression.setText(lesQuestions.get(i).getExpression());
+	            
+	            NoeudQuestion.addContent(NoeudExpression);
+	            
+	            for(j=0; j<lesQuestions.get(i).getLesReponses().size(); j++)
+	            {
+	            	ArrayList<Element> reponses = new ArrayList<Element>();
+	            	Element NoeudReponse = new Element("reponse");
+	            	NoeudReponse.setAttribute("value", String.valueOf(lesQuestions.get(i).getLesReponses().get(j).isValeur()));
+	            	NoeudReponse.setAttribute("select", String.valueOf(lesQuestions.get(i).getLesReponses().get(j).isSelect()));
+	            	NoeudReponse.setText(lesQuestions.get(i).getLesReponses().get(j).getExpression());
+	            	
+	            	reponses.add(NoeudReponse);
+	            	NoeudQuestion.addContent(reponses);
+	            }
+	            questions.add(NoeudQuestion);
+	            racine.addContent(questions);
+	        }
+
+				Document JDOMxml = new Document(racine);
+	            DOMOutputter domOutputter = new DOMOutputter();
+	            try {
+					this.xml = domOutputter.output(JDOMxml);
+				} catch (JDOMException e) {
+					e.printStackTrace();
+				}
+
+	        
+	       
 	}
 }

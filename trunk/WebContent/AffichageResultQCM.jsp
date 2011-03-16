@@ -5,7 +5,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<style type="text/css">	<%@ include file="style.css" %>	</style>
-		<title>Résultat du QCM Arel de <%= ((Modele)request.getSession().getAttribute("m")).getNomQCMCourant() %></title>
+		<title>Résultat du QCM Arel</title>
 	</head>
 	<body>
 		<%@ page import="Modele.*" %>
@@ -13,20 +13,21 @@
 		<br/>
 		<br/>
 		<br/>
+		<% QCM q = (QCM) request.getSession().getAttribute("QCM");%>
 		<%
-			for (int i = 0; i < ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getNbQuestions(); i++)
+			for (int i = 0; i < q.getNbQuestions(); i++)
 			{
 			%>
-		<table>
-			<p class="question"> <%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getExpression() %> </p>
+
+			<p class="question"> <%= q.getQuestion(i).getExpression() %> </p>
 			<%
-				for(int j = 0; j < ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getNbReponses(); j++)
+				for(int j = 0; j < q.getQuestion(i).getNbReponses(); j++)
 				{
-					if(((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).isSelect())
+					if(q.getQuestion(i).getReponse(j).isSelect())
 					{
 					%>
 			<p class="reponse">
-				<%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).getExpression() %>
+				<%= q.getQuestion(i).getReponse(j).getExpression() %>
 				<br/>
 			</p>	
 					<%		
@@ -36,19 +37,19 @@
 			<br/>
 			<br/>
 					<%	
-				for(int j = 0; j < ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getNbReponses(); j++)
+				for(int j = 0; j < q.getQuestion(i).getNbReponses(); j++)
 				{
-					if(((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).isTrue())
+					if(q.getQuestion(i).getReponse(j).isTrue())
 					{
 					%>
 			<p class="correction">
-				<%= ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).getReponse(j).getExpression() %>
+				<%= q.getQuestion(i).getReponse(j).getExpression() %>
 				<br/>
 			</p>
 					<%
 					}
 				}
-				if(((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).evaluerReponses() && ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).aRepondu())
+				if(q.getQuestion(i).evaluerReponses() && q.getQuestion(i).aRepondu())
 				{
 				%>
 			<p class="vrai">
@@ -57,7 +58,7 @@
 			</p>
 				<%
 				}
-				if (!(((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).aRepondu()))
+				if (!(q.getQuestion(i).aRepondu()))
 				{
 				%>
 			<p class="faux">
@@ -66,7 +67,7 @@
 			</p>
 				<%
 				}
-				else if (!(((Modele)request.getSession().getAttribute("m")).getQCMCourant().getQuestion(i).evaluerReponses()))
+				else if (!(q.getQuestion(i).evaluerReponses()))
 				{
 				%>
 			<p class="faux">
@@ -77,10 +78,10 @@
 				}
 			}
 			%>
-		</table>
+
 		<br/>
 		<br/>
-			<%= "Vous avez réalisé ce QCM avec un total de " + ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getScore() + " bonnes réponses sur " + ((Modele)request.getSession().getAttribute("m")).getQCMCourant().getNbQuestions() + "." %>
+			<%= "Vous avez réalisé ce QCM avec un total de " + q.getScore() + " bonnes réponses sur " + q.getNbQuestions() + "." %>
 		<br/>
 		<br/>
 		<form method="get" action="ControleurResultQCM">

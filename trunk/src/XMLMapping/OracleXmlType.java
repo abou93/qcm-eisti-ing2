@@ -164,7 +164,8 @@ public class OracleXmlType
         StringWriter sw=new StringWriter();
         StreamResult result = new StreamResult(sw);
         transformer.transform(source, result);
-        return sw.toString();
+        String str = sw.toString();
+        return str;
 //    	XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
 //	    return sortie.outputString((org.jdom.Document) _document);
     }

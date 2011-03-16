@@ -24,6 +24,16 @@ public class Reponse
 	public boolean isTrue() {
 		return this.valeur;
 	}
+	
+	public boolean isValeur() {
+		return valeur;
+	}
+	public void setValeur(boolean valeur) {
+		this.valeur = valeur;
+	}
+	public void setExpression(String expression) {
+		this.expression = expression;
+	}
 	public void setSelect(boolean v) {
 		this.select = v;
 	}
@@ -36,4 +46,5 @@ public class Reponse
 		else
 			return false;
 	}
+	
 }

@@ -1,5 +1,6 @@
 package Controleur;
 
+import DAO.DAOBase;
 import Modele.*;
 
 import java.io.*;
@@ -62,34 +63,28 @@ public class ControleurSelectQCM extends HttpServlet {
 				// on accepte un écart d'une seconde entre le temps annoncé et le temps réel
 				if (Math.abs(temps-diff) <= 1) {
 					ServletContext context = getServletContext();
-					Modele m;
 					try{
-						String urlData = context.getRealPath("/Data/QCMs/QCMs.xml");
-						if ((Modele)request.getSession().getAttribute("m") == null)
+						int id = (Integer)request.getSession().getAttribute("id_qcm");
+						QCM q = DAOBase.getQCM(id);
+						q.readXML();
+						
+						for (int i = 0; i <q.getNbQuestions(); i++)
 						{
-							m = new Modele(urlData);
-						}
-						else
-						{
-							m = (Modele)request.getSession().getAttribute("m");
-						}
-						for (int i = 0; i < m.getQCMCourant().getNbQuestions(); i++)
-						{
-							for (int j = 0; j < m.getQCMCourant().getQuestion(i).getNbReponses(); j++)
+							for (int j = 0; j < q.getQuestion(i).getNbReponses(); j++)
 							{
 								if (request.getParameter("q" + i + "r" + j) == null)
 								{
-									m.setReponse(i, j, false);
+									q.getLesQuestions().get(i).getLesReponses().get(j).setSelect(false);
 								}
 								else
 								{
 									if (!(request.getParameter("q" + i + "r" + j).matches("")))
-										m.setReponse(i, j, true);
+										q.getLesQuestions().get(i).getLesReponses().get(j).setSelect(true);
 								}
 							}
 						}
-						m.evaluerScoreQCM();
-						request.getSession().setAttribute("m", m);
+						q.evaluerScore();
+						request.getSession().setAttribute("QCM", q);
 						request.getRequestDispatcher("AffichageResultQCM.jsp").forward(request, response);
 					}
 					catch (Exception e){
