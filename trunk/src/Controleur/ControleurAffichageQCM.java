@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import DAO.DAOBase;
 import Modele.QCM;
 
 public class ControleurAffichageQCM extends HttpServlet {
@@ -27,7 +28,8 @@ public class ControleurAffichageQCM extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		System.out.println("Yoo!!!");
-		QCM q = (QCM) request.getAttribute("QCM");
+		int id = Integer.parseInt((String)request.getAttribute("QCM"));
+		QCM q = DAOBase.getQCM(id);
 		request.setAttribute("QCM", q);
 		RequestDispatcher dispatch = request.getRequestDispatcher("AffichageQCM.jsp");
 		dispatch.forward(request, response);

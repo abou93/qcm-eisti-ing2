@@ -37,8 +37,16 @@ public class DAOBase
 	{
 		Session session= HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
-		List<QCM> result = session.createQuery("from QCM where id_cours = "+c.getId()).list();
-		System.out.println("result : "+result.size() );		
+		List<QCM> result = session.createQuery("from QCM where id_cours = "+c.getId()).list();	
+		session.close();
+		return result;
+	}
+	
+	public static QCM getQCM(int id)
+	{
+		Session session= HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		QCM result = (QCM) session.createQuery("from QCM where id = "+id).uniqueResult();	
 		session.close();
 		return result;
 	}
