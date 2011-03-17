@@ -81,6 +81,7 @@ public class ControleurListeQCMs extends HttpServlet {
 			{
 				try{
 					int id = Integer.parseInt(request.getParameter("QCM"));
+					int id_cours = DAOBase.getIdCours(id);
 					QCM q = DAOBase.getQCM(id);
 					q.readXML();
 					request.setAttribute("QCM", q);
@@ -97,6 +98,7 @@ public class ControleurListeQCMs extends HttpServlet {
 					fout.close();
 					request.getSession().setAttribute("tmp", tmp);
 					request.getSession().setAttribute("id_qcm", id);
+					request.getSession().setAttribute("id_cours", id_cours);
 					RequestDispatcher dispatch = request.getRequestDispatcher("AffichageQCM.jsp");
 					dispatch.forward(request, response);
 				}

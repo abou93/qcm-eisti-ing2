@@ -57,11 +57,10 @@ public class DAOBase
 		return result;
 	}
 	
-	public static void saveResultat(QCM q, int id_user)
+	public static void saveResultat(QCM q, int id_user, int id_cours)
 	{
 		q.setXML();
 		System.out.println("id : " +q.getId());
-		q.setId(2323);
 		System.out.println("new id : " +q.getId());
 		Session session= HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
@@ -69,9 +68,20 @@ public class DAOBase
 		session.save(q);
 		System.out.println("--- update(q) [id_user="+id_user+"]");
 		session.createQuery("update QCM set id_user = "+id_user+" where id = "+q.getId()).executeUpdate();
+		System.out.println("--- update(q) [id_cours="+id_cours+"]");
+		session.createQuery("update QCM set id_cours = "+id_cours+" where id = "+q.getId()).executeUpdate();
 		System.out.println("--- commit() ");
 		session.getTransaction().commit();
 		System.out.println("--- close() ");
 		session.close();
+	}
+	public static int getIdCours(int id) {
+		Session session= HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		System.out.println("id="+id);
+		int result = (Integer) session.createQuery(
+				"select id_cours from QCM where id ="+id+" and id_user=0").uniqueResult();	
+		session.close();
+		return result;
 	}
 }

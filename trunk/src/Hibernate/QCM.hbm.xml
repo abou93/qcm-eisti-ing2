@@ -6,7 +6,9 @@
  <class name="Modele.QCM" schema="system" table="QCM">
   <id name="id" type="int">
    <column name="ID" precision="5" scale="0"/>
-   <generator class="assigned"/>
+   <generator class="native">
+    <param name="sequence">SeqQCM</param>
+   </generator>
   </id>
   <property name="xml" column="XML" not-null="true" 
           type="XMLMapping.OracleXmlType"/>

@@ -24,7 +24,7 @@ CREATE TABLE Cours (
 	
 ALTER TABLE Qcm ADD CONSTRAINT fk_qcm_cours FOREIGN KEY (id_cours) REFERENCES Cours (id); 
 ALTER TABLE Qcm ADD CONSTRAINT fk_qcm_user FOREIGN KEY (id_user) REFERENCES Utilisateur (user_id);  
-
+CREATE SEQUENCE SeqQCM START WITH 10;
 
 /** Insertion **/
 INSERT INTO Utilisateur VALUES (0, 'cours', null, null);
