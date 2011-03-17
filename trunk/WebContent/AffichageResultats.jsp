@@ -35,20 +35,20 @@ action="ControleurResultats">
 			<%for(int j=0; j<((ArrayList<String>) request.getSession().getAttribute("liste")).size(); j++)
 			{%>
 				<p class="more-qcm">
-					<button type="submit" name="choix" value="<%=((ArrayList<String>) request.getSession().getAttribute("liste")).get(j) %>">+</button>
-					<%=((ArrayList<String>) request.getSession().getAttribute("liste")).get(j) %>
+					<button type="submit" name="choix" value="<%=((ArrayList<String>) request.getSession().getAttribute("listeId")).get(j) %>">+</button>
+					Difficulté : <%=((ArrayList<String>) request.getSession().getAttribute("liste")).get(j) %>
 				</p>
-				<% if ( request.getSession().getAttribute("choix")!=null && ((String)request.getSession().getAttribute("choix")).matches(((ArrayList<String>) request.getSession().getAttribute("liste")).get(j)) )
+				<% if ( request.getSession().getAttribute("choix")!=null && ((String)request.getSession().getAttribute("choix")).matches(((ArrayList<String>) request.getSession().getAttribute("listeId")).get(j)) )
 				{%>
 					<p class="more-result">
-						<b>Score =	<%=((Modele)request.getSession().getAttribute("m")).getResultatCourant().getScore() %></b>
+						<b>Score =	<%=((QCM)request.getSession().getAttribute("qcm_select")).getScore() %></b>
 						<br/>
-						<%for(int k=0 ; k<((Modele)request.getSession().getAttribute("m")).getResultatCourant().getNbQuestions() ; k++) 
+						<%for(int k=0 ; k<((QCM)request.getSession().getAttribute("qcm_select")).getNbQuestions() ; k++) 
 						{ %>			
 								Question n°<%=k+1%> - 
-								<%=((Modele)request.getSession().getAttribute("m")).getResultatCourant().getQuestion(k).getExpression() %>
+								<%=((QCM)request.getSession().getAttribute("qcm_select")).getQuestion(k).getExpression() %>
 								<br/>
-								<%=((Modele)request.getSession().getAttribute("m")).getResultatCourant().getQuestion(k).getReponse(0).getExpression() %>
+								<%=((QCM)request.getSession().getAttribute("qcm_select")).getQuestion(k).getReponse(0).getExpression() %>
 								<br/>
 						<%} %>
 					</p>

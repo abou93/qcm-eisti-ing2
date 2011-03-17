@@ -55,5 +55,11 @@ public abstract class UtilisateurManager {
                 return u.getUserId().intValue();
         }
         return -1;
-}
+	}
+
+	public static Vector<Utilisateur> getLesUtilisateurs() {
+		return lesUtilisateurs;
+	}
+	
+	
 }

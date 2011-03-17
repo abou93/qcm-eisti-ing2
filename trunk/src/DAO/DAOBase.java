@@ -2,6 +2,7 @@ package DAO;
 
 import java.util.List;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
 import DAO.HibernateUtil;
@@ -43,7 +44,7 @@ public class DAOBase
 	{
 		Session session= HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
-		List<QCM> result = session.createQuery("from QCM where id_cours = "+c.getId()).list();	
+		List<QCM> result = session.createQuery("from QCM where id_cours = "+c.getId()+" and id_user=0").list();	
 		session.close();
 		return result;
 	}
@@ -68,8 +69,8 @@ public class DAOBase
 		session.save(q);
 		System.out.println("--- update(q) [id_user="+id_user+"]");
 		session.createQuery("update QCM set id_user = "+id_user+" where id = "+q.getId()).executeUpdate();
-		System.out.println("--- update(q) [id_cours="+id_cours+"]");
-		session.createQuery("update QCM set id_cours = "+id_cours+" where id = "+q.getId()).executeUpdate();
+		System.out.println("--- update(q) [id_cours="+q.getId_cours()+"]");
+		session.createQuery("update QCM set id_cours = "+q.getId_cours()+" where id = "+q.getId()).executeUpdate();
 		System.out.println("--- commit() ");
 		session.getTransaction().commit();
 		System.out.println("--- close() ");
@@ -81,6 +82,41 @@ public class DAOBase
 		System.out.println("id="+id);
 		int result = (Integer) session.createQuery(
 				"select id_cours from QCM where id ="+id+" and id_user=0").uniqueResult();	
+		session.close();
+		return result;
+	}
+	public static List<Cours> getListCours(int id_user) {
+		Session session= HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		List<Cours> lc = session.createQuery("from Cours").list();
+		session.close();
+		
+		for(int i=0; i<lc.size(); i++)
+		{
+			List<QCM> lq = getQCMUserCours(lc.get(i).getId(),id_user);
+			for(int j=0; j<lq.size();j++)
+			{
+				lc.get(i).addQCM(lq.get(j));
+			}
+		}
+		return lc;
+	}
+	public static List<QCM> getQCMUserCours(int id_cours, int id_user)
+	{
+		Session session= HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		List<QCM> result = (List<QCM>) session.createQuery(
+				"from QCM where id_user = "+id_user+" and id_cours="+id_cours).list();	
+		session.close();
+		return result;
+	}
+	
+	public static List<QCM> getQCMUser(int id_user)
+	{
+		Session session= HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		List<QCM> result = (List<QCM>) session.createQuery(
+				"from QCM where id_user = "+id_user).list();	
 		session.close();
 		return result;
 	}

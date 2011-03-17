@@ -3,10 +3,13 @@ package Controleur;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import DAO.DAOBase;
 import Modele.*;
 
 
@@ -36,49 +39,35 @@ public class ControleurResultats extends HttpServlet {
 		ServletContext context = getServletContext();
 		Modele m;
 		try{
-			String urlData = context.getRealPath("/Data/QCMs/QCMs.xml");
-			if ((Modele)request.getSession().getAttribute("m") == null)
-			{
-				m = new Modele(urlData);
-			}
-			else
-			{
-				m = (Modele)request.getSession().getAttribute("m");
-			}
-				
+			int id_user = UtilisateurManager.getId((String) request.getSession().getAttribute("user"));
+			List<Cours> lc = DAOBase.getListCours(id_user);
 			/* Si on n'a pas choisi l'utilisateur dont on veut afficher les résultats */
 			if (request.getParameter("choixUser")==null) {
 				ArrayList<String> liste = new ArrayList<String>();
-				/* Permet de lister le contenu du dossier */
-				String [] s = new File(getServletContext().getRealPath(File.separator + "Data" + 
-						File.separator + "Resultats")).list();
-				
-				/* Pour chaque dossier trouvé, on vérifie si son nom est bien
-				 * celui d'un utilisateur de la liste. Si c'est le cas on
-				 * l'ajoute à la liste que l'on enverra à la vue.
-				 */
-				for (int i = 0; i < s.length; i++) {
-					if (UtilisateurManager.getUser(s[i]) == null) continue;
-					liste.add(s[i]);
+				Vector<Utilisateur> lu = UtilisateurManager.getLesUtilisateurs();
+				for(int i=0; i<lu.size() ; i++)
+				{
+					liste.add(lu.get(i).getUserLogin());
 				}
 				request.getSession().setAttribute("listeUsers", liste);
 			}
 			/* Si on a déjà choisi l'utilisateur et qu'on veut le choix du résultat */
 			else {
 				ArrayList<String> liste = new ArrayList<String>();
+				ArrayList<Integer> listeId = new ArrayList<Integer>();
 				String user = request.getParameter("choixUser");
-				String [] s = new File(getServletContext().getRealPath(File.separator + "Data" + 
-						File.separator + "Resultats" + File.separator + user)).list();
-				
-				/* On transforme le tableau en liste
-				 */
-				for (int i = 0; i < s.length; i++) {
-					if (s[i].equals("Resultats.xml")) continue; // c'est la banque de résultats
-					if (s[i].endsWith(".xml")==false) continue; // ce n'est pas un fichier xml (svn ou autre)
-					liste.add(s[i].substring(0,s[i].length()-4));
+				List<QCM> lq = DAOBase.getQCMUser(id_user);
+				for(int i=0; i<lq.size() ; i++)
+				{
+					liste.add(Integer.toString(lq.get(i).getDifficulte()));
+				}
+				for(int i=0; i<lq.size() ; i++)
+				{
+					listeId.add(lq.get(i).getId());
 				}
 				request.getSession().setAttribute("choixUser", user);
 				request.getSession().setAttribute("liste", liste);
+				request.getSession().setAttribute("listeId", listeId);
 				request.getSession().setAttribute("choix", null);
 			}
 			
@@ -94,14 +83,13 @@ public class ControleurResultats extends HttpServlet {
 				/* On veut afficher le choix*/
 				else
 				{
-					String nomFichierXML = (String) request.getParameter("choix");
-					String nameUser = (String) request.getSession().getAttribute("choixUser");
-					String urlResult = context.getRealPath("/Data/Resultats/"+nameUser+"/"+nomFichierXML+".xml");
-					m.chargerResultat(nomFichierXML, urlResult);
+					String string_id = (String) request.getParameter("choix");
+					int id_qcm = Integer.parseInt(string_id);
+					QCM q = DAOBase.getQCM(id_qcm);
 					
-					request.getSession().setAttribute("choixUser", nameUser);
-					request.getSession().setAttribute("choix", nomFichierXML);
-					request.getSession().setAttribute("m", m);
+//					request.getSession().setAttribute("choixUser", nameUser);
+					request.getSession().setAttribute("choix", string_id);
+					request.getSession().setAttribute("qcm_select", q);
 				}
 			}
 			

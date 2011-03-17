@@ -25,6 +25,7 @@ public class QCM {
 	private ArrayList<Question> lesQuestions;
 	private org.w3c.dom.Document xml;
 	private int id; /*Hibernate*/
+	private int id_cours; /*Hibernate*/
 	
 	public QCM (){
 		this.lesQuestions = new ArrayList<Question> ();
@@ -107,6 +108,14 @@ public class QCM {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getId_cours() {
+		return id_cours;
+	}
+
+	public void setId_cours(int id_cours) {
+		this.id_cours = id_cours;
 	}
 
 	public org.w3c.dom.Document getXml() {

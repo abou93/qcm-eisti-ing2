@@ -10,7 +10,8 @@
     <param name="sequence">SeqQCM</param>
    </generator>
   </id>
-  <property name="xml" column="XML" not-null="true" 
-          type="XMLMapping.OracleXmlType"/>
+  <property column="XML" generated="never" lazy="false" name="xml"
+   not-null="true" type="XMLMapping.OracleXmlType"/>
+  <property column="id_cours" name="id_cours" type="integer"/>
  </class>
 </hibernate-mapping>
