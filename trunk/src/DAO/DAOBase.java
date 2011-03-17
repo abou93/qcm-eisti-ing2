@@ -7,10 +7,20 @@ import org.hibernate.Session;
 import DAO.HibernateUtil;
 import Modele.Cours;
 import Modele.QCM;
+import Modele.Utilisateur;
 
 
 public class DAOBase 
 {	
+	public static List<Utilisateur> getListUsers()
+	{
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		List<Utilisateur> result = (List<Utilisateur>) session.createQuery("from Utilisateur").list();
+		session.getTransaction().commit();
+		HibernateUtil.getSessionFactory().close();
+		return result;
+	}
 	public static List<Cours> getListCours()
 	{
 		Session session= HibernateUtil.getSessionFactory().openSession();
@@ -51,9 +61,8 @@ public class DAOBase
 	{
 		q.setXML();
 		System.out.println("id : " +q.getId());
-		q.setId(2343);
+		q.setId(2323);
 		System.out.println("new id : " +q.getId());
-//		System.out.println("xml : " + q.getXmlText());
 		Session session= HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		System.out.println("--- save(q) ");

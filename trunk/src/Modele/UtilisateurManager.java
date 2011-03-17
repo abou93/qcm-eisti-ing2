@@ -51,7 +51,7 @@ public abstract class UtilisateurManager {
 	
 	public static int getId (String login) {
         for (Utilisateur u : lesUtilisateurs) {
-                if (u.getUserLogin().equals(login)) continue;
+                if (! u.getUserLogin().equals(login)) continue;
                 return u.getUserId().intValue();
         }
         return -1;

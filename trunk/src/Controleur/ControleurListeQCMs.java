@@ -21,6 +21,7 @@ import Modele.Cours;
 import Modele.Modele;
 import Modele.QCM;
 import Modele.Sessions;
+import Modele.Utilisateur;
 import Modele.UtilisateurManager;
 
 /**
@@ -37,14 +38,8 @@ public class ControleurListeQCMs extends HttpServlet {
         super();
     }
     
-    static {
-    	Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		List result = session.createQuery("from Utilisateur").list(); // requête HQL
-		session.getTransaction().commit();
-		HibernateUtil.getSessionFactory().close();
-		
-		UtilisateurManager.creerListe (result);
+    static {	
+		UtilisateurManager.creerListe (DAOBase.getListUsers());
     }
 
 	/**
