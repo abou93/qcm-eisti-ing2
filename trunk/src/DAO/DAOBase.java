@@ -49,16 +49,20 @@ public class DAOBase
 	
 	public static void saveResultat(QCM q, int id_user)
 	{
-		System.out.println("nom : " +q.getNom());
-		System.out.println("nb rep : " + q.getNbQuestions());
+		q.setXML();
+		System.out.println("id : " +q.getId());
+		q.setId(2343);
+		System.out.println("new id : " +q.getId());
+//		System.out.println("xml : " + q.getXmlText());
 		Session session= HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
+		System.out.println("--- save(q) ");
 		session.save(q);
-		
-		System.out.println(" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ");
+		System.out.println("--- update(q) [id_user="+id_user+"]");
 		session.createQuery("update QCM set id_user = "+id_user+" where id = "+q.getId()).executeUpdate();
-		System.out.println(" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ");
+		System.out.println("--- commit() ");
 		session.getTransaction().commit();
+		System.out.println("--- close() ");
 		session.close();
 	}
 }

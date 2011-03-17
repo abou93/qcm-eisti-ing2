@@ -1,4 +1,5 @@
 package XMLMapping;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -128,16 +129,17 @@ public class OracleXmlType
         try {
             XMLType xmlType = null;
             if (value != null) {
-            	xmlType = oracle.xdb.XMLType.createXML( nativeConn, 
-                        OracleXmlType.domToString((Document)value));
-//                xmlType = new oracle.xdb.XMLType();
-//                xmlType=XMLType.createXML( nativeConn, 
+//                xmlType = new oracle.xdb.XMLType( nativeConn, 
 //                    OracleXmlType.domToString((Document)value));
-//                xmlType = XMLType.createXML(st.getConnection(),OracleXmlType.domToString((Document)value));
+            	String vv = OracleXmlType.domToString((Document)value).replaceAll("xml version = '1.0'", "");
+            	vv = vv.replaceAll("<\\?\\?>", "");
+            	xmlType = oracle.xdb.XMLType.createXML( nativeConn, 
+                      vv);
             }
             st.setObject(index, xmlType);
         }
         catch (Exception e) {
+        	e.printStackTrace();
             throw new SQLException("Could not covert Document to String for storage");            
         }
     }
@@ -146,8 +148,8 @@ public class OracleXmlType
         throws HibernateException 
     {
         if (value == null) return null;
+        
         return (Document)((Document)value).cloneNode(true);
-//        return (org.jdom.Document)((org.jdom.Document)value).clone();
     }
     
     public boolean isMutable() {
@@ -166,8 +168,6 @@ public class OracleXmlType
         transformer.transform(source, result);
         String str = sw.toString();
         return str;
-//    	XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-//	    return sortie.outputString((org.jdom.Document) _document);
     }
     
     protected static Document stringToDom(String xmlSource) 
@@ -178,4 +178,4 @@ public class OracleXmlType
         return builder.parse(new ByteArrayInputStream(xmlSource.getBytes("UTF-8")));
     }
     
-} 
+}

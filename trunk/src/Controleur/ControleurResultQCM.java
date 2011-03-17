@@ -44,8 +44,8 @@ public class ControleurResultQCM extends HttpServlet {
 			{
 				try{
 					QCM q = (QCM) request.getSession().getAttribute("QCM");
-					q.setXML();
-					System.out.println(q.getXmlText());
+					System.out.println("user="+(String) request.getSession().getAttribute("user"));
+					System.out.println("id_user="+UtilisateurManager.getId((String) request.getSession().getAttribute("user")));
 					DAOBase.saveResultat(q, UtilisateurManager.getId((String) request.getSession().getAttribute("user")));
 					RequestDispatcher dispatch = request.getRequestDispatcher("ControleurListeQCMs");
 					dispatch.forward(request, response);
