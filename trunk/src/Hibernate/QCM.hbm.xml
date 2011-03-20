@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 3 juin 2010 17:18:17 by Hibernate Tools 3.2.4.GA -->
+<hibernate-mapping>
+ <class name="Modele.QCM" schema="system" table="QCM">
+  <id name="id" type="int">
+   <column name="ID" precision="5" scale="0"/>
+   <generator class="native">
+    <param name="sequence">SeqQCM</param>
+   </generator>
+  </id>
+  <property column="XML" generated="never" lazy="false" name="xml"
+   not-null="true" type="XMLMapping.OracleXmlType"/>
+  <property column="id_cours" name="id_cours" type="integer"/>
+ </class>
+</hibernate-mapping>

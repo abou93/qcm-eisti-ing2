@@ -1,0 +1,258 @@
+@charset "utf-8";
+/* CSS Document */
+h1{
+	color:#01466F;
+	font:"MS Serif", "New York", serif;
+	text-align:center;
+}
+h1.cours{
+	font:"MS Serif", "New York", serif;
+	text-align:left;
+	margin-bottom:20px;
+	margin-top:20px;
+	border:1px solid #888;
+	padding:3px 6px;
+	background: #01466F;
+	background-repeat:no-repeat;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius: 5px;
+	text-transform:uppercase;
+	letter-spacing:2px;
+	font-size: large;
+	color: white;
+}
+.bouton{
+	/*color:#F06;*/
+	text-align:center;
+	background-color:#b4b4ff;	
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	width:50%;
+	outline-color:#0030b9;	
+}
+td.difficulte{
+	width:50%;
+	text-align:left;
+}
+td{
+	text-align:center;
+}
+td.choix{
+	color:#5843f4;
+	/*background-color:#8da7f4;*/
+	outline-color:#0030b9;	
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	text-align:left;
+	padding-left:50px;
+}
+table{
+	width:100%;
+}
+
+.minuterie {
+
+font-size: 36pt;
+color: #000000;
+background-color: #FFFFFF;
+border-style: solid;
+border-top-width: 1px;
+border-left-width: 1px;
+border-bottom-width: 1px;
+border-right-width:1px;
+border-color: #FFFFFF;
+}
+
+.body{
+	color:#01466F;
+	font-size:18px;
+	margin:20px;
+}
+button {margin: 0;padding: 0;border: 0;outline: 0;font-weight: normal;font-style: normal;font-size: 100%;font-family: inherit;moz-box-sizing: border-content;}
+
+button.plus{
+	border: 0px;
+	background-image:url('../images/fleche.png');
+	background-color:white;
+	background-repeat: no-repeat;
+	background-position:0px 5px;
+	width:28px;
+	height:40px;
+}
+
+correct{
+	background-image:url('../images/correct.png');
+	background-repeat:no-repeat;
+	padding-left:16px;
+	width:16px;
+	heigh:16px;
+}
+
+incorrect{
+	background-image:url('../images/incorrect.png');
+	background-repeat:no-repeat;
+	padding-left:16px;
+	width:16px;
+	high:16px;
+}
+
+#header{
+	background-image:url('../images/arel.png');
+	background-color: #01466F;
+	background-repeat:no-repeat;
+	background-position:center;
+	padding-top:120px;
+	width:100%;
+	high:300px;
+	-moz-border-radius:12px;
+	-webkit-border-radius:12px;
+	border-radius:12px;
+	-webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, .7); 
+	-moz-box-shadow: 0px 2px 4px rgba(0, 0, 0, .7); 
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, .7);
+}
+p.question{
+	width:100%;
+	font-weight:bold;	
+}
+p.vrai{
+	color:green;
+}
+p.faux{
+	color:red;
+}
+
+p.more-user{
+	padding-left:50px;
+}
+p.more-qcm{
+	padding-left:70px;
+}
+p.more-result{
+	padding-left:100px;
+}
+result.more-and-more{
+	padding-left:40px;
+}
+
+
+/* Not Just a Grid v1.0 (c) 2011 Al Redpath / Outrageous Creations! Licenced under an MIT Licence*/
+/* ---------------------------------------------------------------------------- */
+/* vertical form styling ------------------------------------------------------ */
+/* ---------------------------------------------------------------------------- */
+.vertical_form {font: 14px "Trebuchet MS", Arial, Helvetica, sans-serif;letter-spacing:1px;}
+.vertical_form fieldset{border:1px solid #888;margin:10px 0px;padding:10px 20px 10px 20px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius: 10px;}
+.vertical_form fieldset.fieldsetbuttons {padding:10px 10px 10px 20px;}
+.vertical_form fieldset.fieldsetbuttons div {text-align:right;}
+.vertical_form legend {margin:0px;border:1px solid #888;padding:3px 6px;background:#eee url(images/notjustagrid/transoverlay-matte.png) repeat-x;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius: 5px;text-transform:uppercase;	letter-spacing:2px;}
+.vertical_form label {display:block;margin:10px 0px 5px 0px;}
+.vertical_form ul {margin:0px; padding:0px;}
+.vertical_form li {list-style:none; margin:0px; padding:0px;}
+.vertical_form div.form_input_notes {font-size:12px; margin:0px 0px 20px 10px;}
+/* ---------------------------------------------------------------------------- */
+/* Horizontal form styling ---------------------------------------------------- */
+/* ---------------------------------------------------------------------------- */
+.horizontal_form {font: 14px "Trebuchet MS", Arial, Helvetica, sans-serif;letter-spacing:1px;}
+.horizontal_form fieldset{border:1px solid #888;margin:10px 0px;padding:10px 20px 10px 20px;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius: 10px;}
+.horizontal_form fieldset.fieldsetbuttons {padding:10px 10px 10px 20px;}
+.horizontal_form fieldset.fieldsetbuttons div {text-align:right;}
+.horizontal_form legend {margin:0px;border:1px solid #888;padding:3px 6px;background:#01466F repeat-x;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius: 5px;text-transform:uppercase;	letter-spacing:2px; font-size: medium; color: white;}
+.horizontal_form label {float:left;margin:0px 5px 0px 0px; width:150px; text-align:right;}
+.horizontal_form ul {margin:0px; padding:0px;}
+.horizontal_form li {list-style:none; vertical-align:middle; margin:10px 0px;clear:left;}
+.horizontal_form div.form_input_notes {font-size:12px; display:inline;}
+/* ---------------------------------------------------------------------------- */
+/* Input field styling -------------------------------------------------------- */
+/* ---------------------------------------------------------------------------- */
+.normalfield, .requiredfield {border: 1px solid #ccc;border-top: 1px solid #444;border-left: 1px solid #444;font: 14px "Trebuchet MS", Arial, Helvetica, sans-serif;letter-spacing:1px;padding:3px 2px 3px 2px;}
+.normalfield {background: #ffffff url(../images/notjustagrid/misc/formgreyback.gif) repeat-x;}
+.requiredfield {background: #fafad8 url(../images/notjustagrid/misc/formyellowback.gif) repeat-x top right;}
+.fielderror {border: 1px solid #ff4444;background: #fee9eb url(../images/notjustagrid/misc/formredback.gif) repeat-x top right;}
+.fieldgood {background: #e0ffc7 url(../images/notjustagrid/misc/formgreenback.gif) repeat-x;}
+.requiredfield:focus, .fielderror:focus, .normalfield:forus {border: 1px solid #444444;	-webkit-box-shadow: 0px 0px 7px rgba(0, 144, 255, .7); 	-moz-box-shadow: 0px 0px 7px rgba(0, 144, 255, .7);		box-shadow: 0px 0px 7px rgba(0, 144, 255, .7);}
+.requiredfield:focus {background: #fafad8 url(../images/notjustagrid/misc/formyellowback.gif) repeat-x top right;}
+.normalfield:focus {background: #e0ffc7 url(../images/notjustagrid/misc/formgreenback.gif) repeat-x;}
+.fielderror:focus {border: 1px solid #ff4444;background: #fee9eb url(../images/notjustagrid/misc/formredback.gif) repeat-x top right;}
+.smallfield {font:10px;padding:2px 1px 2px 1px;}
+.largefield {font:16px}
+/* ---------------------------------------------------------------------------- */
+/* Styled Buttons ------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------- */
+.styled_button, .styled_button:visited {background: #222 url(../images/notjustagrid/misc/transoverlay-matte.png) repeat-x;font: bold 12px "Trebuchet MS", Arial, Helvetica,sans-serif;text-transform:uppercase;text-decoration: none;line-height:30px;letter-spacing:1px;color: #fff;padding: 0px 10px 0px 10px;margin:0px 3px;height:30px;border: 1px solid rgba(0,0,0,0.4);border-top: 1px solid rgba(255,255,255,0.4);;border-left: 1px solid rgba(255,255,255,0.4);border-radius:15px;-moz-border-radius:15px;-webkit-border-radius: 15px;box-shadow: 0 1px 5px rgba(0,0,0,0.7);-moz-box-shadow: 0 1px 5px rgba(0,0,0,0.7);-webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.7);text-shadow: 0 -1px 1px rgba(0,0,0,0.25);position: relative;cursor: pointer;}
+a.styled_button, a.styled_button:visited {color:#fff;height:30px;line-height:30px;padding:5px 10px;}
+a.styled_button:hover, a.styled_button:active {color:#fff;white-space:nowrap;}
+.cancel_button.styled_button:after, .save_button.styled_button:after, .back_button.styled_button:after, .confirm_button.styled_button:after, .question_button.styled_button:after, .delete_button.styled_button:after, .edit_button.styled_button:after, .view_button.styled_button:after  .doc_button.styled_button:after {position:absolute;padding-top:7px;right:5px;}
+.cancel_button.styled_button, .save_button.styled_button, .back_button.styled_button, .confirm_button.styled_button, .question_button.styled_button, .delete_button.styled_button, .edit_button.styled_button, .view_button.styled_button .doc_button.styled_button {padding-right:25px;}
+.cancel_button.styled_button:after {content: url(../images/notjustagrid/icons/icon-cancel.png);}
+.confirm_button.styled_button:after {content: url(../images/notjustagrid/icons/icon-success.png);}
+.question_button.styled_button:after {content: url(../images/notjustagrid/icons/icon-question.png);}
+.delete_button.styled_button:after {content: url(../images/notjustagrid/icons/icon-delete.png);}
+.edit_button.styled_button:after {content: url(../images/notjustagrid/icons/icon-edit.png);}
+.doc_button.styled_button:after {content: url(../images/notjustagrid/icons/icon-document.png);}
+.view_button.styled_button:after {content: url(../images/notjustagrid/icons/icon-view.png);}
+.back_button.styled_button:after {content: url(../images/retour.png);}
+.save_button.styled_button:after {content: url(../images/save.png);}
+.green.styled_button {background-color:#afc243;}
+.red.styled_button {background-color: #e33100;}
+.blue.styled_button {background-color:#6c93b3;}
+.grey.styled_button {background-color:#ddd; color:#666;	text-shadow: 0 1px 1px rgba(255,255,255,0.8);}
+.green.styled_button:hover {background-color:#98a83a;}
+.red.styled_button:hover {background-color: #bf2900;}
+.blue.styled_button:hover {background-color:#5c7d98;}
+.grey.styled_button:hover {background-color:#ccc;color:#666; text-shadow: 0 1px 1px rgba(255,255,255,0.8);}
+@-moz-document url-prefix() {button.delete_button.styled_button:after, button.save_button.styled_button:after, button.back_button.styled_button:after, button.doc_button.styled_button:after, button.question_button.styled_button:after, button.confirm_button.styled_button:after, button.cancel_button.styled_button:after, button.edit_button.styled_button:after, button.view_button.styled_button:after  {padding-top:1px;right:15px;}}
+
+
+
+
+/* Not Just a Grid v1.0 (c) 2011 Al Redpath / Outrageous Creations! Licenced under an MIT Licence*/
+/* ---------------------------------------------------------------------------- */
+/* Filetype hint icons -------------------------------------------------------- */
+/* ---------------------------------------------------------------------------- */
+a[href ^='mailto:'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-email-tiny.png) no-repeat right top;}
+a[href $='.pdf'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-pdf-tiny.png) no-repeat right top;}
+a[href $='.xls'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-excel-tiny.png) no-repeat right top;}
+a[href $='.ppt'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-powerpoint-tiny.png) no-repeat right top;}
+a[href $='.doc'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-word-tiny.png) no-repeat right top;}
+a[href $='.rtf'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-document-tiny.png) no-repeat right top;}
+a[href $='.txt'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-document-tiny.png) no-repeat right top;}
+a[href $='.wmv'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-video-tiny.png) no-repeat right top;}
+a[href $='.mov'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-video-tiny.png) no-repeat right top;}
+a[href $='.avi'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-video-tiny.png) no-repeat right top;}
+a[href $='.mpg'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-video-tiny.png) no-repeat right top;}
+a[href $='.swf'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-video-tiny.png) no-repeat right top;}
+a[href $='.flv'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-video-tiny.png) no-repeat right top;}
+a[href $='.f4v'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-video-tiny.png) no-repeat right top;}
+a[href $='.rss'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-rss-tiny.png) no-repeat right top;}
+a[href $='.rm'] {padding-right: 10px;background: transparent url(../images/notjustagrid/icons/icon-video-tiny.png) no-repeat  right top;}
+/* ---------------------------------------------------------------------------- */
+/* error boxes ---------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------- */
+.warning, .error, .success, .question {padding:15px 15px 15px 70px;background-repeat:no-repeat;background-position:10px center;-moz-border-radius:12px;-webkit-border-radius:12px;border-radius:12px; -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, .7); -moz-box-shadow: 0px 2px 4px rgba(0, 0, 0, .7); box-shadow: 0px 2px 4px rgba(0, 0, 0, .7);margin:20px;text-align:left;position:relative;}
+.warning {border:2px solid #d18819;background-image: url(../images/notjustagrid/icons/icon-warning-large.png);background-color:#FFFFCC;color:#660000;}
+.error {border:2px solid #b04242;background-image: url(../images/notjustagrid/icons/icon-error-large.png);background-color:#f6d4d7;color:#660000;}
+.success {border:2px solid #459a2a;background-image: url(../images/notjustagrid/icons/icon-success-large.png);background-color:#e0ffc7;color:#2a4f0b;}
+.question {border:2px solid #637ec1;background-image: url(../images/notjustagrid/icons/icon-question-large.png);background-color:#dde2ee;color:#2e52aa;}
+.warning div, .error div, .success div, .question div {
+	width: 0;
+	height: 0;
+	left: 96%;
+	border-left: 10px solid  transparent;
+	border-right: 10px solid transparent;
+	position:absolute;
+	top:-16px;
+	}
+.warning div {border-bottom:15px solid #d18819;}
+.error div {border-bottom:15px solid #b04242;}
+.success div {border-bottom:15px solid #459a2a;}
+.question div {border-bottom:15px solid #637ec1;}
+/* ---------------------------------------------------------------------------- */
+/* Pagination styles ---------------------------------------------------------- */
+/* ---------------------------------------------------------------------------- */
+div.pagescontainer {padding: 3px;margin: 3px;text-align:right;color:#eee;}
+div.pagescontainer a, div.pagescontainer span.ghost, div.pagescontainer span.current {font: bold 12px "Trebuchet MS", Arial, Helvetica,sans-serif;text-transform:uppercase;text-decoration: none;line-height:30px;letter-spacing:1px;color: #444;padding: 3px 8px 3px 8px;height:30px;margin:2px;text-align:center;text-shadow: 0 -1px 1px rgba(0,0,0,0.25);border-bottom: 1px solid rgba(0,0,0,0.4);border-top: 1px solid rgba(255,255,255,0.4);border-right: 1px solid rgba(0,0,0,0.4);border-left: 1px solid rgba(255,255,255,0.4);border-radius:15px;-moz-border-radius:15px;-webkit-border-radius: 15px;box-shadow: 0 1px 3px rgba(0,0,0,0.5);-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);text-shadow: 0 1px 1px rgba(255,255,255,0.8);background:#ccc url(../images/notjustagrid/misc/transoverlay-matte.png) repeat-x;}
+div.pagescontainer a:hover, div.pagescontainer a:active {background-color:#afc243;color: #fff !important;text-shadow: 0 -1px 1px rgba(0,0,0,0.5);}
+div.pagescontainer span.ghost {	border-bottom: 1px solid rgba(0,0,0,0.1);border-top: 1px solid rgba(0,0,0,0.1);border-right: 1px solid rgba(0,0,0,0.1);border-left: 1px solid rgba(0,0,0,0.1); background-color:#fff;color:#ccc; box-shadow: 0 1px 3px rgba(0,0,0,0.2);-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.2);-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.2);}
+div.pagescontainer span.current {background-color: #5c7d98;color: #fff;text-shadow: 0 -1px 1px rgba(0,0,0,0.5);}
+
+
+
