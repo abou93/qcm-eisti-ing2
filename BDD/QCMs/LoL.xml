@@ -1,0 +1,31 @@
+<qcm temps="120" lvl="2">
+	<question>
+		<expression>"Meeeeeeeeeeeeeeeeerde !" de qui provient cette expression</expression>
+		<reponse value="false">Rachou</reponse>
+		<reponse value="false">Sikic</reponse>
+		<reponse value="false">HdM</reponse>
+		<reponse value="true">Jack</reponse>
+		<reponse value="false">Crapo</reponse>
+	</question><question>
+		<expression>"Meeeeeeeeeeeeeeeeerde !" de qui provient cette expression</expression>
+		<reponse value="false">Rachou</reponse>
+		<reponse value="false">Sikic</reponse>
+		<reponse value="false">HdM</reponse>
+		<reponse value="true">Jack</reponse>
+		<reponse value="false">Crapo</reponse>
+	</question><question>
+		<expression>"Meeeeeeeeeeeeeeeeerde !" de qui provient cette expression</expression>
+		<reponse value="false">Rachou</reponse>
+		<reponse value="false">Sikic</reponse>
+		<reponse value="false">HdM</reponse>
+		<reponse value="true">Jack</reponse>
+		<reponse value="false">Crapo</reponse>
+	</question><question>
+		<expression>"Meeeeeeeeeeeeeeeeerde !" de qui provient cette expression</expression>
+		<reponse value="false">Rachou</reponse>
+		<reponse value="false">Sikic</reponse>
+		<reponse value="false">HdM</reponse>
+		<reponse value="true">Jack</reponse>
+		<reponse value="false">Crapo</reponse>
+	</question>
+</qcm>

@@ -1,0 +1,23 @@
+<qcm temps="120" lvl="3">
+	<question>
+		<expression>Quelle est la fonction permettant de creer un tableau ?</expression>
+		<reponse value="false">Un crayon et une regle</reponse>
+		<reponse value="true">La balise &lt;TABLE&gt; &lt;/TABLE&gt;</reponse>
+		<reponse value="false">La balise &lt;TABLEAU&gt; &lt;/TABLEAU&gt;</reponse>
+		<reponse value="false">La balise &lt;TAB&gt; &lt;/TAB&gt;</reponse>
+	</question>
+	<question>
+		<expression>Quelle fonction permet de definir une "case" dans un tableau ?</expression>
+		<reponse value="false">Aucune</reponse>
+		<reponse value="false">Inserer "case" dans l'assistant graphique</reponse>
+		<reponse value="true">La balise &lt;TR&gt; &lt;/TR&gt;</reponse>
+		<reponse value="true">La balise &lt;TD&gt; &lt;/TD&gt;</reponse>
+	</question>
+	<question>
+		<expression>Comment insee-t-on un titre dans un tableau ?</expression>
+		<reponse value="false">Avec a balise &lt;TITLE&gt; &lt;/TITLE&gt;</reponse>
+		<reponse value="false">On ecrit le titre directement dans le tableau</reponse>
+		<reponse value="false">Avec la balise &lt;CAPTION&gt; &lt;/CAPTION&gt;</reponse>
+		<reponse value="false">Avec la balise &lt;TH&gt; &lt;/TH&gt;</reponse>
+	</question>
+</qcm>

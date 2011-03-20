@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 12 mars 2011 18:25:26 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="Modele.Cours" table="COURS">
+	    <id name="id" type="int">
+			<column name="ID" precision="5" scale="0"/>
+			<generator class="native">
+		    	<param name="sequence">SeqCours</param>
+		   	</generator>
+		</id>
+		<property name="nom" type="string">
+			<column length="50" name="NOM"/>
+		</property>
+    </class>
+</hibernate-mapping>
